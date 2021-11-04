@@ -4,6 +4,7 @@ import Connexion from "../views/Connexion.vue"
 import Subscribe from "../views/Subscribe.vue"
 import Home from "../views/Home.vue"
 import Profile from "../views/Profile.vue"
+import Member from "../views/Member.vue"
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: Profile
+  },
+  {
+    path: '/member/:id',
+    name: 'member',
+    component: Member
   }
 ]
 

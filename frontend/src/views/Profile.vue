@@ -2,10 +2,10 @@
     <div>
         <Nav />
 
-        <div id="container">
-            <section>
+        <main>
+            <article class="general-profile">
                 
-                <div class="azerty">
+                <div class="modify-img-profile">
                     <div class="container-profile-img">
                         <img class="img-profile" src="../assets/img_profile.jpg" alt="">  
                     </div>
@@ -22,13 +22,13 @@
                 </div>
 
                 <button class="delete">Supprimer le compte</button>
-            </section>
+            </article>
 
-            <div>
+            <article>
                 <ModifyEmail/>
                 <ModifyPassword />
-            </div>
-        </div>
+            </article>
+        </main>
     </div>
 </template>
 
@@ -48,20 +48,20 @@
 </script>
 
 <style lang="scss" scoped>
-    #container {
+    main {
         display: flex;
         justify-content: space-around;
         align-items: center;
         height: 80vh;
     }
 
-    section {
+    .general-profile {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
 
-        .azerty {
+        .modify-img-profile {
             position: relative;
 
             .container-profile-img {
@@ -75,16 +75,22 @@
                 }
             }
 
-                button {
-                    position: absolute;
-                    right: 1em;
-                    top: 1em;
-                    background-color: #05d157;
-                    color: white;
-                    border: none;
-                    border-radius: 0.2em;
-                    padding: 0.3em;
+            button {
+                position: absolute;
+                right: 1em;
+                top: 1em;
+                background-color: #05d157;
+                color: white;
+                border: none;
+                border-radius: 0.2em;
+                padding: 0.3em 0.5em;
+                 cursor: pointer;
+
+                &:hover {
+                    transform: scale(1.1);
+                    transition: 0.5s;
                 }
+            }
         }
 
         p {
@@ -103,7 +109,13 @@
                 color: white;
                 border: none;
                 border-radius: 0.2em;
-                padding: 0.3em;
+                padding: 0.3em 0.5em;
+                cursor: pointer;
+
+                &:hover {
+                    transform: scale(1.1);
+                    transition: 0.5s;
+                }
             }
         }
 
@@ -112,8 +124,14 @@
             color: white;
             border: none;
             border-radius: 0.2em;
-            padding: 0.5em;
+            padding: 0.5em 1em;
             margin-top: 1em;
+            cursor: pointer;
+
+            &:hover {
+                transform: scale(1.1);
+                transition: 0.8s;
+            }
         }
     }
 </style>

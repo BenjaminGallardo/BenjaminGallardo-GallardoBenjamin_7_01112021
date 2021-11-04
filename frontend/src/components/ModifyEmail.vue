@@ -23,7 +23,7 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     h2 {
         font-size: 18px;
         color: white;
@@ -49,7 +49,13 @@
         color: white;
         border: none;
         border-radius: 0.2em;
-        padding: 0.3em;
         margin-left: 1em;
+        padding: 0.3em 0.5em;
+        cursor: pointer;
+
+        &:hover {
+            transform: scale(1.1);
+            transition: 0.5s;
+        }
     }
 </style>

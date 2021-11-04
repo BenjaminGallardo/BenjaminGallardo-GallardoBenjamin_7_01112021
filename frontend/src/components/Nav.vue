@@ -42,6 +42,7 @@
 
                 i:hover {
                     transform: scale(1.1);
+                    transition: 0.5s;
                     color: #365665;
                 }
             }

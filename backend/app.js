@@ -41,7 +41,7 @@ app.get('/home', (req, res) => {
     })
 });
 
-app.get('/members/:id', (req, res) => {
+app.get('/member/:id', (req, res) => {
     connectMysql.query('SELECT * FROM user WHERE id = ?', [req.params.id], (err, result) => {
         if(!err){
             res.status(200).json(result);
@@ -50,16 +50,5 @@ app.get('/members/:id', (req, res) => {
         }
     })
 });
-
-
-app.post('/members', (req, res) => {
-    connectMysql.query('INSERT INTO user(username, email, password) VALUES (?)', [req.body.username], [req.body.email], [req.body.password], (err, result) => {
-        if(!err){
-            res.status(200).json(result);
-        } else {
-            console.log(err);
-        }
-    })
-})
 
 module.exports = app;

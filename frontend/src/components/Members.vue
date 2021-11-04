@@ -2,7 +2,7 @@
     <section>
         <h2>Les membres :</h2>
         <ul>
-            <li v-for="member in members" :key="member"><i class="fas fa-user"></i> {{ member.username }}</li>
+            <li :key="index" v-for="(member, index) in members"><router-link :to="`/member/${index + 1}`"> <i class="fas fa-user"></i>{{ member.username }}</router-link></li>
         </ul>
     </section>
 </template>
@@ -17,11 +17,13 @@
                 members: []
             }
         },
-        mounted(){
+        created(){
             axios
             .get('http://localhost:3000/home')
             .then(response => {
-                this.members = response.data;
+                for(const user of response.data){
+                    this.members.push(user)
+                }
             })
         }
     }
@@ -38,9 +40,21 @@
         padding: 0;
 
         li {
-            color: white;
             line-height: 2em;
             list-style-type: none;
+
+            i {
+                margin-right: 0.5em;
+            }
+
+            a {
+                color: white;
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
         }
     }
 </style>
