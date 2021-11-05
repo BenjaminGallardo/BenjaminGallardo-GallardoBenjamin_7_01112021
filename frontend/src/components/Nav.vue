@@ -3,9 +3,8 @@
         <nav>
             <img src="../assets/icon-left-font-monochrome-white.png" alt="">
             <ul>
-                <li><router-link to="/home"><i class="fas fa-home fa-2x"></i></router-link></li>
-                <li><router-link to="/home"><i class="fas fa-plus fa-2x"></i></router-link></li>
-                <li><router-link to="/profile"><i class="fas fa-user fa-2x"></i></router-link></li>
+                <li><router-link to="/home" title="Accueil"><i class="fas fa-home fa-2x"></i></router-link></li>
+                <li><router-link to="/profile" title="Profil"><i class="fas fa-user fa-2x"></i></router-link></li>
             </ul>
         </nav>
 
@@ -16,7 +15,7 @@
 
 <script>
     export default {
-       name: 'Nav' 
+       name: 'Nav',
     }
 </script>
 

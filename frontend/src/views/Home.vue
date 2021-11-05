@@ -1,22 +1,82 @@
 <template>
     <div>
-        <Nav />
-        <Members />
+        <nav>
+            <img src="../assets/icon-left-font-monochrome-white.png" alt="">
+            <ul>
+                <li><router-link to="/home" title="Accueil"><i class="fas fa-home fa-2x"></i></router-link></li>
+                <li><a @click="toggleModale" title="Créer une publication"><i class="fas fa-plus fa-2x"></i></a></li>
+                <li><router-link to="/profile" title="Profil"><i class="fas fa-user fa-2x"></i></router-link></li>
+            </ul>
+        </nav>
+
+        <hr>
+
+        <main>
+            <news />
+            <Members />
+        </main>
+
+        <publication v-bind:revele="revele" v-bind:toggleModale="toggleModale"/>
     </div>
 </template>
 
 <script>
-    import Nav from '../components/Nav.vue'
     import Members from '../components/Members.vue'
+    import News from '../components/News.vue'
+    import Publication from '../components/Publication.vue'
 
     export default {
         name: 'Home',
         components: {
-            Nav,
-            Members
-        }
+            News,
+            Members,
+            Publication
+        },
+        data(){
+            return {
+                revele: false
+            }
+        },
+        methods: {
+           toggleModale: function(){
+               this.revele = !this.revele
+           }
+       }
     }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
+    main {
+        display: grid;
+        grid-template-columns: 4fr 1fr;
+        gap: 2em;
+    }
+
+        nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0.5em 1em;
+
+        img {
+            width: 15em;
+        }
+
+        ul {
+            display: flex;
+            align-items: center;
+            list-style-type: none;
+
+            li a{
+                color: white;
+                margin-left: 3em;
+
+                i:hover {
+                    transform: scale(1.1);
+                    transition: 0.5s;
+                    color: #365665;
+                }
+            }
+        }
+    }
 </style>

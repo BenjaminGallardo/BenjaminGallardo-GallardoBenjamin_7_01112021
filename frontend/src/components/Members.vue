@@ -29,7 +29,7 @@
     }
 </script>
 
-<style  lang="scss" scoped> 
+<style  lang="scss" scoped>
     h2 {
         color: white;
         text-decoration: underline;
