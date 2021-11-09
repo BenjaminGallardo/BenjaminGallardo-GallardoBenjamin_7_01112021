@@ -12,12 +12,12 @@
             <article class="form-container">
                 <form id="form-publication">
                     <label for="input-comments"><i class="fas fa-user"></i> Guillaume Collin</label>
-                    <textarea id="input-comments" cols="30" rows="10" placeholder="Créer votre commentaire..."></textarea>
+                    <textarea id="input-comments" cols="30" rows="10" placeholder="Créer le message de votre publication..." v-model="publication.textField"></textarea>
                     <button class="btn-add-img">Ajouter une image</button>
                 </form>
 
                 <div class="container-btn-publication">
-                    <button form="form-publication" class="btn-publication">Publier</button>
+                    <button form=""  class="btn-publication" @click="createPublication">Publier</button>
                 </div>
             </article>
             
@@ -26,9 +26,33 @@
 </template>
 
 <script>
+    import axios from 'axios'
+
     export default {
         name: "Publication",
-        props: ['revele', 'toggleModale']
+        data(){
+            return {
+                publication: {
+                    userId: '',
+                    textField: '',
+                    imageUrl: ''
+                }
+            }
+        },
+        props: ['revele', 'toggleModale'],
+        methods: {
+            createPublication: function(){
+                axios
+                .post('http://localhost:3001/api/publication', {
+                    userId: ``,
+                    textField: `${this.publication.textField}`,
+                    imageUrl: ``
+                })
+                .then(response => {
+                    console.log(response);
+                })
+            }
+        }
     }
 </script>
 

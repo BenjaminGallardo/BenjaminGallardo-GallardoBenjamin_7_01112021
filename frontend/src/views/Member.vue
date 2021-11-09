@@ -28,9 +28,8 @@
         },
         mounted(){
             axios
-            .get(`http://localhost:3000/member/${this.id}`)
+            .get(`http://localhost:3001/api/member/${this.id}`)
             .then(response => {
-                console.log(response.data[0]);
                 this.member = response.data[0];
             })
         }
@@ -45,5 +44,11 @@
         align-items: center;
         height: 70vh;
         color: white;
+
+        p:last-child {
+            color: black;
+            background: white;
+            padding: 1em;
+        }
     }
 </style>

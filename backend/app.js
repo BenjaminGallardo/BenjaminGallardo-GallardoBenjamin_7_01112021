@@ -1,15 +1,12 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const helmet = require('helmet');
 const mysql = require('mysql');
-require('dotenv').config();
+const connectMysql = require('./mysql-config');
+const helmet = require('helmet');
+const bodyParser = require('body-parser');
 
-const connectMysql = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "7axgU8<?5Q",
-    database: "groupomania"
-});
+const userAuthRoutes = require('./routes/userAuth');
+const memberRoutes = require('./routes/member');
+const publicationRoutes = require('./routes/publication');
 
 connectMysql.connect(function(err){
     if(err) throw err;
@@ -22,6 +19,8 @@ connectMysql.connect(function(err){
 
 const app = express();
 
+app.use(helmet());
+
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
@@ -31,24 +30,8 @@ app.use((req, res, next) => {
     next(); 
 });
 
-app.get('/home', (req, res) => {
-    connectMysql.query('SELECT * FROM user', (err, result) => {
-        if(!err) {
-            res.status(200).json(result);
-        } else {
-            console.log(err);
-        }
-    })
-});
-
-app.get('/member/:id', (req, res) => {
-    connectMysql.query('SELECT * FROM user WHERE id = ?', [req.params.id], (err, result) => {
-        if(!err){
-            res.status(200).json(result);
-        } else {
-            console.log(err);
-        }
-    })
-});
+app.use('/api/auth', userAuthRoutes);
+app.use('/api/member', memberRoutes);
+app.use('/api/publication', publicationRoutes);
 
 module.exports = app;

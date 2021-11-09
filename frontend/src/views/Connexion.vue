@@ -8,18 +8,18 @@
         </header>
         <main>
             <section>
-                <form method="post">
+                <form>
                     <div class="form-container">
-                        <label for="username">Nom d'utilisateur :</label>
-                        <input type="text" name="username" id="username">
+                        <label for="username">Adresse Email :</label>
+                        <input type="text" name="username" id="username" v-model="user.email">
                     </div>
 
                     <div class="form-container">
                         <label for="password">Mot de passe :</label>
-                        <input type="password" name="password" id="password">
+                        <input type="password" name="password" id="password" v-model="user.password">
                     </div>
 
-                    <button>Connexion</button>
+                    <button @click="connexion">Connexion</button>
                 </form>
                 
                 <img src="../assets/phone.png" alt="">
@@ -29,8 +29,28 @@
 </template>
 
 <script>
+    import axios from 'axios'
+
     export default {
         name: 'Connexion',
+        data(){
+            return {
+                user: {
+                    email: '',
+                    password: ''
+                }
+            }
+        },
+        methods: {
+            connexion: function(){
+                axios
+                .post('http://localhost:3001/api/auth/connexion', {
+                    email :`${this.user.email}`,
+                    password: `${this.user.password}`
+                })
+                .then(response => console.log(response));
+            }
+        }
     }
 </script>
 

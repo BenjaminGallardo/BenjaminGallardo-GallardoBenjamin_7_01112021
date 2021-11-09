@@ -6,6 +6,7 @@
                 <li><router-link to="/home" title="Accueil"><i class="fas fa-home fa-2x"></i></router-link></li>
                 <li><a @click="toggleModale" title="Créer une publication"><i class="fas fa-plus fa-2x"></i></a></li>
                 <li><router-link to="/profile" title="Profil"><i class="fas fa-user fa-2x"></i></router-link></li>
+                <li><router-link to="home" title="Déconnexion"> <i class="fas fa-sign-out-alt fa-2x"></i></router-link></li>
             </ul>
         </nav>
 
@@ -13,6 +14,7 @@
 
         <main>
             <news />
+            <hr>
             <Members />
         </main>
 
@@ -48,7 +50,7 @@
 <style lang='scss' scoped>
     main {
         display: grid;
-        grid-template-columns: 4fr 1fr;
+        grid-template-columns: 4fr 0.1fr 1fr;
         gap: 2em;
     }
 

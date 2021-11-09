@@ -5,6 +5,7 @@
             <ul>
                 <li><router-link to="/home" title="Accueil"><i class="fas fa-home fa-2x"></i></router-link></li>
                 <li><router-link to="/profile" title="Profil"><i class="fas fa-user fa-2x"></i></router-link></li>
+                <li><router-link to="home" title="Déconnexion"> <i class="fas fa-sign-out-alt fa-2x"></i></router-link></li>
             </ul>
         </nav>
 
