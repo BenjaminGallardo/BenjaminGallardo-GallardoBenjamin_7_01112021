@@ -48,7 +48,9 @@
                     email :`${this.user.email}`,
                     password: `${this.user.password}`
                 })
-                .then(response => console.log(response));
+                .then(() => {
+    
+                });
             }
         }
     }

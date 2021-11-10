@@ -10,14 +10,16 @@
             <hr>
 
             <article class="form-container">
-                <form id="form-publication">
+                <form id="form-publication" action="http://localhost:3001/api/publication" method="POST" enctype="multipart/form-data">
                     <label for="input-comments"><i class="fas fa-user"></i> Guillaume Collin</label>
-                    <textarea id="input-comments" cols="30" rows="10" placeholder="Créer le message de votre publication..." v-model="publication.textField"></textarea>
-                    <button class="btn-add-img">Ajouter une image</button>
+                    <textarea id="input-comments" cols="30" rows="10" placeholder="Créer le message de votre publication..." name="textField"></textarea>
+                    
+                    <label for="my-file" class="label-add-img" >Ajouter une image</label>
+                    <input id="my-file" class="input-add-img" type="file" accept="image/png, image/jpeg" name="imageUrl">
                 </form>
 
                 <div class="container-btn-publication">
-                    <button form=""  class="btn-publication" @click="createPublication">Publier</button>
+                    <button form="form-publication" type="submit" class="btn-publication">Publier</button>
                 </div>
             </article>
             
@@ -32,26 +34,11 @@
         name: "Publication",
         data(){
             return {
-                publication: {
-                    userId: '',
-                    textField: '',
-                    imageUrl: ''
-                }
             }
         },
         props: ['revele', 'toggleModale'],
         methods: {
-            createPublication: function(){
-                axios
-                .post('http://localhost:3001/api/publication', {
-                    userId: ``,
-                    textField: `${this.publication.textField}`,
-                    imageUrl: ``
-                })
-                .then(response => {
-                    console.log(response);
-                })
-            }
+            axios
         }
     }
 </script>
@@ -113,25 +100,33 @@
                 display: flex;
                 flex-direction: column;
                 align-items: flex-start;
+                position: relative;
 
                 textarea {
                     width: 100%;
                     background-color: rgb(223, 222, 222);
                 }
 
-                .btn-add-img {
-                    background-color: #3f4f83;
-                    color: white;
+                .label-add-img {
                     margin: 1em 0;
-                    border: none;
-                    border-radius: 0.2em;
-                    padding: 0.3em 0.5em;
+                    padding: 0.5em;
+                    background-color: #365665;
+                    border-radius: 0.5em;
                     cursor: pointer;
+                    color: white;
+                    font-size: 13px;
+                    z-index: 1;
 
                     &:hover {
                         transform: scale(1.05);
                         transition: 0.5s;
                     }
+                }
+
+                .input-add-img {
+                    position: absolute;
+                    bottom: 1.35em;
+                    left: 1.3em;
                 }
             }
 

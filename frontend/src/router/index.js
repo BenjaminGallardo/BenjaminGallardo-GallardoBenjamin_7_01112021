@@ -8,6 +8,10 @@ import Member from "../views/Member.vue"
 
 const routes = [
   {
+    path:'/',
+    component: Connexion
+  },
+  {
     path: '/connexion',
     name: 'connexion',
     component: Connexion

@@ -33,7 +33,7 @@ module.exports.connexion = (req, res) => {
                     return res.status(401).json({error : 'Mot de passe incorrect'});
                 } else {
                     res.status(200).json({
-                        userId: req.body.userId,
+                        userId: result[0].id,
                         token: jwt.sign(
                             { userId: result[0].id },
                             process.env.TOKEN,

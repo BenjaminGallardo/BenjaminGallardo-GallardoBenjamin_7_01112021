@@ -11,12 +11,19 @@ module.exports.getAllPublication = (req, res) => {
 };
 
 module.exports.createPublication = (req, res) => {
-    connectMysql.query('INSERT INTO publication SET userId=?, textField=?, imageUrl=?', [req.body.userId, req.body.textField, req.body.imageUrl],(err, result) => {
+    console.log(req.body);
+    const newPublication = {
+         userId: '55', //req.body.userId,
+        textField: req.body.textField,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    }
+    
+    connectMysql.query('INSERT INTO publication SET userId=?, textField=?, imageUrl=?', [newPublication.userId, newPublication.textField, newPublication.imageUrl],(err, result) => {
         if(err){
             console.log(err);
         } else {
             console.log("Publication créée");
-            res.status(200).json({message : result})
+            res.status(201).json({message : "Publication créé"})
         }
     })
 };

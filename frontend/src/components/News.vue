@@ -18,8 +18,8 @@
                     <hr>
 
                     <div class='body-news'>
-                        <p>{{publication.textField}} 😄</p>
-                        <img src="../assets/paris.jpg" alt="">
+                        <p>{{ publication.textField }}</p>
+                        <img :src="publication.imageUrl" alt="">
                     </div>  
 
                     <div class="footer-news">
@@ -27,36 +27,7 @@
                         <textarea name="" id="" placeholder="Ajouter un commentaire"></textarea>
                     </div> 
                 </article>
-            </li>
-
-            <li>
-                <article>
-                    <div class="header-news">
-                        <router-link to='/home'><i class="fas fa-user"></i> Gallardo Benjamin</router-link>
-
-                        <i class="fas fa-ellipsis-h fa-2x" @click="toggleMenu"></i>
-
-                        <div class="btn-action" v-if="revele">
-                            <div class="triangle"></div>
-                            <button class="btn-modify">Modifier</button>
-                            <button class="btn-delete">Supprimer</button>
-                        </div>
-                    </div>
-
-                    <hr>
-
-                    <div class='body-news'>
-                        <p>Ceci est la défense de Paris ! Qu'en pensez vous ? 😄 (Je suis la troisième publication mais je ne suis pas sur le serveur)</p>
-                        <img src="../assets/paris.jpg" alt="">
-                    </div>  
-
-                    <div class="footer-news">
-                        <router-link to='/home'><i class="fas fa-user"></i> Guilaume Collin</router-link>
-                        <textarea name="" id="" placeholder="Ajouter un commentaire"></textarea>
-                    </div> 
-                </article>
-            </li>
-            
+            </li>    
         </ul>
     </div>
 </template>
