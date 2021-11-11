@@ -230,6 +230,7 @@
         justify-content: space-around;
         align-items: center;
         margin-top: 3em;
+        height: 70vh;
 
         img {
             width: 12em;

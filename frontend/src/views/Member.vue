@@ -6,7 +6,7 @@
             <i class="fas fa-user fa-5x"></i> 
             <h2>{{ member.username }}</h2>
             <p>{{ member.email }}</p>
-            <p>{{ member.bio }}</p>
+            <p class="bio" v-if="member.bio !== null">{{ member.bio }}</p>
         </section>
     </div>
 </template>
@@ -45,7 +45,7 @@
         height: 70vh;
         color: white;
 
-        p:last-child {
+        .bio {
             color: black;
             background: white;
             padding: 1em;
