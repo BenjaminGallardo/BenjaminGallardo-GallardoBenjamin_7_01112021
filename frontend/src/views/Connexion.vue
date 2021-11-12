@@ -20,6 +20,7 @@
                     </div>
 
                     <button @click="connexion">Connexion</button>
+                    <div class="button--disabled" v-if="user.email == '' || user.password == '' " ></div>
                 </form>
                 
                 <img src="../assets/phone.png" alt="">
@@ -41,6 +42,7 @@
                 }
             }
         },
+
         methods: {
             connexion: function(){
                 axios
@@ -101,6 +103,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            position: relative;
             
             .form-container {
                 display: flex;
@@ -130,6 +133,15 @@
                     transform: scale(1.1);
                     transition: 0.3s;
                 }
+            }
+
+            .button--disabled {
+                width: 87px;
+                height: 32px;
+                background-color: rgba($color: #f1f1f1, $alpha: 0.7);
+                border-radius: 0.5em;
+                position: absolute;
+                bottom: 2em;
             }
         }
     }

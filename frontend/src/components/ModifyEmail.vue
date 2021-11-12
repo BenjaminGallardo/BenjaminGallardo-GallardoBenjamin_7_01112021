@@ -3,21 +3,36 @@
         <h2>Adresse-Email :</h2>
         <p>{{ email }}</p>
 
-        <form method="post">
+        <form>
             <label for="email-modify">Nouvelle adresse email :</label> <br>
-            <input type="text" id="email-modify" name="email-modify">
+            <input type="text" id="email-modify" name="email-modify" v-model="inputModifyEmail">
             
-            <button>Modifier</button>
+            <button type="submit" @click="modifyEmail">Modifier</button>
         </form>
     </div>
 </template>
 
 <script>
+    import axios from 'axios'
+
     export default {
        name: 'ModifyEmail',
        data(){
            return {
-               email: "Benjamin.Gallardo1@outlook.fr"
+               email: "Benjamin.Gallardo1@outlook.fr",
+               inputModifyEmail: ''
+           }
+       },
+       methods:{
+           modifyEmail(){
+               axios
+               .put(`http://localhost:3001/api/profile/email`, {
+                   id: 34,
+                   email : this.inputModifyEmail
+               })
+               .then(response => {
+                   console.log(response);
+               })
            }
        }
     }

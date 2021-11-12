@@ -9,6 +9,6 @@ router.put('/email', profileControllers.modifyEmail);
 router.put('/password', profileControllers.modifyPassword);
 router.put('/bio', profileControllers.modifyBio);
 router.put('/profile-image', profileControllers.modifyProfileImage);
-router.delete('/', profileControllers.deleteAccount);
+router.delete('/', multer, profileControllers.deleteAccount);
 
 module.exports = router;

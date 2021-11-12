@@ -35,14 +35,14 @@
 
                     <div class="form-container">
                         <label for="confirm-password">Confirmer le mot de passe :</label>
-                        <input type="password" id="confirm-password" @input="verifyConfirmPassword">
+                        <input type="password" id="confirm-password" v-model="user.confirmPassword" @input="verifyConfirmPassword">
                         <i class="fas fa-check check"></i>
                         <i class="fas fa-times error"></i>
                         <span>Les deux mots de passe sont différents</span>
                     </div>
 
                     <button @click="sendForm">Inscription</button>
-                    <div class="no-click"></div>
+                    <div :class="{'button--disabled' : !formVerify()}"></div>
                 </form>
 
                 <img src="../assets/phone.png" alt="">
@@ -62,8 +62,13 @@
                 user: {
                     username: '',
                     email: '',
-                    password: ''
+                    password: '',
+                    confirmPassword: ''
                 },
+                checkOne: null,
+                checkTwo: null,
+                checkThree: null,
+                checkFour: null
             }
         },
 
@@ -77,13 +82,16 @@
                     checkInput[0].style.display = "flex";
                     errorInput[0].style.display = "none";
                     msgError[0].style.display = "none";
+                    this.checkOne = true;
+                    
                 } 
                         
                 else {
                     errorInput[0].style.display = "flex";
                     msgError[0].style.display = "flex";
                     checkInput[0].style.display = "none";
-                }
+                    this.checkOne = false;
+                } 
             },
 
             verifyEmail: function(event){
@@ -96,11 +104,13 @@
                     checkInput[1].style.display = "flex";
                     errorInput[1].style.display = "none";
                     msgError[1].style.display = "none";
+                    this.checkTwo = true;
 
                 } else if(event.target.value.search(regexEmail) === -1){
                     errorInput[1].style.display = "flex";
                     checkInput[1].style.display = "none";
                     msgError[1].style.display = "flex";
+                    this.checkTwo = false;
                 }
             },
 
@@ -155,11 +165,13 @@
                     checkInput[2].style.display = "none";
                     errorInput[2].style.display = "flex";
                     msgError[2].style.display = "flex";
+                    this.checkThree = false; 
 
                 } else {
                     checkInput[2].style.display = "flex";
                     errorInput[2].style.display = "none";
                     msgError[2].style.display = "none";
+                    this.checkThree = true;
                 }
             },
 
@@ -172,16 +184,27 @@
                     errorInput[3].style.display = "flex";
                     checkInput[3].style.display = "none";
                     msgError[3].style.display = "flex";
+                    this.checkFour = false;
                 
                 } else if(event.target.value === this.inputValues){
                     checkInput[3].style.display = "flex";
                     errorInput[3].style.display = "none";
                     msgError[3].style.display = "none";
+                    this.checkFour = true;
 
                 } else {
                     errorInput[3].style.display = "flex";
                     checkInput[3].style.display = "none";
                     msgError[3].style.display = "flex";
+                    this.checkFour = false;
+                }
+            },
+
+            formVerify: function(){
+                if(this.checkOne == true && this.checkTwo == true && this.checkThree == true && this.checkFour == true ){
+                    return true;
+                } else {
+                    return false;
                 }
             },
             
@@ -292,6 +315,20 @@
                 border-radius: 0.5em;
                 cursor: pointer;
                 font-size: 15px;
+
+                &:hover {
+                    transform: scale(1.1);
+                    transition: 0.3s;
+                }
+            }
+
+            .button--disabled {
+                width: 87px;
+                height: 32px;
+                background-color: rgba($color: #f1f1f1, $alpha: 0.7);
+                border-radius: 0.5em;
+                position: absolute;
+                bottom: 2em;
             }
         }
     }

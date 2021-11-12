@@ -10,16 +10,19 @@
                         <img class="img-profile" src="../assets/img_profile.jpg" alt="">  
                     </div>
 
-                    <button>Modifier</button>
+                    <form action="">
+                        <label for="input-modify-image-profile" class="label-modify-image-profile">Modifier</label>
+                        <input type="file" id="input-modify-image-profile">
+                    </form>
                 </div>
 
 
                 <p>Gallardo Benjamin</p>
 
-                <div id="bio">
-                    <textarea name="text-bio" id="text-bio" cols="40" rows="5"></textarea>
+                <form id="bio">
+                    <textarea name="text-bio" id="text-bio" cols="40" rows="5" value="Etudiant en développement web"></textarea>
                     <button>Modifier</button>
-                </div>
+                </form>
 
                 <button class="delete">Supprimer le compte</button>
             </article>
@@ -75,7 +78,7 @@
                 }
             }
 
-            button {
+            .label-modify-image-profile {
                 position: absolute;
                 right: 1em;
                 top: 1em;
@@ -84,12 +87,17 @@
                 border: none;
                 border-radius: 0.2em;
                 padding: 0.3em 0.5em;
-                 cursor: pointer;
+                cursor: pointer;
+                font-size: 13px;
 
                 &:hover {
                     transform: scale(1.1);
                     transition: 0.5s;
                 }
+            }
+
+            #input-modify-image-profile {
+                display: none;
             }
         }
 
