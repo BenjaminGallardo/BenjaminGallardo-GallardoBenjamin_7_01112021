@@ -12,33 +12,33 @@
                     <div class="form-container">
                         <label for="username">Nom d'utilisateur :</label>
                         <input type="text" id="username" v-model="user.username" @input="verifyUsername">
-                        <i class="fas fa-check check"></i>
-                        <i class="fas fa-times error"></i>
-                        <span>Nom d'utilisateur entre 3 et 50 caractères</span>
+                        <i class="fas fa-check check" v-if="checkOne == true"></i>
+                        <i class="fas fa-times error" v-if="checkOne == false"></i>
+                        <span v-if="checkOne == false">Nom d'utilisateur entre 3 et 50 caractères</span>
                     </div>
 
                     <div class="form-container">
                         <label for="email">Adresse-email :</label>
                         <input type="email" id="email" v-model="user.email" @input="verifyEmail">
-                        <i class="fas fa-check check"></i>
-                        <i class="fas fa-times error"></i>
-                        <span>L'adresse email n'a pas le bon format</span>
+                        <i class="fas fa-check check" v-if="checkTwo == true"></i>
+                        <i class="fas fa-times error" v-if="checkTwo == false"></i>
+                        <span v-if="checkTwo == false">L'adresse email n'a pas le bon format</span>
                     </div>
 
                     <div class="form-container">
                         <label for="password">Mot de passe :</label>
                         <input type="password" id="password" v-model="user.password" @input="verifyPassword">
-                        <i class="fas fa-check check"></i>
-                        <i class="fas fa-times error"></i>
-                        <span>Le mot de passe doit contenir une majuscule, un chiffre et un caractère spécial</span>
+                        <i class="fas fa-check check" v-if="checkThree == true"></i>
+                        <i class="fas fa-times error" v-if="checkThree == false"></i>
+                        <span v-if="checkThree == false">Le mot de passe doit contenir une majuscule, un chiffre et un caractère spécial</span>
                     </div>
 
                     <div class="form-container">
                         <label for="confirm-password">Confirmer le mot de passe :</label>
                         <input type="password" id="confirm-password" v-model="user.confirmPassword" @input="verifyConfirmPassword">
-                        <i class="fas fa-check check"></i>
-                        <i class="fas fa-times error"></i>
-                        <span>Les deux mots de passe sont différents</span>
+                        <i class="fas fa-check check" v-if="checkFour == true"></i>
+                        <i class="fas fa-times error" v-if="checkFour == false"></i>
+                        <span v-if="checkFour == false">Les deux mots de passe sont différents</span>
                     </div>
 
                     <button @click="sendForm">Inscription</button>
@@ -74,51 +74,26 @@
 
         methods: {
             verifyUsername : function(event){
-                const checkInput = document.querySelectorAll('.check');
-                const errorInput = document.querySelectorAll('.error');
-                const msgError = document.querySelectorAll('span');
-
                 if(event.target.value.length >= 3 && event.target.value.length <= 50){
-                    checkInput[0].style.display = "flex";
-                    errorInput[0].style.display = "none";
-                    msgError[0].style.display = "none";
-                    this.checkOne = true;
-                    
-                } 
-                        
+                    this.checkOne = true;  
+                }         
                 else {
-                    errorInput[0].style.display = "flex";
-                    msgError[0].style.display = "flex";
-                    checkInput[0].style.display = "none";
                     this.checkOne = false;
                 } 
             },
 
             verifyEmail: function(event){
-                const checkInput = document.querySelectorAll('.check');
-                const errorInput = document.querySelectorAll('.error');
-                const msgError = document.querySelectorAll('span');
                 const regexEmail = /\S+@\S+\.\S+/;
 
                 if(event.target.value.search(regexEmail) === 0){
-                    checkInput[1].style.display = "flex";
-                    errorInput[1].style.display = "none";
-                    msgError[1].style.display = "none";
                     this.checkTwo = true;
 
                 } else if(event.target.value.search(regexEmail) === -1){
-                    errorInput[1].style.display = "flex";
-                    checkInput[1].style.display = "none";
-                    msgError[1].style.display = "flex";
                     this.checkTwo = false;
                 }
             },
 
-            verifyPassword: function(event){
-                const checkInput = document.querySelectorAll('.check');
-                const errorInput = document.querySelectorAll('.error');
-                const msgError = document.querySelectorAll('span');
-        
+            verifyPassword: function(event){        
                 const specialCaracter = /[^a-zA-Z0-9]/;
                 const alphabet = /[a-z]/i;
                 const numbers = /[0-9]/;
@@ -162,40 +137,21 @@
                 }
 
                 if(objectValidationTestAll < 3){
-                    checkInput[2].style.display = "none";
-                    errorInput[2].style.display = "flex";
-                    msgError[2].style.display = "flex";
                     this.checkThree = false; 
 
                 } else {
-                    checkInput[2].style.display = "flex";
-                    errorInput[2].style.display = "none";
-                    msgError[2].style.display = "none";
                     this.checkThree = true;
                 }
             },
 
             verifyConfirmPassword: function(event){
-                const checkInput = document.querySelectorAll('.check');
-                const errorInput = document.querySelectorAll('.error');
-                const msgError = document.querySelectorAll('span');
-                
                 if(event.target.value.length === 0){
-                    errorInput[3].style.display = "flex";
-                    checkInput[3].style.display = "none";
-                    msgError[3].style.display = "flex";
                     this.checkFour = false;
                 
                 } else if(event.target.value === this.inputValues){
-                    checkInput[3].style.display = "flex";
-                    errorInput[3].style.display = "none";
-                    msgError[3].style.display = "none";
                     this.checkFour = true;
 
                 } else {
-                    errorInput[3].style.display = "flex";
-                    checkInput[3].style.display = "none";
-                    msgError[3].style.display = "flex";
                     this.checkFour = false;
                 }
             },
@@ -283,7 +239,6 @@
                 }
 
                 .check {
-                    display: none;
                     color: green;
                     position: absolute;
                     top: 1.8em;
@@ -291,7 +246,6 @@
                 }
 
                 .error {
-                    display: none;
                     color: red;
                     position: absolute;
                     top: 1.9em;
@@ -299,7 +253,6 @@
                 }
 
                 span {
-                    display: none;
                     font-size: 12px;
                     flex-wrap: wrap;
                     font-style: italic;
