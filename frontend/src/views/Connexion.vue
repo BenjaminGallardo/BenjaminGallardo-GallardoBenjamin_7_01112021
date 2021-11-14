@@ -9,6 +9,7 @@
         <main>
             <section>
                 <form>
+                    <p class="msg-error"></p>
                     <div class="form-container">
                         <label for="username">Adresse Email :</label>
                         <input type="text" name="username" id="username" v-model="user.email">
@@ -19,7 +20,7 @@
                         <input type="password" name="password" id="password" v-model="user.password">
                     </div>
 
-                    <button @click="connexion">Connexion</button>
+                    <button @click.prevent="connexion">Connexion</button>
                     <div class="button--disabled" v-if="user.email == '' || user.password == '' " ></div>
                 </form>
                 
@@ -50,9 +51,16 @@
                     email :`${this.user.email}`,
                     password: `${this.user.password}`
                 })
-                .then(() => {
-    
-                });
+
+                .then(function (response) {
+                    console.log(response);
+                    })
+
+                .catch(function (error){
+                    let msgError = document.querySelector(".msg-error");
+                    msgError.innerText = error.response.data.error;
+                    msgError.style.display = "flex";
+                })
             }
         }
     }
@@ -142,6 +150,13 @@
                 border-radius: 0.5em;
                 position: absolute;
                 bottom: 2em;
+            }
+
+            .msg-error {
+                color: red;
+                font-size: 13px;
+                font-style: italic;
+                display: none;
             }
         }
     }

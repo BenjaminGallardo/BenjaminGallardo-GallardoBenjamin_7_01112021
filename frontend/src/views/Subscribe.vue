@@ -9,9 +9,10 @@
         <main>
             <section>
                 <form id="form-inscription">
+                    <p class="msg-error"></p>
                     <div class="form-container">
                         <label for="username">Nom d'utilisateur :</label>
-                        <input type="text" id="username" v-model="user.username" @input="verifyUsername">
+                        <input type="text" id="username" v-model="user.username" @input="verifyUsername" placeholder="Prénom Nom">
                         <i class="fas fa-check check" v-if="checkOne == true"></i>
                         <i class="fas fa-times error" v-if="checkOne == false"></i>
                         <span v-if="checkOne == false">Nom d'utilisateur entre 3 et 50 caractères</span>
@@ -19,7 +20,7 @@
 
                     <div class="form-container">
                         <label for="email">Adresse-email :</label>
-                        <input type="email" id="email" v-model="user.email" @input="verifyEmail">
+                        <input type="email" id="email" v-model="user.email" @input="verifyEmail"  placeholder="exemple@exemple.fr">
                         <i class="fas fa-check check" v-if="checkTwo == true"></i>
                         <i class="fas fa-times error" v-if="checkTwo == false"></i>
                         <span v-if="checkTwo == false">L'adresse email n'a pas le bon format</span>
@@ -27,22 +28,22 @@
 
                     <div class="form-container">
                         <label for="password">Mot de passe :</label>
-                        <input type="password" id="password" v-model="user.password" @input="verifyPassword">
+                        <input type="password" id="password" v-model="user.password" @input="verifyPassword"  placeholder="******">
                         <i class="fas fa-check check" v-if="checkThree == true"></i>
                         <i class="fas fa-times error" v-if="checkThree == false"></i>
-                        <span v-if="checkThree == false">Le mot de passe doit contenir une majuscule, un chiffre et un caractère spécial</span>
+                        <span v-if="checkThree == false">Le mot de passe doit contenir une majuscule, un chiffre et un caractère spécial ( * . $ ? ! ^ % )</span>
                     </div>
 
                     <div class="form-container">
                         <label for="confirm-password">Confirmer le mot de passe :</label>
-                        <input type="password" id="confirm-password" v-model="user.confirmPassword" @input="verifyConfirmPassword">
+                        <input type="password" id="confirm-password" v-model="user.confirmPassword" @input="verifyConfirmPassword" placeholder="******">
                         <i class="fas fa-check check" v-if="checkFour == true"></i>
                         <i class="fas fa-times error" v-if="checkFour == false"></i>
                         <span v-if="checkFour == false">Les deux mots de passe sont différents</span>
                     </div>
 
-                    <button @click="sendForm">Inscription</button>
-                    <div :class="{'button--disabled' : !formVerify()}"></div>
+                    <button @click.prevent="sendForm">Inscription</button>
+                    <div :class="{'button--disabled' : !formVerify()}"></div>                    
                 </form>
 
                 <img src="../assets/phone.png" alt="">
@@ -171,7 +172,17 @@
                     email :`${this.user.email}`,
                     password: `${this.user.password}`
                 })
-                .then(response => console.log(response));
+
+                .then(function (response) {
+                    console.log(response);
+                    })
+
+                .catch(function (error){
+                    let msgError = document.querySelector(".msg-error");
+                    msgError.innerText = error.response.data.error;
+                    msgError.style.display = "flex";
+                })
+
                 }
             }
         }
@@ -282,6 +293,13 @@
                 border-radius: 0.5em;
                 position: absolute;
                 bottom: 2em;
+            }
+
+            .msg-error {
+                color: red;
+                font-size: 13px;
+                font-style: italic;
+                display: none;
             }
         }
     }

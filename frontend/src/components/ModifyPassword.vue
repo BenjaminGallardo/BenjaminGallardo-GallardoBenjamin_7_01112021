@@ -4,20 +4,20 @@
         <form method="post">
 
             <div>
-                <label for="old-password">Ancien mot de passe :</label> <br>
-                <input type="password" id="old-password">
+                <label for="old-password" >Ancien mot de passe :</label> <br>
+                <input type="password" id="old-password" v-model="oldPassword">
             </div>
 
             <div>
                 <label for="new-password">Nouveau mot de passe :</label> <br>
-                <input type="password" id="new-password">
+                <input type="password" id="new-password" v-model="newPassword">
             </div>
 
             <div>
                 <label for="confirm-new-password">Confirmer nouveau mot de passe :</label> <br>
                 <input type="password" id="confirm-new-password">
                 
-                <button>Modifier</button>
+                <button type="submit" @click.prevent="modifyPassword">Modifier</button>
             </div>
 
             
@@ -26,8 +26,36 @@
 </template>
 
 <script>
+    import axios from 'axios'
+
     export default {
-        name: 'ModifyPassword'
+        name: 'ModifyPassword',
+        data(){
+            return {
+                newPassword: "",
+                oldPassword: ""
+            }
+        },
+        methods :{
+            modifyPassword(){
+                axios
+                .put(`http://localhost:3001/api/profile/password`, {
+                    id: 45,
+                    oldPassword: {
+                        password: `${this.oldPassword}`
+                    },
+                    newPassword: {
+                        password: `${this.newPassword}`
+                    }
+                })
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    console.log(error.response);
+                })
+            }
+        }
     }
 </script>
 
