@@ -6,12 +6,12 @@
                     <div class="header-news">
                         <router-link to='/home'><i class="fas fa-user"></i> Gallardo Benjamin</router-link>
 
-                        <i class="fas fa-ellipsis-h fa-2x" @click="toggleMenu"></i>
+                        <i class="fas fa-ellipsis-h fa-2x" @click="toggleMenu(publication.id)"></i>
 
-                        <div class="btn-action" v-if="revele">
+                        <div class="btn-action" v-if="reveleMenu == publication.id">
                             <div class="triangle"></div>
-                            <button class="btn-modify">Modifier</button>
-                            <button class="btn-delete">Supprimer</button>
+                            <router-link :to="`/publication/${this.reveleMenu}`" class="btn-modify">Modifier</router-link>
+                            <button class="btn-delete" @click="deletePublication">Supprimer</button>
                         </div>
                     </div>
 
@@ -28,24 +28,37 @@
                     </div> 
                 </article>
             </li>    
-        </ul>
+        </ul>    
     </div>
 </template>
 
 <script>
-import axios from 'axios';
-    export default {
+import axios from 'axios'
+
+export default {
         name: 'Publication',
         data(){
             return {
-                revele: false,
+                reveleMenu: -1,
                 publications: []
             }
         },
         methods: {
-            toggleMenu: function(){
-                this.revele = !this.revele;
-            }
+            toggleMenu: function(id){
+                this.reveleMenu = id;
+            },
+
+            deletePublication(){
+                axios
+                .delete('http://localhost:3001/api/publication', {
+                    data : {id : this.reveleMenu}
+                })
+                .then(response => {
+                    console.log(response);
+                    window.location.reload();
+                })
+                .catch()
+            },
         },
         created(){
             axios
@@ -54,7 +67,7 @@ import axios from 'axios';
                 for(const publication of response.data){
                     this.publications.push(publication)
                 }
-            })
+            });
         }
     }
 </script>
@@ -121,8 +134,18 @@ import axios from 'axios';
                     }
 
                     .btn-modify {
+                        text-align: center;
                         border-radius: 0.5em 0.5em 0 0;
                         border-bottom: solid 1px white;
+                        background-color: #385565;
+                        font-size: 12px;
+                        color: white;
+                        padding: 0.5em;
+                        width: 83.5%;
+
+                        &:hover {
+                            text-decoration: underline;
+                        }
                     }
 
                     .btn-delete {
@@ -150,3 +173,4 @@ import axios from 'axios';
         }
     }
 </style>
+

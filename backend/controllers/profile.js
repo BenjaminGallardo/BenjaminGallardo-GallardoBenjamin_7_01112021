@@ -6,6 +6,7 @@ module.exports.getProfile = (req, res) => {
 };
 
 module.exports.modifyEmail = (req, res) => {
+    console.log(req.body);
     connectMysql.query(`UPDATE user SET email=? WHERE id=?`, [req.body.email, req.body.id], (err, result) => {
         if(err){
             console.log(err);

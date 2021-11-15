@@ -1,43 +1,64 @@
 <template>
-    <div class="bloc-modale" v-if="revele">
-        <div class="overlay" @click="toggleModale"></div>
+        <div>
+            <div class="bloc-modale">
+                <div class="overlay"></div>
 
-        <section class="create-publication">
+                <section class="modify-publication">
 
-            <button class="btn-quit" @click="toggleModale">X</button>
+                    <router-link to="/home" class="btn-quit">X</router-link>
 
-            <h1>Créer une publication</h1>
-            <hr>
+                    <h1>Modifier la publication</h1>
+                    <hr>
 
-            <article class="form-container">
-                <form id="form-publication" action="http://localhost:3001/api/publication" method="POST" enctype="multipart/form-data">
-                    <label for="input-comments"><i class="fas fa-user"></i> Benjamin Gallardo</label>
-                    <textarea id="input-comments" cols="30" rows="10" placeholder="Créer le message de votre publication..." name="textField"></textarea>
+                    <article class="form-container">
+                        <form id="form-publication" enctype="multipart/form-data">
+                            <label for="input-comments"><i class="fas fa-user"></i> Benjamin Gallardo</label>
+                            <textarea id="input-comments" cols="30" rows="10" name="textField" :value="publicationContain.textField" ></textarea>
+                            
+                            <img class="old-image" :src="publicationContain.imageUrl" alt="">
+
+                            <label for="my-file" class="label-add-img" >Modifier l'image</label>
+                            <input id="my-file" class="input-add-img" type="file" accept="image/png, image/jpeg" name="imageUrl">
+                        </form>
+
+                        <div class="container-btn-publication">
+                            <button form="form-publication" type="submit" class="btn-publication" @click.prevent="modifyPublication">Publier la modification</button>
+                        </div>
+                    </article>
                     
-                    <label for="my-file" class="label-add-img" >Ajouter une image</label>
-                    <input id="my-file" class="input-add-img" type="file" accept="image/png, image/jpeg" name="imageUrl">
-                </form>
-
-                <div class="container-btn-publication">
-                    <button form="form-publication" type="submit" class="btn-publication">Publier</button>
-                </div>
-            </article>
-            
-        </section>
-    </div>
+                </section>
+            </div>
+        </div> 
 </template>
 
 <script>
-
+    import axios from 'axios'
 
     export default {
-        name: "Publication",
+        name: 'ModificationPublication',
         data(){
             return {
+                id: this.$route.params.id,
+                publicationContain: [],
             }
         },
-        props: ['revele', 'toggleModale'],
         methods: {
+            modifyPublication(){
+                axios
+                .put(`http://localhost:3001/api/publication/${this.id}`, {
+                    id: this.id,
+                    textField: document.querySelector('#input-comments').value,
+                    imageUrl: document.querySelector('.input-add-img')
+                })
+            }
+        },
+        created(){
+            axios
+            .get(`http://localhost:3001/api/publication/${this.id}`)
+            .then(response => {
+                this.publicationContain = response.data[0];
+                console.log(this.publicationContain);
+            })
         }
     }
 </script>
@@ -66,7 +87,7 @@
             height: 100%;
         }
 
-        .create-publication {
+        .modify-publication {
             position:fixed;
             position: relative;
             background-color: white;
@@ -84,6 +105,8 @@
                 border-radius: 0.5em;
                 padding: 0.2em 0.5em;
                 cursor: pointer;
+                text-decoration: none;
+                font-size: 13px;
 
                 &:hover {
                     transform: scale(1.1);
@@ -106,6 +129,11 @@
                     background-color: rgb(223, 222, 222);
                 }
 
+                .old-image {
+                    margin-top: 1em;
+                    width: 200px;
+                }
+             
                 .label-add-img {
                     margin: 1em 0;
                     padding: 0.5em;
@@ -125,7 +153,7 @@
                 .input-add-img {
                     position: absolute;
                     bottom: 1.35em;
-                    left: 1.3em;
+                    left: 0;
                 }
             }
 
@@ -153,4 +181,3 @@
         }
     }
 </style>
-

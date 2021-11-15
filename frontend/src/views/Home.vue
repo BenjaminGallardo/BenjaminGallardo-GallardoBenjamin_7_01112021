@@ -32,7 +32,7 @@
         components: {
             News,
             Members,
-            Publication
+            Publication,
         },
         data(){
             return {
