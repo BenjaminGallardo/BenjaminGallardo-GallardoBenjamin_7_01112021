@@ -1,22 +1,27 @@
 <template>
     <div> 
         <nav>
-            <img src="../assets/icon-left-font-monochrome-white.png" alt="">
+            <img src="../assets/icon-left-font-monochrome-white.png" alt="Logo Groupomania">
             <ul>
                 <li><router-link to="/home" title="Accueil"><i class="fas fa-home fa-2x"></i></router-link></li>
                 <li><router-link to="/profile" title="Profil"><i class="fas fa-user fa-2x"></i></router-link></li>
-                <li><router-link to="home" title="Déconnexion"> <i class="fas fa-sign-out-alt fa-2x"></i></router-link></li>
+                <li><a href="" @click="deconnexion"><i class="fas fa-sign-out-alt fa-2x"></i></a></li>
             </ul>
         </nav>
 
         <hr>
     </div>
-    
 </template>
 
 <script>
     export default {
-       name: 'Nav',
+       name: 'HeaderNav',
+       methods: {
+           deconnexion(){
+               this.$store.commit('deconnexion');
+               this.$router.push('/connexion');
+           }
+       }
     }
 </script>
 
@@ -36,14 +41,14 @@
             align-items: center;
             list-style-type: none;
 
-            li a{
-                color: white;
+            li a {
+                color: $color-text;
                 margin-left: 3em;
 
                 i:hover {
                     transform: scale(1.1);
                     transition: 0.5s;
-                    color: #365665;
+                    color: $color-anchor-hover;
                 }
             }
         }

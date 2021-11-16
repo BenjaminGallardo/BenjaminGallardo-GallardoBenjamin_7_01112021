@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <article>
         <h2>Adresse-Email :</h2>
         <p>{{ email }}</p>
 
@@ -9,7 +9,7 @@
             
             <button type="submit" @click="modifyEmail">Modifier</button>
         </form>
-    </div>
+    </article>
 </template>
 
 <script>
@@ -41,16 +41,16 @@
 <style lang="scss" scoped>
     h2 {
         font-size: 18px;
-        color: white;
+        color: $color-text;
         text-decoration: underline;
     }
 
     p {
-        color: white;
+        color: $color-text;
     }
 
     label {
-        color: white;
+        color: $color-text;
         text-decoration: underline;
     }
 

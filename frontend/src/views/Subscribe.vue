@@ -3,13 +3,13 @@
         <header>
             <nav>
                 <img src="../assets/icon-left-font-monochrome-white.png" alt="Logo Groupomania">
-                <router-link to="connexion">Connexion</router-link>
+                <router-link to="connexion"><h1>Connexion</h1></router-link>
             </nav>
         </header>
         <main>
             <section>
                 <form id="form-inscription">
-                    <p class="msg-error"></p>
+                    <p class="msg-error" v-if="status == 'error-created'">{{ errorMsg }}</p>
                     <div class="form-container">
                         <label for="username">Nom d'utilisateur :</label>
                         <input type="text" id="username" v-model="user.username" @input="verifyUsername" placeholder="Prénom Nom">
@@ -42,7 +42,11 @@
                         <span v-if="checkFour == false">Les deux mots de passe sont différents</span>
                     </div>
 
-                    <button @click.prevent="sendForm">Inscription</button>
+                    <button @click.prevent="subscribe">
+                        <span v-if="status == 'loading'">Inscription en cours...</span>
+                        <span v-else>Inscription</span>
+                    </button>
+                
                     <div :class="{'button--disabled' : !formVerify()}"></div>                    
                 </form>
 
@@ -53,8 +57,8 @@
 </template>
 
 <script>
-    import axios from 'axios';
-    
+    import { mapState } from 'vuex'
+
     export default {
         name: 'Subscribe',
         
@@ -69,9 +73,14 @@
                 checkOne: null,
                 checkTwo: null,
                 checkThree: null,
-                checkFour: null
+                checkFour: null,
+                errorMsg: ""
             }
         },
+
+        computed: {
+            ...mapState(['status'])
+        }, 
 
         methods: {
             verifyUsername : function(event){
@@ -165,24 +174,26 @@
                 }
             },
             
-            sendForm: function(){
-                axios
-                .post('http://localhost:3001/api/auth/subscribe', {
+            subscribe: function(){
+                this.$store.dispatch('subscribe', {
                     username: `${this.user.username}`,
                     email :`${this.user.email}`,
                     password: `${this.user.password}`
                 })
-
-                .then(function (response) {
-                    console.log(response);
+                .then(() => {
+                    this.$store.dispatch('connexion', {
+                        email: this.user.email,
+                        password: this.user.password
                     })
-
-                .catch(function (error){
-                    let msgError = document.querySelector(".msg-error");
-                    msgError.innerText = error.response.data.error;
-                    msgError.style.display = "flex";
-                })
-
+                        .then(() => {
+                            this.$router.push('/home')
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        })
+                    }, error => {
+                        this.errorMsg = error.response.data.error;
+                    })
                 }
             }
         }
@@ -201,13 +212,18 @@
                     width: 20em;
                 }
 
-                a{
+                h1 {
+                    font-size: 18px;
+                    font-weight: 100; 
+                }
+
+                a {
                     text-decoration: none;
-                    color: white;
+                    color: $color-text;
                     font-size: 18px;
 
                     &:hover {
-                        color: #365665;
+                        color: $color-anchor-hover;
                         transform: scale(1.1);
                         transition: 0.3s;
                     }
@@ -239,7 +255,7 @@
             .form-container {
                 display: flex;
                 flex-direction: column;
-                color: white;
+                color: $color-text;
                 margin: 0.5em 1em;
                 max-width: 14em;
                 position: relative;
@@ -273,7 +289,7 @@
             button {
                 margin-top: 1em;
                 padding: 0.5em;
-                color: white;
+                color: $color-text;
                 background-color: #3f4f83;
                 border: none;
                 border-radius: 0.5em;
@@ -299,7 +315,6 @@
                 color: red;
                 font-size: 13px;
                 font-style: italic;
-                display: none;
             }
         }
     }

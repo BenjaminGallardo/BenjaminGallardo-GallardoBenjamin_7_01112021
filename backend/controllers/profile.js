@@ -3,10 +3,16 @@ const bcrypt = require('bcrypt');
 const fs = require('fs');
 
 module.exports.getProfile = (req, res) => {
+    connectMysql.query(`SELECT * FROM user`, (err, result) => {
+        if(err){
+            console.log(err);
+        } else {
+            res.status(200).json(result)
+        }
+    })
 };
 
 module.exports.modifyEmail = (req, res) => {
-    console.log(req.body);
     connectMysql.query(`UPDATE user SET email=? WHERE id=?`, [req.body.email, req.body.id], (err, result) => {
         if(err){
             console.log(err);

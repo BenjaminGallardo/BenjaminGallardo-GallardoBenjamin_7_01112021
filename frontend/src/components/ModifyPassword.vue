@@ -1,8 +1,7 @@
 <template>
-    <div>
+    <article>
         <h2>Modifier le mot de passe :</h2>
-        <form method="post">
-
+        <form>
             <div>
                 <label for="old-password" >Ancien mot de passe :</label> <br>
                 <input type="password" id="old-password" v-model="oldPassword">
@@ -19,10 +18,8 @@
                 
                 <button type="submit" @click.prevent="modifyPassword">Modifier</button>
             </div>
-
-            
         </form>
-    </div>
+    </article>
 </template>
 
 <script>
@@ -62,12 +59,12 @@
 <style lang="scss" scoped>
     h2 {
         font-size: 18px;
-        color: white;
+        color: $color-text;
         text-decoration: underline;
     }
 
     form {
-        color: white;
+        color: $color-text;
     }
 
     input {
@@ -77,7 +74,7 @@
 
     button {
         background-color: #05d157;
-        color: white;
+        color: $color-text;
         border: none;
         border-radius: 0.2em;
         margin-left: 1em;

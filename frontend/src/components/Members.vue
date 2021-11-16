@@ -1,6 +1,6 @@
 <template>
     <section>
-        <h2>Les membres :</h2>
+        <h1>Les membres :</h1>
         <ul>
             <li :key="index" v-for="(member, index) in members"><router-link :to="`/member/${member.id}`"> <i class="fas fa-user"></i>{{ member.username }}</router-link></li>
         </ul>
@@ -30,8 +30,8 @@
 </script>
 
 <style  lang="scss" scoped>
-    h2 {
-        color: white;
+    h1 {
+        color: $color-text;
         text-decoration: underline;
     }
 
@@ -48,7 +48,7 @@
             }
 
             a {
-                color: white;
+                color: $color-text;
                 text-decoration: none;
 
                 &:hover {

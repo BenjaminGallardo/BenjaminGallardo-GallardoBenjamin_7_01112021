@@ -6,16 +6,16 @@
                 <li><router-link to="/home" title="Accueil"><i class="fas fa-home fa-2x"></i></router-link></li>
                 <li><a @click="toggleModale" title="Créer une publication"><i class="fas fa-plus fa-2x"></i></a></li>
                 <li><router-link to="/profile" title="Profil"><i class="fas fa-user fa-2x"></i></router-link></li>
-                <li><router-link to="home" title="Déconnexion"> <i class="fas fa-sign-out-alt fa-2x"></i></router-link></li>
+                <li><a @click="deconnexion" title="Déconnexion"> <i class="fas fa-sign-out-alt fa-2x"></i></a></li>
             </ul>
         </nav>
 
         <hr>
 
         <main>
-            <news />
+            <news></news>
             <hr>
-            <Members />
+            <members></members>
         </main>
 
         <publication v-bind:revele="revele" v-bind:toggleModale="toggleModale"/>
@@ -42,6 +42,10 @@
         methods: {
            toggleModale: function(){
                this.revele = !this.revele
+           },
+            deconnexion(){
+               this.$store.commit('deconnexion');
+               this.$router.push('/connexion');
            }
        }
     }
@@ -70,13 +74,13 @@
             list-style-type: none;
 
             li a{
-                color: white;
+                color: $color-text;
                 margin-left: 3em;
 
                 i:hover {
                     transform: scale(1.1);
                     transition: 0.5s;
-                    color: #365665;
+                    color: $color-anchor-hover;
                 }
             }
         }

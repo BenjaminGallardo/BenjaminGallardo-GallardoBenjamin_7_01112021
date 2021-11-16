@@ -6,7 +6,7 @@
 
             <button class="btn-quit" @click="toggleModale">X</button>
 
-            <h1>Créer une publication</h1>
+            <h2>Créer une publication</h2>
             <hr>
 
             <article class="form-container">
@@ -37,8 +37,6 @@
             }
         },
         props: ['revele', 'toggleModale'],
-        methods: {
-        }
     }
 </script>
 
@@ -79,7 +77,7 @@
                 right: 1em;
                 top: 1em;
                 background-color: red;
-                color: white;
+                color: $color-text;
                 border: none;
                 border-radius: 0.5em;
                 padding: 0.2em 0.5em;
@@ -91,7 +89,7 @@
                 }
             }
 
-            h1 {
+            h3 {
                 text-align: center;
             }
 
@@ -112,7 +110,7 @@
                     background-color: #365665;
                     border-radius: 0.5em;
                     cursor: pointer;
-                    color: white;
+                    color: $color-text;
                     font-size: 13px;
                     z-index: 1;
 
@@ -136,7 +134,7 @@
 
                 .btn-publication {
                     background-color: #05d157;
-                    color: white;
+                    color: $color-text;
                     margin: 1em 0;
                     border: none;
                     border-radius: 0.2em;

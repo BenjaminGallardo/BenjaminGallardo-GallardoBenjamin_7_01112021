@@ -3,13 +3,13 @@
         <header>
             <nav>
                 <img src="../assets/icon-left-font-monochrome-white.png" alt="Logo Groupomania">
-                <router-link to="Subscribe">Inscription</router-link>
+                <router-link to="Subscribe"><h1>Inscription</h1></router-link>
             </nav>
         </header>
         <main>
             <section>
                 <form>
-                    <p class="msg-error"></p>
+                    <p class="msg-error" v-if="status == 'error-connexion'">{{ errorMsg }}</p>
                     <div class="form-container">
                         <label for="username">Adresse Email :</label>
                         <input type="text" name="username" id="username" v-model="user.email">
@@ -20,7 +20,10 @@
                         <input type="password" name="password" id="password" v-model="user.password">
                     </div>
 
-                    <button @click.prevent="connexion">Connexion</button>
+                    <button @click.prevent="connexion">
+                        <span v-if="status == 'loading'">Connexion en cours</span>
+                        <span v-else>Connexion</span>
+                    </button>
                     <div class="button--disabled" v-if="user.email == '' || user.password == '' " ></div>
                 </form>
                 
@@ -31,7 +34,7 @@
 </template>
 
 <script>
-    import axios from 'axios'
+    import { mapState } from 'vuex'
 
     export default {
         name: 'Connexion',
@@ -40,27 +43,33 @@
                 user: {
                     email: '',
                     password: ''
-                }
+                },
+                errorMsg: ""
             }
         },
 
+        computed: {
+            ...mapState(['status'])
+        },  
+
         methods: {
             connexion: function(){
-                axios
-                .post('http://localhost:3001/api/auth/connexion', {
+                this.$store.dispatch('connexion', {
                     email :`${this.user.email}`,
                     password: `${this.user.password}`
                 })
-
-                .then(function (response) {
-                    console.log(response);
-                    })
-
-                .catch(function (error){
-                    let msgError = document.querySelector(".msg-error");
-                    msgError.innerText = error.response.data.error;
-                    msgError.style.display = "flex";
+                .then(() => {
+                    this.$router.push('/profile')
+                }, error => {
+                    this.errorMsg = error.response.data.error
                 })
+            }
+        },
+        
+        mounted(){
+            if(this.$store.state.user.userId != -1){
+                this.$router.push('/profile');
+                return;
             }
         }
     }
@@ -79,13 +88,18 @@
                 width: 20em;
             }
 
+            h1 {
+               font-size: 18px;
+               font-weight: 100; 
+            }
+            
             a {
                 text-decoration: none;
-                color: white;
+                color: $color-text;
                 font-size: 18px;
 
                 &:hover {
-                    color: #365665;
+                    color: $color-anchor-hover;
                     transform: scale(1.1);
                     transition: 0.3s;
                 }
@@ -116,7 +130,7 @@
             .form-container {
                 display: flex;
                 flex-direction: column;
-                color: white;
+                color: $color-text;
                 margin: 0.5em 1em;
                 max-width: 14em;
                 position: relative;
@@ -130,7 +144,7 @@
             button {
                 margin-top: 1em;
                 padding: 0.5em;
-                color: white;
+                color: $color-text;
                 background-color: #3f4f83;
                 border: none;
                 border-radius: 0.5em;
@@ -156,7 +170,6 @@
                 color: red;
                 font-size: 13px;
                 font-style: italic;
-                display: none;
             }
         }
     }

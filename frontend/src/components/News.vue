@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <section>
         <ul>
             <li :key="index" v-for="(publication, index) in publications">
                 <article>
@@ -19,17 +19,19 @@
 
                     <div class='body-news'>
                         <p>{{ publication.textField }}</p>
-                        <img :src="publication.imageUrl" alt="">
+                        <img :src="publication.imageUrl" alt="Images de la publication">
                     </div>  
+
+                    <hr>
 
                     <div class="footer-news">
                         <router-link to='/home'><i class="fas fa-user"></i> Guilaume Collin</router-link>
-                        <textarea name="" id="" placeholder="Ajouter un commentaire"></textarea>
+                        <textarea placeholder="Ajouter un commentaire"></textarea>
                     </div> 
                 </article>
             </li>    
         </ul>    
-    </div>
+    </section>
 </template>
 
 <script>

@@ -41,23 +41,23 @@ module.exports.createPublication = (req, res) => {
 
 module.exports.modifyPublication = (req, res) => {
     console.log(req.body);
-    // if(req.body.imageUrl = ""){
-    //     connectMysql.query('UPDATE publication SET textField=? WHERE id=?', [req.body.textField, req.params.id], (err, result) => {
-    //         if(err){
-    //             console.log(err);
-    //         } else {
-    //             console.log(result);
-    //         }
-    //     })
-    // } else {
-    //     connectMysql.query('UPDATE publication SET textField=?, imageUrl=? WHERE id=?', [req.body.textField, req.body.imageUrl, req.params.id], (err, result) => {
-    //         if(err){
-    //             console.log(err);
-    //         } else {
-    //             console.log(result);
-    //         }
-    //     })
-    // }
+    if(req.body.imageUrl = ""){
+        connectMysql.query('UPDATE publication SET textField=? WHERE id=?', [req.body.textField, req.params.id], (err, result) => {
+            if(err){
+                console.log(err);
+            } else {
+                console.log(result);
+            }
+        })
+    } else {
+        connectMysql.query('UPDATE publication SET textField=?, imageUrl=? WHERE id=?', [req.body.textField, req.body.imageUrl, req.params.id], (err, result) => {
+            if(err){
+                console.log(err);
+            } else {
+                console.log(result);
+            }
+        })
+    }
 };
 
 module.exports.deletePublication = (req, res) => {

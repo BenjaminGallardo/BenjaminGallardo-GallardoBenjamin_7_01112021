@@ -1,34 +1,33 @@
 <template>
-        <div>
-            <div class="bloc-modale">
-                <div class="overlay"></div>
+    <div class="bloc-modale">
+        <div class="overlay"></div>
 
-                <section class="modify-publication">
+        <section class="modify-publication">
 
-                    <router-link to="/home" class="btn-quit">X</router-link>
+            <router-link to="/home" class="btn-quit">X</router-link>
 
-                    <h1>Modifier la publication</h1>
-                    <hr>
+            <h1>Modifier la publication</h1>
+            
+            <hr>
 
-                    <article class="form-container">
-                        <form id="form-publication" enctype="multipart/form-data">
-                            <label for="input-comments"><i class="fas fa-user"></i> Benjamin Gallardo</label>
-                            <textarea id="input-comments" cols="30" rows="10" name="textField" :value="publicationContain.textField" ></textarea>
+            <article class="form-container">
+                <form id="form-publication" enctype="multipart/form-data">
+                    <label for="input-comments"><i class="fas fa-user"></i> Benjamin Gallardo</label>
+                    <textarea id="input-comments" cols="30" rows="10" name="textField" :value="publicationContain.textField" ></textarea>
                             
-                            <img class="old-image" :src="publicationContain.imageUrl" alt="">
+                    <img class="old-image" :src="publicationContain.imageUrl" alt="">
 
-                            <label for="my-file" class="label-add-img" >Modifier l'image</label>
-                            <input id="my-file" class="input-add-img" type="file" accept="image/png, image/jpeg" name="imageUrl">
-                        </form>
+                    <label for="my-file" class="label-add-img" >Modifier l'image</label>
+                    <input id="my-file" class="input-add-img" type="file" accept="image/png, image/jpeg" name="imageUrl" @change="previewFiles">
+                </form>
 
-                        <div class="container-btn-publication">
-                            <button form="form-publication" type="submit" class="btn-publication" @click.prevent="modifyPublication">Publier la modification</button>
-                        </div>
-                    </article>
+                <div class="container-btn-publication">
+                    <button form="form-publication" type="submit" class="btn-publication" @click.prevent="modifyPublication">Publier la modification</button>
+                </div>
+            </article>
                     
-                </section>
-            </div>
-        </div> 
+        </section>
+    </div>
 </template>
 
 <script>
@@ -40,15 +39,22 @@
             return {
                 id: this.$route.params.id,
                 publicationContain: [],
+                imageUrl: []
             }
         },
         methods: {
+            previewFiles(event){
+                
+                this.imageUrl = event.target.files[0].name;
+                console.log(this.imageUrl);
+            },
+
             modifyPublication(){
                 axios
                 .put(`http://localhost:3001/api/publication/${this.id}`, {
                     id: this.id,
                     textField: document.querySelector('#input-comments').value,
-                    imageUrl: document.querySelector('.input-add-img')
+                    imageUrl: this.imageUrl
                 })
             }
         },
@@ -57,7 +63,6 @@
             .get(`http://localhost:3001/api/publication/${this.id}`)
             .then(response => {
                 this.publicationContain = response.data[0];
-                console.log(this.publicationContain);
             })
         }
     }
@@ -100,7 +105,7 @@
                 right: 1em;
                 top: 1em;
                 background-color: red;
-                color: white;
+                color: $color-text;
                 border: none;
                 border-radius: 0.5em;
                 padding: 0.2em 0.5em;
@@ -140,7 +145,7 @@
                     background-color: #365665;
                     border-radius: 0.5em;
                     cursor: pointer;
-                    color: white;
+                    color: $color-text;
                     font-size: 13px;
                     z-index: 1;
 
@@ -164,7 +169,7 @@
 
                 .btn-publication {
                     background-color: #05d157;
-                    color: white;
+                    color: $color-text;
                     margin: 1em 0;
                     border: none;
                     border-radius: 0.2em;

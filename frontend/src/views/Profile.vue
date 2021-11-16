@@ -1,9 +1,11 @@
 <template>
     <div>
-        <Nav />
-
+        <header>
+            <header-nav></header-nav>
+        </header>
         <main>
-            <article class="general-profile">
+            <section class="general-profile">
+                <h1>Votre profil</h1>
                 
                 <div class="modify-img-profile">
                     <div class="container-profile-img">
@@ -16,7 +18,6 @@
                     </form>
                 </div>
 
-
                 <p>Gallardo Benjamin</p>
 
                 <form id="bio">
@@ -25,27 +26,34 @@
                 </form>
 
                 <button class="delete">Supprimer le compte</button>
-            </article>
+            </section>
 
-            <article>
-                <ModifyEmail/>
-                <ModifyPassword />
-            </article>
+            <section>
+                <modify-email></modify-email>
+                <modify-password></modify-password>
+            </section>
         </main>
     </div>
 </template>
 
 <script>
-    import Nav from "../components/Nav.vue"
+    import HeaderNav from "../components/HeaderNav.vue"
     import ModifyEmail from "../components/ModifyEmail.vue"
     import ModifyPassword from "../components/ModifyPassword.vue"
 
     export default {
         name: 'Profile',
         components: {
-            Nav,
+            HeaderNav,
             ModifyEmail,
             ModifyPassword
+        },
+        mounted(){
+            // if(this.$store.state.user.userId == -1) {
+            //     this.$router.push('/connexion');
+            //     return;
+            // }
+            // this.$store.dispatch('getUserInfosProfile');
         }
     }
 </script>
@@ -56,6 +64,10 @@
         justify-content: space-around;
         align-items: center;
         height: 80vh;
+
+        h1{
+            display: none;
+        }
     }
 
     .general-profile {
@@ -83,7 +95,7 @@
                 right: 1em;
                 top: 1em;
                 background-color: #05d157;
-                color: white;
+                color: $color-text;
                 border: none;
                 border-radius: 0.2em;
                 padding: 0.3em 0.5em;
@@ -102,7 +114,7 @@
         }
 
         p {
-            color: white;
+            color: $color-text;
             font-size: 20px;
         }
 
@@ -114,7 +126,7 @@
                 right: 1em;
                 bottom: 1em;
                 background-color: #05d157;
-                color: white;
+                color: $color-text;
                 border: none;
                 border-radius: 0.2em;
                 padding: 0.3em 0.5em;
@@ -129,7 +141,7 @@
 
         .delete {
             background-color:red;
-            color: white;
+            color: $color-text;
             border: none;
             border-radius: 0.2em;
             padding: 0.5em 1em;

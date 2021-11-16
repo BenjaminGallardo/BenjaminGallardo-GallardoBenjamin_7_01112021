@@ -1,10 +1,10 @@
 <template>
     <div>
-        <Nav />
+        <header-nav></header-nav>
 
         <section class="member-profile">
             <i class="fas fa-user fa-5x"></i> 
-            <h2>{{ member.username }}</h2>
+            <h1>{{ member.username }}</h1>
             <p>{{ member.email }}</p>
             <p class="bio" v-if="member.bio !== null">{{ member.bio }}</p>
         </section>
@@ -12,13 +12,13 @@
 </template>
 
 <script>
-    import Nav from '../components/Nav.vue'
+    import HeaderNav from '../components/HeaderNav.vue'
     import axios from 'axios'
 
     export default {
         name: "Member",
         components: {
-            Nav
+            HeaderNav
         },
         data(){
             return {
@@ -43,11 +43,11 @@
         justify-content: center;
         align-items: center;
         height: 70vh;
-        color: white;
+        color: $color-text;
 
         .bio {
             color: black;
-            background: white;
+            background: $color-text;
             padding: 1em;
         }
     }
