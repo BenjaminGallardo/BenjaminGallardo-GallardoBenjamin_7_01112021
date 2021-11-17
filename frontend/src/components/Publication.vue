@@ -28,8 +28,6 @@
 </template>
 
 <script>
-
-
     export default {
         name: "Publication",
         data(){
@@ -42,26 +40,10 @@
 
 <style lang="scss" scoped>
     .bloc-modale {
-        position: fixed;
-        top: 0;
-        right: 0;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        @include bloc-center;
 
         .overlay {
-            background-color: rgba(0,0,0,0.8);
-            position: fixed;
-            top: 0;
-            right: 0;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            height: 100%;
+            @include overlay;
         }
 
         .create-publication {
@@ -71,6 +53,10 @@
             border-radius: 0.5em;
             padding: 0em 1em;
             width: 600px;
+
+            @include mobile {
+                width: auto;
+            }
 
             .btn-quit {
                 position: absolute;
@@ -83,13 +69,19 @@
                 padding: 0.2em 0.5em;
                 cursor: pointer;
 
+                @include mobile {
+                    font-size: 12px;
+                    top: 0.5em;
+                    right: 0.5em;
+                }
+
                 &:hover {
                     transform: scale(1.1);
                     transition: 0.5s;
                 }
             }
 
-            h3 {
+            h2 {
                 text-align: center;
             }
 
@@ -114,6 +106,10 @@
                     font-size: 13px;
                     z-index: 1;
 
+                    @include mobile {
+                        font-size: 12px;
+                    }
+
                     &:hover {
                         transform: scale(1.05);
                         transition: 0.5s;
@@ -124,6 +120,11 @@
                     position: absolute;
                     bottom: 1.35em;
                     left: 1.3em;
+
+                    @include mobile {
+                        left: 0.5em;
+                        bottom: 1.2em;
+                    }
                 }
             }
 

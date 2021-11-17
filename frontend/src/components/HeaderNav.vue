@@ -32,6 +32,10 @@
         justify-content: space-between;
         margin: 0.5em 1em;
 
+        @include mobile {
+            flex-direction: column;
+        }
+
         img {
             width: 15em;
         }
@@ -40,10 +44,15 @@
             display: flex;
             align-items: center;
             list-style-type: none;
+            padding: 0;
 
             li a {
                 color: $color-text;
                 margin-left: 3em;
+
+                @include mobile {
+                    margin: 0em 1em 0em 1em;
+                }
 
                 i:hover {
                     transform: scale(1.1);

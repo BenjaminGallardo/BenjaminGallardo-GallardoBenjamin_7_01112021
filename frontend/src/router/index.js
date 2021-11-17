@@ -6,6 +6,7 @@ import Home from "../views/Home.vue"
 import Profile from "../views/Profile.vue"
 import Member from "../views/Member.vue"
 import ModifyPublication from '../views/ModifyPublication.vue'
+import AccountDelete from '../views/AccountDelete.vue'
 
 const routes = [
   {
@@ -41,6 +42,11 @@ const routes = [
     path: '/member/:id',
     name: 'member',
     component: Member
+  },
+  {
+    path: '/account-delete',
+    name: 'accountDelete',
+    component: AccountDelete
   }
 ]
 

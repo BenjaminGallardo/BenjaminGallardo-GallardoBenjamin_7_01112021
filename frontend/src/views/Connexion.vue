@@ -86,11 +86,19 @@
 
             img {
                 width: 20em;
+
+                @include mobile {
+                    width: 10em;
+                }
             }
 
             h1 {
                font-size: 18px;
-               font-weight: 100; 
+               font-weight: 100;
+               
+                @include mobile {
+                    font-size: 15px;
+                }
             }
             
             a {
@@ -111,10 +119,14 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
-        height: 80vh;
+        height: 90vh;
 
         img {
             width: 12em;
+
+            @include mobile {
+                display: none;
+            }
         }
 
         form {
@@ -126,6 +138,10 @@
             align-items: center;
             justify-content: center;
             position: relative;
+
+            @include mobile {
+                font-size: 14px;
+            }
             
             .form-container {
                 display: flex;
@@ -138,6 +154,10 @@
                 input {
                     margin: 0.5em 0;
                     min-width: 17em;
+
+                    @include mobile {
+                        min-width: 12em;
+                    }
                 }
             }
 

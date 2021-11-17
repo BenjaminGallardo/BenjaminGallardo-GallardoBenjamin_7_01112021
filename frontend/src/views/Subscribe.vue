@@ -178,7 +178,7 @@
                 this.$store.dispatch('subscribe', {
                     username: `${this.user.username}`,
                     email :`${this.user.email}`,
-                    password: `${this.user.password}`
+                    password: `${this.user.password}`,
                 })
                 .then(() => {
                     this.$store.dispatch('connexion', {
@@ -201,6 +201,7 @@
 
 <style lang='scss' scoped>
         header {
+            margin-bottom: 8em;
 
             nav {
                 display: flex;
@@ -210,11 +211,20 @@
 
                 img {
                     width: 20em;
+
+                    @include mobile {
+                        min-width: 10em;
+                    }
                 }
 
                 h1 {
                     font-size: 18px;
                     font-weight: 100; 
+
+                    @include mobile {
+                        font-size: 15px;
+                        margin-left: 1em;
+                    }
                 }
 
                 a {
@@ -235,11 +245,15 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
-        margin-top: 3em;
+        margin-bottom: 8em;
         height: 70vh;
 
         img {
             width: 12em;
+
+            @include mobile {
+                display: none;
+            }
         }
 
         form {
@@ -251,6 +265,10 @@
             align-items: center;
             justify-content: center;
             position: relative;
+
+            @include mobile {
+                font-size: 13px;
+            }
             
             .form-container {
                 display: flex;
@@ -263,6 +281,10 @@
                 input {
                     margin: 0.3em 0;
                     width: 17em;
+
+                    @include mobile {
+                        width: 14em;
+                    }
                 }
 
                 .check {
@@ -270,6 +292,11 @@
                     position: absolute;
                     top: 1.8em;
                     right: -2em;
+
+                    @include mobile {
+                        top: 2em;
+                        right: -2.4em;
+                    }
                 }
 
                 .error {
@@ -277,6 +304,11 @@
                     position: absolute;
                     top: 1.9em;
                     right: -1.8em;
+
+                    @include mobile {
+                        top: 2.2em;
+                        right: -2.2em;
+                    }
                 }
 
                 span {

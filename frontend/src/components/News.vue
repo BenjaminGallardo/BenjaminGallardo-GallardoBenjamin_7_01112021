@@ -78,6 +78,7 @@ export default {
 
     ul {
         list-style-type: none;
+        padding-inline-start: 0px;
     }
 
     article {
@@ -95,6 +96,10 @@ export default {
                 a {
                     color: black;
                     text-decoration: none;
+
+                    @include mobile {
+                        font-size: 14px;
+                    }
                 }
 
                 i {
@@ -161,6 +166,10 @@ export default {
             img {
                 width: 100%;
             }
+
+            @include mobile {
+                font-size: 14px;
+            }
         }
 
         .footer-news {
@@ -171,6 +180,10 @@ export default {
                 color: black;
                 text-decoration: none;
                 margin: 1em 0 0.5em 0;
+
+                @include mobile {
+                    font-size: 14px;
+                }
             }
         }
     }

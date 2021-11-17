@@ -70,26 +70,10 @@
 
 <style lang="scss" scoped>
     .bloc-modale {
-        position: fixed;
-        top: 0;
-        right: 0;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
+        @include bloc-center;
+        
         .overlay {
-            background-color: rgba(0,0,0,0.8);
-            position: fixed;
-            top: 0;
-            right: 0;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            height: 100%;
+            @include overlay;
         }
 
         .modify-publication {
@@ -99,6 +83,11 @@
             border-radius: 0.5em;
             padding: 0em 1em;
             width: 600px;
+
+            @include mobile {
+                width: auto;
+                margin: 1em 0;
+            }
 
             .btn-quit {
                 position: absolute;
@@ -113,6 +102,11 @@
                 text-decoration: none;
                 font-size: 13px;
 
+                @include mobile {
+                    right: 0.2em;
+                    top: 0.2em;
+                }
+
                 &:hover {
                     transform: scale(1.1);
                     transition: 0.5s;
@@ -121,6 +115,12 @@
 
             h1 {
                 text-align: center;
+
+                @include mobile {
+                    font-size: 18px;
+                    line-height: 0.5em;
+                    margin-top: 1.5em;
+                }
             }
 
             form {
@@ -129,14 +129,28 @@
                 align-items: flex-start;
                 position: relative;
 
+                @include mobile {
+                    label {
+                        font-size: 15px;
+                    }
+                }
+
                 textarea {
                     width: 100%;
                     background-color: rgb(223, 222, 222);
+
+                    @include mobile {
+                        height: 100px;
+                    }
                 }
 
                 .old-image {
                     margin-top: 1em;
                     width: 200px;
+
+                    @include mobile {
+                        height: 100px;
+                    }
                 }
              
                 .label-add-img {

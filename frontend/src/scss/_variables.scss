@@ -1,2 +1,9 @@
 $color-text: #f1f1f1;
 $color-anchor-hover: #365665;
+
+$breakpoints : (
+    mobile: 768px,
+    tablet: 1024px,
+    laptopM: 1440px,
+    laptopL : 1920px
+);

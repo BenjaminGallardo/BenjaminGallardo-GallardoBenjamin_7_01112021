@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div class="home">
         <nav>
             <img src="../assets/icon-left-font-monochrome-white.png" alt="">
             <ul>
-                <li><router-link to="/home" title="Accueil"><i class="fas fa-home fa-2x"></i></router-link></li>
+                <li class="home-list"><router-link to="/home" title="Accueil"><i class="fas fa-home fa-2x"></i></router-link></li>
                 <li><a @click="toggleModale" title="Créer une publication"><i class="fas fa-plus fa-2x"></i></a></li>
                 <li><router-link to="/profile" title="Profil"><i class="fas fa-user fa-2x"></i></router-link></li>
                 <li><a @click="deconnexion" title="Déconnexion"> <i class="fas fa-sign-out-alt fa-2x"></i></a></li>
@@ -15,7 +15,7 @@
         <main>
             <news></news>
             <hr>
-            <members></members>
+            <members class="listing-members"></members>
         </main>
 
         <publication v-bind:revele="revele" v-bind:toggleModale="toggleModale"/>
@@ -52,36 +52,64 @@
 </script>
 
 <style lang='scss' scoped>
-    main {
-        display: grid;
-        grid-template-columns: 4fr 0.1fr 1fr;
-        gap: 2em;
-    }
-
-        nav {
+    nav {
         display: flex;
         align-items: center;
         justify-content: space-between;
         margin: 0.5em 1em;
 
+        @include mobile {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
         img {
             width: 15em;
+            
+            @include mobile {
+                margin-bottom: 1em;
+            }
         }
 
         ul {
             display: flex;
-            align-items: center;
             list-style-type: none;
+            padding: 0;
 
-            li a{
+            li a {
                 color: $color-text;
                 margin-left: 3em;
+
+                @include mobile {
+                    font-size: 13px;
+                    margin: 0 1em 0 1em;
+                }
 
                 i:hover {
                     transform: scale(1.1);
                     transition: 0.5s;
                     color: $color-anchor-hover;
                 }
+            }
+        }
+    }
+
+    main {
+        display: grid;
+        grid-template-columns: 4fr 0.1fr 1fr;
+        gap: 2em;
+
+        @include mobile {
+            display: flex;
+            flex-direction: column;
+
+            hr {
+                display: none;
+            }
+
+            .listing-members {
+                display: none;
             }
         }
     }

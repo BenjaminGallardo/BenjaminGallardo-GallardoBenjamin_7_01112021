@@ -3,10 +3,12 @@ const bcrypt = require('bcrypt');
 const fs = require('fs');
 
 module.exports.getProfile = (req, res) => {
-    connectMysql.query(`SELECT * FROM user`, (err, result) => {
+    console.log(req.body);
+    connectMysql.query(`SELECT * FROM user WHERE id=?`, [req.body.id], (err, result) => {
         if(err){
-            console.log(err);
+            res.status(500).json({error : "Les informations n'ont pas pu être récupérées"})
         } else {
+            console.log(result);
             res.status(200).json(result)
         }
     })
@@ -15,9 +17,9 @@ module.exports.getProfile = (req, res) => {
 module.exports.modifyEmail = (req, res) => {
     connectMysql.query(`UPDATE user SET email=? WHERE id=?`, [req.body.email, req.body.id], (err, result) => {
         if(err){
-            console.log(err);
+            res.status(500).json({message: "L'email n'a pas pu être modifié"});
         } else {
-            res.status(200).json({message: "Email Modifié"})
+            res.status(200).json({message: "Email Modifié"});
         }
     })
 };
@@ -45,7 +47,7 @@ module.exports.modifyPassword = (req, res) => {
                                 if(err){
                                     console.log(err);
                                 } else {
-                                    res.status(200).json({message: "Mot de passe Modifié"})
+                                    res.status(200).json({message: "Mot de passe modifié"})
                                 }
                             })
                         })
@@ -56,7 +58,7 @@ module.exports.modifyPassword = (req, res) => {
             }
         })
     } else {
-        res.status(400).json({error: "Les données ne sont pas formatées correctement"});
+        res.status(500).json({error: "Les données ne sont pas formatées correctement"});
     }
 }
     
@@ -65,9 +67,9 @@ module.exports.modifyPassword = (req, res) => {
 module.exports.modifyBio = (req, res) => {
     connectMysql.query('UPDATE user SET bio=? WHERE id=?', [req.body.bio, req.body.id], (err, result) => {
         if(err){
-            console.log(err);
+            res.status(500).json({error : "La bio n'a pas pu être modifiée"});
         } else {
-            res.status(200).json({message: "Bio Modifié"})
+            res.status(200).json({message: "Bio Modifié"});
         }
     })
 };
