@@ -11,18 +11,18 @@
             <hr>
 
             <article class="form-container">
-                <form id="form-publication" enctype="multipart/form-data">
+                <form id="form-publication" :action="`http://localhost:3001/api/publication/${this.id}`" method="POST" enctype="multipart/form-data">
                     <label for="input-comments"><i class="fas fa-user"></i> Benjamin Gallardo</label>
                     <textarea id="input-comments" cols="30" rows="10" name="textField" :value="publicationContain.textField" ></textarea>
                             
                     <img class="old-image" :src="publicationContain.imageUrl" alt="">
 
                     <label for="my-file" class="label-add-img" >Modifier l'image</label>
-                    <input id="my-file" class="input-add-img" type="file" accept="image/png, image/jpeg" name="imageUrl" @change="previewFiles">
+                    <input id="my-file" class="input-add-img" type="file" accept="image/png, image/jpeg" name="imageUrl">
                 </form>
 
                 <div class="container-btn-publication">
-                    <button form="form-publication" type="submit" class="btn-publication" @click.prevent="modifyPublication">Publier la modification</button>
+                    <button form="form-publication" type="submit" class="btn-publication" @click="reload">Publier la modification</button>
                 </div>
             </article>
                     
@@ -43,19 +43,11 @@
             }
         },
         methods: {
-            previewFiles(event){
-                
-                this.imageUrl = event.target.files[0].name;
-                console.log(this.imageUrl);
-            },
-
-            modifyPublication(){
-                axios
-                .put(`http://localhost:3001/api/publication/${this.id}`, {
-                    id: this.id,
-                    textField: document.querySelector('#input-comments').value,
-                    imageUrl: this.imageUrl
-                })
+            reload(){
+                setTimeout(function(){ 
+                    window.location.href="http://localhost:8080/home"
+                }, 1000)
+                return;
             }
         },
         created(){
@@ -147,6 +139,7 @@
                 .old-image {
                     margin-top: 1em;
                     width: 200px;
+                    height: 130px;
 
                     @include mobile-tablet {
                         height: 100px;

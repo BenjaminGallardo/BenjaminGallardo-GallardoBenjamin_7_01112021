@@ -66,9 +66,6 @@
     article {
         position: relative;
         
-        @include mobile-tablet {
-            text-align: center;
-        }
 
         hr {
             display: none;

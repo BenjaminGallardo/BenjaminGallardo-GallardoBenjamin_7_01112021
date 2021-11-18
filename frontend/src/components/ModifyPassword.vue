@@ -143,10 +143,6 @@
         @include laptopL {
             margin-top: 5em;
         }
-
-        @include mobile-tablet {
-            text-align: center;
-        }
     }
 
     h2 {

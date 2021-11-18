@@ -257,7 +257,7 @@
         height: 70vh;
 
         img {
-            width: 12em;
+            width: 14em;
 
             @include laptopL {
                 width: 17em;

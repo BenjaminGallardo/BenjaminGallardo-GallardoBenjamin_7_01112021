@@ -133,7 +133,7 @@
             width: 12em;
 
             @include laptopL {
-                width: 16em;
+                width: 18em;
             }
 
             @include mobile-tablet {

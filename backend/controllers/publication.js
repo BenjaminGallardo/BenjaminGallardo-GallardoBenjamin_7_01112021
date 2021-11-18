@@ -40,17 +40,21 @@ module.exports.createPublication = (req, res) => {
 };
 
 module.exports.modifyPublication = (req, res) => {
-    console.log(req.body);
-    if(req.body.imageUrl = ""){
+    if(req.file === undefined){
         connectMysql.query('UPDATE publication SET textField=? WHERE id=?', [req.body.textField, req.params.id], (err, result) => {
             if(err){
-                console.log(err);
+                console.log(error);
             } else {
                 console.log(result);
             }
         })
     } else {
-        connectMysql.query('UPDATE publication SET textField=?, imageUrl=? WHERE id=?', [req.body.textField, req.body.imageUrl, req.params.id], (err, result) => {
+        const publication = {
+            textField : req.body.textField,
+            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        }
+
+        connectMysql.query('UPDATE publication SET textField=?, imageUrl=? WHERE id=?', [publication.textField, publication.imageUrl, req.params.id], (err, result) => {
             if(err){
                 console.log(err);
             } else {
