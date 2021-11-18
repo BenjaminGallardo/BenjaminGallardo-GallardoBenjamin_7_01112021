@@ -8,15 +8,13 @@ require('dotenv').config();
 module.exports.subscribe = (req, res) => {
     let usernameSyntax = /^[a-z A-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ0-9-]{2,}$/;
     let emailSyntax = /\S+@\S+\.\S+/;
-    let passwordSyntax = /^[a-z A-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ0-9-\.\*\$\?\!\^\%]{2,}$/;
     
     let verificationSyntaxForm = [
         usernameSyntax.test(req.body.username),
         emailSyntax.test(req.body.email),
-        passwordSyntax.test(req.body.password)
     ];
     
-    if(verificationSyntaxForm[0] == true && verificationSyntaxForm[1] == true && verificationSyntaxForm[2] == true){
+    if(verificationSyntaxForm[0] == true && verificationSyntaxForm[1] == true){
         bcrypt.hash(req.body.password, 10)
         .then(hash => {
             connectMysql.query("INSERT INTO user SET username=?, email=?, password=?" , [req.body.username, req.body.email, hash],(err, result) => {

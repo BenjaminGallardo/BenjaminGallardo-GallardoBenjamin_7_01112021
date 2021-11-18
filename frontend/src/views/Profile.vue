@@ -105,9 +105,9 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
-        min-height: 80vh;
+        min-height: 90vh;
 
-        @include mobile {
+        @include mobile-tablet {
             flex-direction: column;
         }
 
@@ -131,12 +131,22 @@
                 border-radius: 50%;
                 overflow: hidden;
 
-                @include mobile {
+                @include laptopL {
+                    height: 20em;
+                    width: 20em;
+                }
+
+                @include mobile-tablet {
                     margin-top: 1em;
                 }
 
                 .img-profile {
                     width: 15em;
+
+                    @include laptopL {
+                        height: 20em;
+                        width: 20em;
+                    }
                 }
             }
 
@@ -145,6 +155,10 @@
                 right: 0em;
                 top: 1em;
                 @include btn-modify;
+
+                @include laptopL {
+                    right: 2em;
+                }
             }
 
             #input-modify-image-profile {
@@ -155,10 +169,22 @@
         p {
             color: $color-text;
             font-size: 20px;
+
+            @include laptopL {
+                font-size: 25px;
+            }
         }
 
         #bio {
             position: relative;
+
+                textarea {
+                    @include laptopL {
+                        height: 150px;
+                        width: 400px
+                    }
+                }
+           
 
             button {
                 position: absolute;
@@ -176,6 +202,10 @@
             padding: 0.5em 1em;
             margin-top: 1em;
             cursor: pointer;
+
+                @include laptopL {
+                    font-size: 18px;
+                }
 
             &:hover {
                 transform: scale(1.1);
@@ -202,7 +232,7 @@
                 border-radius: 0.5em;
                 padding: 1em 1em 2em 1em;
 
-                @include mobile {
+                @include mobile-tablet {
                     text-align: center;
                     font-size: 14px;
                     margin: 0 1em;

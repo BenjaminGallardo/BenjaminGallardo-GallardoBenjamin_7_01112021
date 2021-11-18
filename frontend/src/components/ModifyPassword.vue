@@ -138,10 +138,25 @@
 </script>
 
 <style lang="scss" scoped>
+    article {
+
+        @include laptopL {
+            margin-top: 5em;
+        }
+
+        @include mobile-tablet {
+            text-align: center;
+        }
+    }
+
     h2 {
         font-size: 18px;
         color: $color-text;
         text-decoration: underline;
+
+        @include laptopL {
+            font-size: 25px;
+        }
     }
 
     form {
@@ -149,20 +164,32 @@
 
         label {
             margin-top: 0.5em;
+
+            @include laptopL {
+                font-size: 18px;
+            }
         }
 
         input {
             margin: 0.5em 0;
             width: 20em;
 
-            @include mobile {
+            @include laptopL {
+                font-size: 15px;
+            }
+
+            @include mobile-tablet {
                 margin-right: 0.5em 
             }
         }
 
         button {
             @include btn-modify;
-            @include mobile {
+
+            @include laptopL {
+                font-size: 15px;
+            }   
+            @include mobile-tablet {
                 margin-left: 0;
             }
         }
@@ -175,6 +202,10 @@
                 position: absolute;
                 top: 2.1em;
                 left: -1.3em;
+
+                @include mobile-tablet {
+                    display: none;
+                }
             }
 
             .error {
@@ -182,12 +213,17 @@
                 position: absolute;
                 top: 2.1em;
                 left: -1.1em;
+                
+                @include mobile-tablet {
+                    display: none;
+                }
             }
 
             span {
                 font-size: 12px;
                 flex-wrap: wrap;
                 font-style: italic;
+                color: red;
             }
         }
 

@@ -84,8 +84,8 @@
             padding: 0em 1em;
             width: 600px;
 
-            @include mobile {
-                width: auto;
+            @include mobile-tablet {
+                width: 80%;
                 margin: 1em 0;
             }
 
@@ -102,7 +102,7 @@
                 text-decoration: none;
                 font-size: 13px;
 
-                @include mobile {
+                @include mobile-tablet {
                     right: 0.2em;
                     top: 0.2em;
                 }
@@ -116,7 +116,7 @@
             h1 {
                 text-align: center;
 
-                @include mobile {
+                @include mobile-tablet {
                     font-size: 18px;
                     line-height: 0.5em;
                     margin-top: 1.5em;
@@ -129,7 +129,7 @@
                 align-items: flex-start;
                 position: relative;
 
-                @include mobile {
+                @include mobile-tablet {
                     label {
                         font-size: 15px;
                     }
@@ -139,7 +139,7 @@
                     width: 100%;
                     background-color: rgb(223, 222, 222);
 
-                    @include mobile {
+                    @include mobile-tablet {
                         height: 100px;
                     }
                 }
@@ -148,7 +148,7 @@
                     margin-top: 1em;
                     width: 200px;
 
-                    @include mobile {
+                    @include mobile-tablet {
                         height: 100px;
                     }
                 }

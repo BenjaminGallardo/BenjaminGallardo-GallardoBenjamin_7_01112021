@@ -65,11 +65,15 @@
 <style lang="scss" scoped>
     article {
         position: relative;
+        
+        @include mobile-tablet {
+            text-align: center;
+        }
 
         hr {
             display: none;
 
-            @include mobile {
+            @include mobile-tablet {
                 display: flex;
                 margin-top: 2em;
             }
@@ -81,29 +85,50 @@
         color: $color-text;
         text-decoration: underline;
         line-height: 0.5em;
+
+        @include laptopL {
+            font-size: 25px;
+        }
     }
 
     p {
         color: $color-text;
+
+        @include laptopL {
+            font-size: 18px;
+        }
     }
 
     label {
         color: $color-text;
         text-decoration: underline;
+
+        @include laptopL {
+            font-size: 18px;
+        }
     }
 
     input {
         margin-top: 0.5em;
         width: 20em;
 
-        @include mobile {
+        @include laptopL {
+            font-size: 15px;
+        }
+
+        @include mobile-tablet {
             margin-right: 0.5em 
         }
     }
 
     button {
         @include btn-modify;
-        @include mobile {
+
+        @include laptopL {
+            font-size: 15px;
+        }   
+
+        @include mobile-tablet {
             margin: 0.5em 0 0 0;
         }
     }
@@ -114,6 +139,10 @@
             position: absolute;
             bottom: 0.2em;
             left: -1.3em;
+
+            @include mobile-tablet {
+                display: none;
+            }
         }
 
         .error {
@@ -121,6 +150,10 @@
             position: absolute;
             bottom: 1.7em;
             left: -1.1em;
+
+            @include mobile-tablet {
+                display: none;
+            }
         }
 
         span {
@@ -128,6 +161,7 @@
             flex-wrap: wrap;
             font-style: italic;
             color: $color-text;
+            color: red;
         }
     }
 </style>

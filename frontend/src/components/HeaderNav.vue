@@ -32,7 +32,7 @@
         justify-content: space-between;
         margin: 0.5em 1em;
 
-        @include mobile {
+        @include mobile-tablet {
             flex-direction: column;
         }
 
@@ -50,7 +50,7 @@
                 color: $color-text;
                 margin-left: 3em;
 
-                @include mobile {
+                @include mobile-tablet {
                     margin: 0em 1em 0em 1em;
                 }
 

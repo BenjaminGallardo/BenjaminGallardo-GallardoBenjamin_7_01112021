@@ -58,7 +58,7 @@
         justify-content: space-between;
         margin: 0.5em 1em;
 
-        @include mobile {
+        @include mobile-tablet {
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -67,7 +67,7 @@
         img {
             width: 15em;
             
-            @include mobile {
+            @include mobile-tablet {
                 margin-bottom: 1em;
             }
         }
@@ -81,7 +81,7 @@
                 color: $color-text;
                 margin-left: 3em;
 
-                @include mobile {
+                @include mobile-tablet {
                     font-size: 13px;
                     margin: 0 1em 0 1em;
                 }
@@ -100,7 +100,7 @@
         grid-template-columns: 4fr 0.1fr 1fr;
         gap: 2em;
 
-        @include mobile {
+        @include mobile-tablet {
             display: flex;
             flex-direction: column;
 

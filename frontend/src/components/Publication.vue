@@ -54,8 +54,8 @@
             padding: 0em 1em;
             width: 600px;
 
-            @include mobile {
-                width: auto;
+            @include mobile-tablet {
+                width: 80%;
             }
 
             .btn-quit {
@@ -69,7 +69,7 @@
                 padding: 0.2em 0.5em;
                 cursor: pointer;
 
-                @include mobile {
+                @include mobile-tablet {
                     font-size: 12px;
                     top: 0.5em;
                     right: 0.5em;
@@ -106,7 +106,7 @@
                     font-size: 13px;
                     z-index: 1;
 
-                    @include mobile {
+                    @include mobile-tablet {
                         font-size: 12px;
                     }
 
@@ -121,7 +121,7 @@
                     bottom: 1.35em;
                     left: 1.3em;
 
-                    @include mobile {
+                    @include mobile-tablet {
                         left: 0.5em;
                         bottom: 1.2em;
                     }

@@ -87,7 +87,11 @@
             img {
                 width: 20em;
 
-                @include mobile {
+                @include laptopL {
+                    width: 25em;
+                }
+
+                @include mobile-tablet {
                     width: 10em;
                 }
             }
@@ -95,8 +99,12 @@
             h1 {
                font-size: 18px;
                font-weight: 100;
+
+                @include laptopL {
+                    font-size: 22px;
+                }               
                
-                @include mobile {
+                @include mobile-tablet {
                     font-size: 15px;
                 }
             }
@@ -124,7 +132,11 @@
         img {
             width: 12em;
 
-            @include mobile {
+            @include laptopL {
+                width: 16em;
+            }
+
+            @include mobile-tablet {
                 display: none;
             }
         }
@@ -139,7 +151,11 @@
             justify-content: center;
             position: relative;
 
-            @include mobile {
+            @include laptopL {
+                font-size: 21px;
+            }
+
+            @include mobile-tablet {
                 font-size: 14px;
             }
             
@@ -155,7 +171,11 @@
                     margin: 0.5em 0;
                     min-width: 17em;
 
-                    @include mobile {
+                    @include laptopL {
+                        min-width: 22em;
+                    }
+
+                    @include mobile-tablet {
                         min-width: 12em;
                     }
                 }

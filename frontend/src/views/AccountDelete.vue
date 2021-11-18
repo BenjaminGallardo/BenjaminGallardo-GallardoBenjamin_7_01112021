@@ -32,7 +32,7 @@ export default {
             padding: 1em;
             border-radius: 0.5em;
             
-            @include mobile {
+            @include mobile-tablet {
                 padding: 0.5em
             }
 

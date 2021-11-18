@@ -103,7 +103,7 @@
                 }
             },
 
-            verifyPassword: function(event){        
+            verifyPassword: function(event){   
                 const specialCaracter = /[^a-zA-Z0-9]/;
                 const alphabet = /[a-z]/i;
                 const numbers = /[0-9]/;
@@ -111,7 +111,7 @@
                 let objectValidation = {
                     symbol : 0,
                     letter : 0,
-                    number : 0
+                    number : 0,
                 }
 
                 this.inputValues = event.target.value;
@@ -201,7 +201,7 @@
 
 <style lang='scss' scoped>
         header {
-            margin-bottom: 8em;
+            margin-bottom: 4em;
 
             nav {
                 display: flex;
@@ -212,7 +212,11 @@
                 img {
                     width: 20em;
 
-                    @include mobile {
+                    @include laptopL {
+                        width: 25em;
+                    }                    
+
+                    @include mobile-tablet {
                         min-width: 10em;
                     }
                 }
@@ -221,7 +225,11 @@
                     font-size: 18px;
                     font-weight: 100; 
 
-                    @include mobile {
+                    @include laptopL {
+                        font-size: 22px;
+                    }                      
+
+                    @include mobile-tablet {
                         font-size: 15px;
                         margin-left: 1em;
                     }
@@ -251,7 +259,11 @@
         img {
             width: 12em;
 
-            @include mobile {
+            @include laptopL {
+                width: 17em;
+            }
+
+            @include mobile-tablet {
                 display: none;
             }
         }
@@ -266,7 +278,7 @@
             justify-content: center;
             position: relative;
 
-            @include mobile {
+            @include mobile-tablet {
                 font-size: 13px;
             }
             
@@ -278,11 +290,19 @@
                 max-width: 14em;
                 position: relative;
 
+                @include laptopL {
+                    font-size: 21px;
+                }               
+
                 input {
                     margin: 0.3em 0;
                     width: 17em;
 
-                    @include mobile {
+                    @include laptopL {
+                        min-width: 22em;
+                    }
+
+                    @include mobile-tablet {
                         width: 14em;
                     }
                 }
@@ -293,7 +313,7 @@
                     top: 1.8em;
                     right: -2em;
 
-                    @include mobile {
+                    @include mobile-tablet {
                         top: 2em;
                         right: -2.4em;
                     }
@@ -305,7 +325,7 @@
                     top: 1.9em;
                     right: -1.8em;
 
-                    @include mobile {
+                    @include mobile-tablet {
                         top: 2.2em;
                         right: -2.2em;
                     }

@@ -37,26 +37,20 @@
     align-items: center;
 };
 
-@mixin mobile {
-    @media screen and (max-width: map-get($breakpoints, mobile)){
+@mixin mobile-tablet {
+    @media screen and (max-width: map-get($breakpoints, mobile-tablet)){
         @content
     }
 };
 
-@mixin tablet {
-    @media screen and (max-width: map-get($breakpoints, tablet)){
-        @content
-    }
-};
-
-@mixin laptopM {
-    @media screen and (max-width: map-get($breakpoints, laptopM)){
+@mixin large-tablet {
+    @media screen and (max-width: map-get($breakpoints, large-tablet)){
         @content
     }
 };
 
 @mixin laptopL {
-    @media screen and (max-width: map-get($breakpoints, laptopL)){
+    @media screen and (min-width: map-get($breakpoints, laptopL)){
         @content
     }
 };

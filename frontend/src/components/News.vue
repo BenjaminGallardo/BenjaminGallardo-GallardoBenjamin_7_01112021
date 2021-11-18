@@ -97,7 +97,7 @@ export default {
                     color: black;
                     text-decoration: none;
 
-                    @include mobile {
+                    @include mobile-tablet {
                         font-size: 14px;
                     }
                 }
@@ -167,7 +167,7 @@ export default {
                 width: 100%;
             }
 
-            @include mobile {
+            @include mobile-tablet {
                 font-size: 14px;
             }
         }
@@ -181,7 +181,7 @@ export default {
                 text-decoration: none;
                 margin: 1em 0 0.5em 0;
 
-                @include mobile {
+                @include mobile-tablet {
                     font-size: 14px;
                 }
             }
