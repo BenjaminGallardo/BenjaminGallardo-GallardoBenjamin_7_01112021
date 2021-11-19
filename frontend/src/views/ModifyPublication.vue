@@ -130,6 +130,7 @@
                 textarea {
                     width: 100%;
                     background-color: rgb(223, 222, 222);
+                    resize: none;
 
                     @include mobile-tablet {
                         height: 100px;

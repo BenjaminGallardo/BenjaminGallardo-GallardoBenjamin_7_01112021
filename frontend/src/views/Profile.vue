@@ -179,16 +179,19 @@
             position: relative;
 
                 textarea {
+                    resize: none;
+
                     @include laptopL {
                         height: 150px;
-                        width: 400px
+                        width: 400px;
+                        
                     }
                 }
            
 
             button {
                 position: absolute;
-                right: 1em;
+                right: 0.5em;
                 bottom: 1em;
                 @include btn-modify;
             }

@@ -8,6 +8,7 @@ const path = require('path');
 const userAuthRoutes = require('./routes/userAuth');
 const memberRoutes = require('./routes/member');
 const publicationRoutes = require('./routes/publication');
+const commentRoutes = require('./routes/comment');
 const profileRoutes = require('./routes/profile');
 
 connectMysql.connect(function(err){
@@ -37,6 +38,8 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/auth', userAuthRoutes);
 app.use('/api/member', memberRoutes);
 app.use('/api/publication', publicationRoutes);
+app.use('/api/comment', commentRoutes);
 app.use('/api/profile', profileRoutes);
+
 
 module.exports = app;

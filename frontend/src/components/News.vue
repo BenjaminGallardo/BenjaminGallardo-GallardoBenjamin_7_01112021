@@ -2,7 +2,7 @@
     <section>
         <ul>
             <li :key="index" v-for="(publication, index) in publications">
-                <article>
+                <article class="news">
                     <div class="header-news">
                         <router-link to='/home'><i class="fas fa-user"></i> Gallardo Benjamin</router-link>
 
@@ -25,8 +25,8 @@
                     <hr>
 
                     <div class="footer-news">
-                        <router-link to='/home'><i class="fas fa-user"></i> Guilaume Collin</router-link>
-                        <textarea placeholder="Ajouter un commentaire"></textarea>
+                        <create-comment :publicationId="publication.id"></create-comment>
+                        <view-comments :publicationId="publication.id"></view-comments>
                     </div> 
                 </article>
             </li>    
@@ -35,10 +35,16 @@
 </template>
 
 <script>
-import axios from 'axios'
+    import axios from 'axios'
+    import CreateComment from './CreateComment.vue'
+    import ViewComments from './ViewComments.vue'
 
-export default {
+    export default {
         name: 'Publication',
+        components: {
+            CreateComment,
+            ViewComments
+        },
         data(){
             return {
                 reveleMenu: -1,
@@ -81,7 +87,7 @@ export default {
         padding-inline-start: 0px;
     }
 
-    article {
+    .news {
         background-color: white;
         margin: 2em;
         padding: 1em;
@@ -169,21 +175,6 @@ export default {
 
             @include mobile-tablet {
                 font-size: 14px;
-            }
-        }
-
-        .footer-news {
-            display: flex;
-            flex-direction: column;
-
-            a {
-                color: black;
-                text-decoration: none;
-                margin: 1em 0 0.5em 0;
-
-                @include mobile-tablet {
-                    font-size: 14px;
-                }
             }
         }
     }

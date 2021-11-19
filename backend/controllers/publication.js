@@ -34,7 +34,6 @@ module.exports.createPublication = (req, res) => {
             console.log(err);
         } else {
             console.log("Publication créée");
-            res.status(201).json({message : "Publication créé"})
         }
     })
 };

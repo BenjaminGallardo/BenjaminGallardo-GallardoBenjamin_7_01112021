@@ -19,7 +19,7 @@
                 </form>
 
                 <div class="container-btn-publication">
-                    <button form="form-publication" type="submit" class="btn-publication">Publier</button>
+                    <button form="form-publication" type="submit" class="btn-publication" @click="reload">Publier</button>
                 </div>
             </article>
             
@@ -35,6 +35,14 @@
             }
         },
         props: ['revele', 'toggleModale'],
+        methods: {
+            reload(){
+                setTimeout(function(){ 
+                window.location.href="http://localhost:8080/home"
+                }, 1000)
+                return;
+            }
+        }
     }
 </script>
 
@@ -94,6 +102,7 @@
                 textarea {
                     width: 100%;
                     background-color: rgb(223, 222, 222);
+                    resize: none;
                 }
 
                 .label-add-img {
