@@ -15,7 +15,7 @@
                     <label for="input-comments"><i class="fas fa-user"></i> Benjamin Gallardo</label>
                     <textarea id="input-comments" cols="30" rows="10" name="textField" :value="publicationContain.textField" ></textarea>
                             
-                    <img class="old-image" :src="publicationContain.imageUrl" alt="">
+                    <img v-if="publicationContain.imageUrl != undefined" class="old-image" :src="publicationContain.imageUrl" alt="">
 
                     <label for="my-file" class="label-add-img" >Modifier l'image</label>
                     <input id="my-file" class="input-add-img" type="file" accept="image/png, image/jpeg" name="imageUrl">

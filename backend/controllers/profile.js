@@ -87,7 +87,7 @@ module.exports.deleteAccount = (req, res) => {
                 if(err) {
                     res.status(400).json({error : "L'utilisateur n'existe pas"})
                 } else {
-                    res.status(200).json({message: 'Utilisateur Supprimée'});
+                    res.status(200).json({message: 'Utilisateur supprimé'});
                 }
             })
         }

@@ -3,15 +3,18 @@
         <ul>
             <li :key="index" v-for="(publication, index) in publications">
                 <article class="news">
-                    <div class="header-news">
+                    <div class="header-news">                      
                         <router-link to='/home'><i class="fas fa-user"></i> Gallardo Benjamin</router-link>
-
-                        <i class="fas fa-ellipsis-h fa-2x" @click="toggleMenu(publication.id)"></i>
+                        
+                        <div class="date">
+                            <p>{{ publication.date }}</p>
+                            <i class="fas fa-ellipsis-h fa-2x" @click="toggleMenu(publication.id)"></i>
+                        </div>
 
                         <div class="btn-action" v-if="reveleMenu == publication.id">
                             <div class="triangle"></div>
                             <router-link :to="`/publication/${this.reveleMenu}`" class="btn-modify">Modifier</router-link>
-                            <button class="btn-delete" @click="deletePublication">Supprimer</button>
+                            <button class="btn-delete" @click="toggleModale">Supprimer</button>
                         </div>
                     </div>
 
@@ -19,7 +22,7 @@
 
                     <div class='body-news'>
                         <p>{{ publication.textField }}</p>
-                        <img :src="publication.imageUrl" alt="Images de la publication">
+                        <img v-if="publication.imageUrl != undefined" :src="publication.imageUrl" alt="Images de la publication">
                     </div>  
 
                     <hr>
@@ -30,7 +33,22 @@
                     </div> 
                 </article>
             </li>    
-        </ul>    
+        </ul>
+        
+        <div class="bloc-modale" v-if="revelePopUp == true">
+            <div class="overlay" @click="toggleModale"></div>
+
+            <aside class="pop-up">
+                <button class="btn-quit" @click="toggleModale">X</button>
+
+                <p>Voulez-vous vraiment supprimer la publication ?</p>
+
+                <div>                
+                    <button class="btn-yes" @click="deletePublication">Oui</button> 
+                    <button class="btn-no" @click="toggleModale">Non</button>
+                </div>
+            </aside>
+        </div>    
     </section>
 </template>
 
@@ -48,12 +66,17 @@
         data(){
             return {
                 reveleMenu: -1,
-                publications: []
+                publications: [],
+                revelePopUp: false
             }
         },
         methods: {
             toggleMenu: function(id){
                 this.reveleMenu = id;
+            },
+
+             toggleModale(){
+                this.revelePopUp = !this.revelePopUp;
             },
 
             deletePublication(){
@@ -103,7 +126,7 @@
                     color: black;
                     text-decoration: none;
 
-                    @include mobile-tablet {
+                @include mobile-tablet {
                         font-size: 14px;
                     }
                 }
@@ -112,6 +135,23 @@
                     cursor: pointer;
                 }
 
+                .date {
+                    display: flex;
+                    align-items: center;
+
+                    p {
+                        margin: 0 1em;
+                        font-size: 12px;
+
+                        @include mobile-tablet {
+                            font-size: 10px;
+                            position: absolute;
+                            width: 150px;
+                            left: -1em;
+                            bottom: -0.8em;
+                        }
+                    }
+                }
                 .btn-action {
                     position: absolute;
                     right: 0;
@@ -178,5 +218,82 @@
             }
         }
     }
+
+    .bloc-modale {
+        @include bloc-center;
+        z-index: 2;
+
+        .overlay {
+            @include overlay;
+        }
+
+            .pop-up {
+                position:fixed;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                background-color: white;
+                border-radius: 0.5em;
+                padding: 1em 1em 2em 1em;
+
+                @include mobile-tablet {
+                    text-align: center;
+                    font-size: 14px;
+                    margin: 0 1em;
+                }
+
+                .btn-quit {
+                    position: absolute;
+                    font-size: 13px;
+                    right: 0.5em;
+                    top: 0.5em;
+                    background-color: red;
+                    border: none;
+                    padding: 0.2em 0.5em;
+                    cursor: pointer;
+
+                    &:hover {
+                        transform: scale(1.1);
+                        transition: 0.5s;
+                    }
+                }
+
+                p {
+                    color: black;
+                }
+
+                .btn-yes {
+                    color: white;
+                    margin-right: 2em;
+                    padding: 1em 2em;
+                    border: none;
+                    border-radius: 0.5em;
+                    background-color: red;
+                    cursor: pointer;
+                    font-weight: bold;
+
+                        &:hover {
+                            transform: scale(1.1);
+                            transition: 0.5s;
+                        }
+                }
+
+                .btn-no {
+                    padding: 1em 2em;
+                    border: none;
+                    border-radius: 0.5em;
+                    background-color: #05d157;
+                    cursor: pointer;
+                    font-weight: bold;
+
+                        &:hover {
+                            transform: scale(1.1);
+                            transition: 0.5s;
+                        }
+                }
+            }
+        }
 </style>
 

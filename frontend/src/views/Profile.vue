@@ -84,7 +84,7 @@
             deleteAccount(){
                 axios
                 .delete('http://localhost:3001/api/profile', {
-                    data: {id:62}
+                    data: {id:70}
                 })
                 .then(() => {
                     this.deconnexion();

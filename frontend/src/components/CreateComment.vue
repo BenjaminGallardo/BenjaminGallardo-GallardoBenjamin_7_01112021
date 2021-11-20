@@ -56,6 +56,10 @@
         a {
             color: black;
             text-decoration: none;
+
+            @include mobile-tablet {
+                font-size: 13px;
+            }
         }
 
         form {

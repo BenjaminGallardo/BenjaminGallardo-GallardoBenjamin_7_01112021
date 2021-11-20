@@ -17,7 +17,7 @@ module.exports.subscribe = (req, res) => {
     if(verificationSyntaxForm[0] == true && verificationSyntaxForm[1] == true){
         bcrypt.hash(req.body.password, 10)
         .then(hash => {
-            connectMysql.query("INSERT INTO user SET username=?, email=?, password=?" , [req.body.username, req.body.email, hash],(err, result) => {
+            connectMysql.query("INSERT INTO user SET username=?, email=?, password=?", [req.body.username, req.body.email, hash],(err, result) => {
                 if(!err){
                     res.status(200).json({message : 'Utilisateur créé'})
                 } else {

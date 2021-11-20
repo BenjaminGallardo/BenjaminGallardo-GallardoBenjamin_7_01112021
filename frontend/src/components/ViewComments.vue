@@ -9,9 +9,12 @@
         <ul v-if="reveleComments == true">
             <li :key="index" v-for="(comment, index) in allComments">
                 <article class="comment" v-if="comment.publication_id === publicationId">
-                    <p><i class="fas fa-user"></i>Gallardo Benjamin</p>
+                    <div class="name-date">
+                        <p><i class="fas fa-user"></i>Gallardo Benjamin</p>
+                        <p>{{ comment.date }}</p>
+                    </div>
                     <p class="contain-comment">{{ comment.commentText }}</p>
-                    <button class="delete-comment" @click="deleteComment(comment.id)"><i class="fas fa-trash-alt"></i></button>
+                    <button class="delete-comment" @click="deleteComment()"><i class="fas fa-trash-alt"></i></button>
                 </article>
             </li>
         </ul>
@@ -27,6 +30,7 @@
             return {
                 reveleComments: false,
                 allComments: [],
+                commentId: ""
             }
         },
         props:['publicationId'],
@@ -45,9 +49,6 @@
                 }
             }
         },
-        deleteComment: function(id){
-            console.log(id);
-        }
     }
 </script>
 
@@ -71,24 +72,52 @@
     ul {
         list-style-type: none;
 
+        @include mobile-tablet {
+            padding: 0;
+        }
+
         .comment {
             margin: 1em 0 0 0;
             position: relative;
 
-            p {
-                font-size: 14px;
-                margin: 0 0 0.3em 0;
+            .name-date {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                    @include mobile-tablet {
+                        flex-direction: column;
+                        align-items: start;
+                    }
+
+                p {
+                    font-size: 14px;
+                    margin: 0 0 0.3em 0;
+
+                    @include mobile-tablet {
+                        font-size: 13px;
+                    }
 
                 i {
                     margin-right: 0.3em;
+                    }
+                }
+
+                p:last-child{
+                    font-size: 12px;
+
+                    @include mobile-tablet {
+                        font-size: 10px;
+                    }
                 }
             }
 
             .contain-comment {
                 background-color: rgba(56, 85, 101, 0.5);
+                border-radius: 0.5em;
                 padding: 0.5em 1.5em 0.5em 0.5em;
                 font-size: 13px;
-                font-style: italic;
+                margin: 0;
             }
 
             .delete-comment {
