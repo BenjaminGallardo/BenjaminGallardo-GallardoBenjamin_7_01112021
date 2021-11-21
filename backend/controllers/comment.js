@@ -1,8 +1,8 @@
 const connectMysql = require('../mysql-config');
 
 module.exports.createComment = (req, res) => {
-    var date = new Date();
-    var options = { year: "numeric", month: "long", day: "2-digit"};
+    const date = new Date();
+    const options = { year: "numeric", month: "long", day: "2-digit"};
     const dateComment = `${date.toLocaleDateString("fr-FR", options)} à ${('0'+date.getHours()).slice(-2)}:${('0'+date.getMinutes()).slice(-2)}`
 
     if(req.body.commentText == ''){

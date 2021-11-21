@@ -23,8 +23,8 @@ module.exports.getOnePublication = (req, res) => {
 };
 
 module.exports.createPublication = (req, res) => {
-    var date = new Date();
-    var options = { year: "numeric", month: "long", day: "2-digit"};
+    const date = new Date();
+    const options = { year: "numeric", month: "long", day: "2-digit"};
 
     const newPublication = {
         userId: '55', //req.body.userId,
@@ -54,8 +54,12 @@ module.exports.createPublication = (req, res) => {
 };
 
 module.exports.modifyPublication = (req, res) => {
+    const date = new Date();
+    const options = { year: "numeric", month: "long", day: "2-digit"};
+    const datePublication = `${date.toLocaleDateString("fr-FR", options)} à ${('0'+date.getHours()).slice(-2)}:${('0'+date.getMinutes()).slice(-2)}`;
+
     if(req.file === undefined){
-        connectMysql.query('UPDATE publication SET textField=? WHERE id=?', [req.body.textField, req.params.id], (err, result) => {
+        connectMysql.query('UPDATE publication SET textField=?, date=? WHERE id=?', [req.body.textField, datePublication, req.params.id], (err, result) => {
             if(err){
                 console.log(error);
             } else {
@@ -68,7 +72,7 @@ module.exports.modifyPublication = (req, res) => {
             imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
         }
 
-        connectMysql.query('UPDATE publication SET textField=?, imageUrl=? WHERE id=?', [publication.textField, publication.imageUrl, req.params.id], (err, result) => {
+        connectMysql.query('UPDATE publication SET textField=?, imageUrl=?, date=? WHERE id=?', [publication.textField, publication.imageUrl, datePublication, req.params.id], (err, result) => {
             if(err){
                 console.log(err);
             } else {
