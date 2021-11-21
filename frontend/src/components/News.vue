@@ -4,7 +4,7 @@
             <li :key="index" v-for="(publication, index) in publications">
                 <article class="news">
                     <div class="header-news">                      
-                        <router-link to='/home'><i class="fas fa-user"></i> Gallardo Benjamin</router-link>
+                        <router-link :to='`/member/${publication.id}`'><i class="fas fa-user"></i> Gallardo Benjamin</router-link>
                         
                         <div class="date">
                             <p>{{ publication.date }}</p>

@@ -1,6 +1,6 @@
 <template>
     <article>
-        <router-link to='/home'><i class="fas fa-user"></i> Gallardo Benjamin</router-link>
+        <router-link to='/profile'><i class="fas fa-user"></i> Gallardo Benjamin</router-link>
         <form> 
             <p class="msg-error" v-if="msgError != ''">{{ msgError }}</p>
             <label for="comment-text"></label>
