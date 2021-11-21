@@ -3,7 +3,7 @@
         <header-nav></header-nav>
 
         <section class="member-profile">
-            <i class="fas fa-user fa-5x"></i> 
+            <img :src="member.imageUrl">
             <h1>{{ member.username }}</h1>
             <p>{{ member.email }}</p>
             <p class="bio" v-if="member.bio !== null">{{ member.bio }}</p>
@@ -42,8 +42,13 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 70vh;
+        height: 90vh;
         color: $color-text;
+        margin-top: 1em;
+
+        img {
+            width: 12em;
+        }
 
         .bio {
             color: black;
