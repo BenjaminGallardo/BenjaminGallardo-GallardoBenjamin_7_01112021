@@ -9,7 +9,7 @@
                 
                 <div class="modify-img-profile">
                     <div class="container-profile-img">
-                        <img class="img-profile" src="../assets/img_profile.jpg" alt="">  
+                        <img class="img-profile" :src="userInformations.imageUrl" alt="Image de profil">
                     </div>
 
                     <form action="">
@@ -18,10 +18,10 @@
                     </form>
                 </div>
 
-                <p>Gallardo Benjamin</p>
+                <p>{{ userInformations.username }}</p>
 
                 <form id="bio">
-                    <textarea name="text-bio" id="text-bio" cols="40" rows="5" value="Etudiant en développement web"></textarea>
+                    <textarea name="text-bio" id="text-bio" cols="40" rows="5" :value="userInformations.bio"></textarea>
                     <button>Modifier</button>
                 </form>
 
@@ -44,7 +44,7 @@
             </section>
 
             <section>
-                <modify-email></modify-email>
+                <modify-email :userInformations="userInformations"></modify-email>
                 <modify-password></modify-password>
             </section>
         </main>
@@ -61,7 +61,8 @@
         name: 'Profile',
         data(){
             return {
-                revelePopUp: false
+                revelePopUp: false,
+                userInformations: ''
             }
         },
 
@@ -90,13 +91,17 @@
                     this.deconnexion();
                 })
             }
+        },
+        mounted(){
+            axios
+            .post('http://localhost:3001/api/profile', {id:this.$store.state.userId}, this.$store.state.headers)
+            .then(response => {
+                this.userInformations = response.data;
+            })
+            .catch(error => {
+                console.log(error);
+            })
         }
-        // mounted(){
-        //      if(this.$store.state.user.userId == -1) {
-        //         this.$router.push('/connexion');
-        //         return;
-        //     }
-        // }
     }
 </script>
 

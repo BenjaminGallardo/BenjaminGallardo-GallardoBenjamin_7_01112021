@@ -27,13 +27,11 @@
             sendComment(){
                 axios
                 .post("http://localhost:3001/api/comment", {
-                    userId: 67,
+                    userId: this.$store.state.userId,
                     commentText : this.commentText,
                     publication_id : this.publication_id
-                })
-                .then(response => {
-                    console.log(response);
-                    
+                }, this.$store.state.headers)
+                .then(()=> {
                     setTimeout(function(){ 
                     window.location.href="http://localhost:8080/home"
                     }, 1000)

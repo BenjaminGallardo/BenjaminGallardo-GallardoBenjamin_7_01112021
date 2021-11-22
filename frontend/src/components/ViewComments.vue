@@ -14,7 +14,7 @@
                         <p>{{ comment.date }}</p>
                     </div>
                     <p class="contain-comment">{{ comment.commentText }}</p>
-                    <button class="delete-comment" @click="deleteComment()"><i class="fas fa-trash-alt"></i></button>
+                    <button class="delete-comment" @click="deleteComment(comment.id)"><i class="fas fa-trash-alt"></i></button>
                 </article>
             </li>
         </ul>
@@ -30,7 +30,6 @@
             return {
                 reveleComments: false,
                 allComments: [],
-                commentId: ""
             }
         },
         props:['publicationId'],
@@ -40,13 +39,23 @@
 
                 if(this.reveleComments == true && this.allComments == ''){
                     axios
-                    .get('http://localhost:3001/api/comment')
+                    .get('http://localhost:3001/api/comment', this.$store.state.headers)
                     .then(response => {
                         for(const comment of response.data){
                          this.allComments.push(comment);
                         }
                     })
                 }
+            },
+            deleteComment(commentId){
+                axios
+                .delete(`http://localhost:3001/api/comment`, {data: {id: commentId}}, this.$store.state.headers)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
             }
         },
     }

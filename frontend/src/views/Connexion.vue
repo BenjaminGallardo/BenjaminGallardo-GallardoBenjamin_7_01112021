@@ -9,7 +9,7 @@
         <main>
             <section>
                 <form>
-                    <p class="msg-error" v-if="status == 'error-connexion'">{{ errorMsg }}</p>
+                    <p class="msg-error" v-if="errorMsg != ''">{{ errorMsg }}</p>
                     <div class="form-container">
                         <label for="username">Adresse Email :</label>
                         <input type="text" name="username" id="username" v-model="user.email">
@@ -20,10 +20,7 @@
                         <input type="password" name="password" id="password" v-model="user.password">
                     </div>
 
-                    <button @click.prevent="connexion">
-                        <span v-if="status == 'loading'">Connexion en cours</span>
-                        <span v-else>Connexion</span>
-                    </button>
+                    <button @click.prevent="connexion">Connexion</button>
                     <div class="button--disabled" v-if="user.email == '' || user.password == '' " ></div>
                 </form>
                 
@@ -34,7 +31,7 @@
 </template>
 
 <script>
-    import { mapState } from 'vuex'
+    import axios from 'axios'
 
     export default {
         name: 'Connexion',
@@ -48,30 +45,22 @@
             }
         },
 
-        computed: {
-            ...mapState(['status'])
-        },  
-
         methods: {
             connexion: function(){
-                this.$store.dispatch('connexion', {
-                    email :`${this.user.email}`,
-                    password: `${this.user.password}`
+                axios
+                .post('http://localhost:3001/api/auth/connexion', {
+                    email: this.user.email,
+                    password: this.user.password
                 })
-                .then(() => {
-                    this.$router.push('/profile')
-                }, error => {
+                .then(response => {
+                    localStorage.setItem('user', JSON.stringify(response.data));
+                    this.$router.push('/home');
+                })
+                .catch(error => {
                     this.errorMsg = error.response.data.error
                 })
             }
         },
-        
-        mounted(){
-            if(this.$store.state.user.userId != -1){
-                this.$router.push('/profile');
-                return;
-            }
-        }
     }
 </script>
 

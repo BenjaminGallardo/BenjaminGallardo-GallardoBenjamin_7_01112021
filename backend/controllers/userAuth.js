@@ -34,6 +34,7 @@ module.exports.subscribe = (req, res) => {
 // Connexion de l'utilisateur
 
 module.exports.connexion = (req, res) => {
+    console.log(req.body);
     let emailSyntax = /\S+@\S+\.\S+/;
     let passwordSyntax = /^[a-z A-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ0-9-\.\*\$\?\!\^\%]{2,}$/;
     

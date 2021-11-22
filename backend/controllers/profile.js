@@ -3,25 +3,31 @@ const bcrypt = require('bcrypt');
 const fs = require('fs');
 
 module.exports.getProfile = (req, res) => {
-    console.log(req.body);
     connectMysql.query(`SELECT * FROM user WHERE id=?`, [req.body.id], (err, result) => {
         if(err){
             res.status(500).json({error : "Les informations n'ont pas pu être récupérées"})
         } else {
-            console.log(result);
-            res.status(200).json(result)
+            res.status(200).json(result[0])
         }
     })
 };
 
 module.exports.modifyEmail = (req, res) => {
-    connectMysql.query(`UPDATE user SET email=? WHERE id=?`, [req.body.email, req.body.id], (err, result) => {
-        if(err){
-            res.status(500).json({message: "L'email n'a pas pu être modifié"});
-        } else {
-            res.status(200).json({message: "Email Modifié"});
-        }
-    })
+    let emailSyntax = /\S+@\S+\.\S+/;
+    let verificationSyntaxEmail = emailSyntax.test(req.body.email);
+
+    if(verificationSyntaxEmail == true){
+        connectMysql.query(`UPDATE user SET email=? WHERE id=?`, [req.body.email, req.body.id], (err, result) => {
+            if(err){
+                res.status(500).json({error: "L'email n'a pas pu être modifié"});
+            } else {
+                res.status(200).json({message: "Email Modifié"});
+            }
+        })
+    } else {
+        res.status(500).json({error: "L'email n'a pas le bon format"})
+    }
+
 };
 
 module.exports.modifyPassword = (req, res) => {
@@ -61,8 +67,6 @@ module.exports.modifyPassword = (req, res) => {
         res.status(500).json({error: "Les données ne sont pas formatées correctement"});
     }
 }
-    
-
 
 module.exports.modifyBio = (req, res) => {
     connectMysql.query('UPDATE user SET bio=? WHERE id=?', [req.body.bio, req.body.id], (err, result) => {
@@ -75,6 +79,7 @@ module.exports.modifyBio = (req, res) => {
 };
 
 module.exports.modifyProfileImage = (req, res) => {
+    const imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
 };
 
 module.exports.deleteAccount = (req, res) => {

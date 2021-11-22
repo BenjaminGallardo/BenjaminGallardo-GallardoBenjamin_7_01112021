@@ -4,11 +4,11 @@ const profileControllers = require('../controllers/profile');
 const auth = require('../middleware/auth');
 const multer = require('../middleware/multer-config');
 
-router.get('/', profileControllers.getProfile);
-router.put('/email', profileControllers.modifyEmail);
-router.put('/password', profileControllers.modifyPassword);
-router.put('/bio', profileControllers.modifyBio);
-router.put('/profile-image', profileControllers.modifyProfileImage);
-router.delete('/', multer, profileControllers.deleteAccount);
+router.post('/', auth, profileControllers.getProfile);
+router.put('/email', auth, profileControllers.modifyEmail);
+router.put('/password',auth, profileControllers.modifyPassword);
+router.put('/bio',auth, profileControllers.modifyBio);
+router.put('/profile-image',auth, profileControllers.modifyProfileImage);
+router.delete('/', auth, multer,profileControllers.deleteAccount);
 
 module.exports = router;

@@ -19,7 +19,7 @@
         },
         created(){
             axios
-            .get('http://localhost:3001/api/member')
+            .get('http://localhost:3001/api/member', this.$store.state.headers)
             .then(response => {
                 for(const user of response.data){
                     this.members.push(user)

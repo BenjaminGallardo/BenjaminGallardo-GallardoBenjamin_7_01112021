@@ -5,7 +5,7 @@
             <ul>
                 <li class="home-list"><router-link to="/home" title="Accueil"><i class="fas fa-home fa-2x"></i></router-link></li>
                 <li><a @click="toggleModale" title="Créer une publication"><i class="fas fa-plus fa-2x"></i></a></li>
-                <li><router-link to="/profile" title="Profil"><i class="fas fa-user fa-2x"></i></router-link></li>
+                <li><router-link to="/profile" title="Profil"><img :src="userInformations.imageUrl" alt=""></router-link></li>
                 <li><a @click="deconnexion" title="Déconnexion"> <i class="fas fa-sign-out-alt fa-2x"></i></a></li>
             </ul>
         </nav>
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+    import axios from 'axios'
     import Members from '../components/Members.vue'
     import News from '../components/News.vue'
     import Publication from '../components/Publication.vue'
@@ -36,7 +37,8 @@
         },
         data(){
             return {
-                revele: false
+                revele: false,
+                userInformations: ''
             }
         },
         methods: {
@@ -47,6 +49,16 @@
                this.$store.commit('deconnexion');
                this.$router.push('/connexion');
            }
+       },
+       created(){
+            axios
+            .post('http://localhost:3001/api/profile', {id:this.$store.state.userId}, this.$store.state.headers)
+            .then(response => {
+                this.userInformations = response.data;
+            })
+            .catch(error => {
+                console.log(error);
+            })
        }
     }
 </script>
@@ -74,12 +86,14 @@
 
         ul {
             display: flex;
+            align-items: center;
             list-style-type: none;
             padding: 0;
 
             li a {
                 color: $color-text;
                 margin-left: 3em;
+                cursor: pointer;
 
                 @include mobile-tablet {
                     font-size: 13px;
@@ -90,6 +104,17 @@
                     transform: scale(1.1);
                     transition: 0.5s;
                     color: $color-anchor-hover;
+                } 
+                
+                img {
+                    width: 3em;
+                    margin: 0;
+
+                    &:hover {
+                        transform: scale(1.1);
+                        transition: 0.5s;
+                        color: $color-anchor-hover;
+                    }
                 }
             }
         }

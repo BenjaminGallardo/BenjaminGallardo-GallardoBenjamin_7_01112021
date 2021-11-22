@@ -19,7 +19,7 @@ module.exports.createComment = (req, res) => {
 };
 
 module.exports.getAllComments = (req, res) => {
-    connectMysql.query('SELECT * FROM comments ORDER BY id DESC', (err, result) => {
+    connectMysql.query('SELECT * FROM comments ORDER BY date DESC', (err, result) => {
         if(err){
             console.log(err);
         } else {
@@ -29,4 +29,12 @@ module.exports.getAllComments = (req, res) => {
 };
 
 module.exports.deleteComment = (req, res) => {
+    console.log(req.body);
+    connectMysql.query('DELETE FROM comments WHERE id=?', [req.body.id], (err, result) => {
+        if(err) {
+            console.log(err);
+        } else {
+            console.log(result);
+        }
+    })
 };

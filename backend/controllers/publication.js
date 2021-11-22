@@ -3,7 +3,7 @@ const fs = require('fs');
 const { connect } = require('../mysql-config');
 
 module.exports.getAllPublication = (req, res) => {
-    connectMysql.query('SELECT * FROM publication ORDER BY id DESC', (err, result) => {
+    connectMysql.query('SELECT * FROM publication ORDER BY date DESC', (err, result) => {
         if(err){
             console.log(err);
         } else {
@@ -37,7 +37,7 @@ module.exports.createPublication = (req, res) => {
             if(err){
                 console.log(err);
             } else {
-                console.log("Publication créée");
+                res.status(200).json(result);
             }
         })
     } else {
@@ -47,7 +47,7 @@ module.exports.createPublication = (req, res) => {
             if(err){
                 console.log(err);
             } else {
-                console.log("Publication créée");
+                res.status(200).json(result);
             }
         })
     }
@@ -63,7 +63,7 @@ module.exports.modifyPublication = (req, res) => {
             if(err){
                 console.log(error);
             } else {
-                console.log(result);
+                res.status(200).json(result);
             }
         })
     } else {
@@ -76,7 +76,7 @@ module.exports.modifyPublication = (req, res) => {
             if(err){
                 console.log(err);
             } else {
-                console.log(result);
+                res.status(200).json(result);
             }
         })
     }

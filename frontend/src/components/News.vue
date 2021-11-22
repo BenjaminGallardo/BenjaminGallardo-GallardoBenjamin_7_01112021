@@ -72,7 +72,11 @@
         },
         methods: {
             toggleMenu: function(id){
-                this.reveleMenu = id;
+                if(id == this.reveleMenu){
+                   this.reveleMenu = -1; 
+                } else {
+                    this.reveleMenu = id;
+                }  
             },
 
              toggleModale(){
@@ -83,7 +87,7 @@
                 axios
                 .delete('http://localhost:3001/api/publication', {
                     data : {id : this.reveleMenu}
-                })
+                }, this.$store.state.headers)
                 .then(response => {
                     console.log(response);
                     window.location.reload();
@@ -93,12 +97,15 @@
         },
         created(){
             axios
-            .get('http://localhost:3001/api/publication')
+            .get('http://localhost:3001/api/publication', this.$store.state.headers)
             .then(response => {
                 for(const publication of response.data){
                     this.publications.push(publication)
                 }
-            });
+            })
+            .catch(error => {
+                console.log(error);
+            })
         }
     }
 </script>

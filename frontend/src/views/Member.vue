@@ -28,7 +28,7 @@
         },
         mounted(){
             axios
-            .get(`http://localhost:3001/api/member/${this.id}`)
+            .get(`http://localhost:3001/api/member/${this.id}`, this.$store.state.headers)
             .then(response => {
                 this.member = response.data[0];
             })

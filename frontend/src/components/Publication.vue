@@ -10,7 +10,7 @@
             <hr>
 
             <article class="form-container">
-                <form id="form-publication" action="http://localhost:3001/api/publication" method="POST" enctype="multipart/form-data">
+                <form id="form-publication">
                     <label for="input-comments"><i class="fas fa-user"></i> Benjamin Gallardo</label>
                     <textarea id="input-comments" cols="30" rows="10" placeholder="Créer le message de votre publication..." name="textField"></textarea>
                     
@@ -19,7 +19,7 @@
                 </form>
 
                 <div class="container-btn-publication">
-                    <button form="form-publication" type="submit" class="btn-publication" @click="reload">Publier</button>
+                    <button form="form-publication" type="submit" class="btn-publication" @click.prevent="sendPublication">Publier</button>
                 </div>
             </article>
             
@@ -28,7 +28,10 @@
 </template>
 
 <script>
+    import axios from 'axios'
+
     export default {
+
         name: "Publication",
         data(){
             return {
@@ -36,11 +39,16 @@
         },
         props: ['revele', 'toggleModale'],
         methods: {
-            reload(){
-                setTimeout(function(){ 
-                window.location.href="http://localhost:8080/home"
-                }, 1000)
-                return;
+            sendPublication(){
+                let sendFormPublication = new FormData(document.getElementById("form-publication"));
+
+                axios
+                .post('http://localhost:3001/api/publication', sendFormPublication, this.$store.state.headers)
+                .then(() => {
+                    setTimeout(function(){ 
+                    window.location.href="http://localhost:8080/home"
+                    }, 1000)
+                })
             }
         }
     }

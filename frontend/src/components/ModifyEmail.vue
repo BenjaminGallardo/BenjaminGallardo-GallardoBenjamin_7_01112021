@@ -3,19 +3,19 @@
         <hr>
 
         <h2>Adresse-Email :</h2>
-        <p>{{ email }}</p>
+        <p>{{ userInformations.email }}</p>
 
         <form>
             <label for="email-modify">Nouvelle adresse email :</label> <br>
             <input type="text" id="email-modify" name="email-modify" v-model="inputModifyEmail" @input="verifyEmail" >
             
             
-            <button type="submit" @click="modifyEmail" v-if="check == null || check == true">Modifier</button>
+            <button type="submit" @click.prevent="modifyEmail" v-if="check == null || check == true">Modifier</button>
 
             <div class="verificationFormEmail">
                 <i class="fas fa-check check" v-if="check == true"></i> 
                 <i class="fas fa-times error" v-if="check == false"></i>
-                <span v-if="check == false">L'adresse email n'a pas le bon format</span>
+                <span v-if="check == false || errorMsg != ''">L'adresse email n'a pas le bon format</span>
             </div>
         </form>
     </article>
@@ -28,11 +28,12 @@
        name: 'ModifyEmail',
        data(){
            return {
-               email: "Benjamin.Gallardo1@outlook.fr",
                inputModifyEmail: '',
                check: null,
+               errorMsg: ''
            }
        },
+       props:['userInformations'],
        methods:{
             verifyEmail: function(event){
                 const regexEmail = /\S+@\S+\.\S+/;
@@ -48,14 +49,19 @@
            modifyEmail(){
                axios
                .put(`http://localhost:3001/api/profile/email`, {
-                   id: 55,
+                   id: this.$store.state.userId,
                    email : this.inputModifyEmail
-               })
+               }, this.$store.state.headers)
                .then(response => {
                    console.log(response);
+
+                    setTimeout(function(){ 
+                    window.location.href="http://localhost:8080/profile"
+                    }, 1000)
+                    return;
                })
                .catch(error => {
-                   console.log(error);
+                   this.errorMsg = error.response.data.error;
                })   
            }
        }

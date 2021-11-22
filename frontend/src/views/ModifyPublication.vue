@@ -11,7 +11,7 @@
             <hr>
 
             <article class="form-container">
-                <form id="form-publication" :action="`http://localhost:3001/api/publication/${this.id}`" method="POST" enctype="multipart/form-data">
+                <form id="form-publication">
                     <label for="input-comments"><i class="fas fa-user"></i> Benjamin Gallardo</label>
                     <textarea id="input-comments" cols="30" rows="10" name="textField" :value="publicationContain.textField" ></textarea>
                             
@@ -22,7 +22,7 @@
                 </form>
 
                 <div class="container-btn-publication">
-                    <button form="form-publication" type="submit" class="btn-publication" @click="reload">Publier la modification</button>
+                    <button form="form-publication" type="submit" class="btn-publication" @click.prevent="sendModificationPublication">Publier la modification</button>
                 </div>
             </article>
                     
@@ -43,16 +43,23 @@
             }
         },
         methods: {
-            reload(){
-                setTimeout(function(){ 
+            sendModificationPublication(){
+                 let sendFormModificationPublication = new FormData(document.getElementById("form-publication"));
+
+                 axios
+                 .put(`http://localhost:3001/api/publication/${this.id}`, sendFormModificationPublication ,this.$store.state.headers)
+                 .then(() => {
+                    setTimeout(function(){ 
                     window.location.href="http://localhost:8080/home"
-                }, 1000)
-                return;
+                    }, 1000)
+                    return;
+                 })
+
             }
         },
         created(){
             axios
-            .get(`http://localhost:3001/api/publication/${this.id}`)
+            .get(`http://localhost:3001/api/publication/${this.id}`, this.$store.state.headers)
             .then(response => {
                 this.publicationContain = response.data[0];
             })
