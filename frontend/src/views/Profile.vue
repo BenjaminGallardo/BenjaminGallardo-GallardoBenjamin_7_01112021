@@ -16,7 +16,7 @@
                     <form id="form-modify-img-profile">
                         <label for="input-modify-image-profile" class="label-modify-image-profile">Modifier</label>
                         <input type="file" id="input-modify-image-profile" accept="image/png, image/jpeg" name="imageUrl" @change="onFileChange">
-                        <input class="input-user" type="text" name="id" :value="this.$store.state.userId">
+                        <input class="input-user" type="text" name="id" :value="this.$store.state.user.userId">
                         
                         <div class="yes-no" v-if="url != null">
                             <button type="submit" form="form-modify-img-profile" class="btn-check" @click.prevent="sendImage"><i class="fas fa-check"></i></button>
@@ -29,7 +29,7 @@
 
                 <form id="form-bio">
                     <textarea name="bio" id="text-bio" cols="40" rows="5" :value="userInformations.bio"></textarea>
-                    <input class="input-user" type="text" name="id" :value="this.$store.state.userId">
+                    <input class="input-user" type="text" name="id" :value="this.$store.state.user.userId">
                     <button type='submit' form="bio" @click.prevent="sendBio">Modifier</button>
                 </form>
 

@@ -113,7 +113,9 @@
                 
                 img {
                     width: 3em;
+                    height: 3em;
                     border-radius: 50%;
+                    object-fit: cover;
                     margin: 0;
 
                     &:hover {

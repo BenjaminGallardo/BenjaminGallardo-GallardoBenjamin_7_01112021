@@ -63,7 +63,9 @@
 
             img {
                 width: 2.5em;
+                height: 2.5em;
                 border-radius: 50%;
+                object-fit: cover;
                 margin-right: 0.5em;
             }
         }

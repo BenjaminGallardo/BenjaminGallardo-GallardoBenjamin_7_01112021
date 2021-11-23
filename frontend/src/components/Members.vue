@@ -46,6 +46,8 @@
             img {
                 margin-right: 0.5em;
                 width: 2em;
+                height: 2em;
+                object-fit: cover;
                 border-radius: 50%;
             }
 

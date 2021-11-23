@@ -80,6 +80,8 @@
                 
                 img {
                     width: 2.5em;
+                    height: 2.5em;
+                    object-fit: cover;
                     border-radius: 50%;
 
                     &:hover {
