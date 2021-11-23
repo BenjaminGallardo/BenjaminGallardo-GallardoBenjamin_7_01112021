@@ -1,6 +1,6 @@
 <template>
     <article>
-        <router-link to='/profile'><i class="fas fa-user"></i> Gallardo Benjamin</router-link>
+        <router-link to='/profile'><img :src="userInformations.imageUrl" alt=""> {{ userInformations.username }}</router-link>
         <form> 
             <p class="msg-error" v-if="msgError != ''">{{ msgError }}</p>
             <label for="comment-text"></label>
@@ -22,15 +22,15 @@
                 msgError: '',
             }
         },
-        props:['publicationId'],
+        props:['publicationId', 'userInformations'],
         methods:{
             sendComment(){
                 axios
                 .post("http://localhost:3001/api/comment", {
-                    userId: this.$store.state.userId,
+                    userId: this.$store.state.user.userId,
                     commentText : this.commentText,
                     publication_id : this.publication_id
-                }, this.$store.state.headers)
+                }, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
                 .then(()=> {
                     setTimeout(function(){ 
                     window.location.href="http://localhost:8080/home"
@@ -39,7 +39,6 @@
                 })
                 .catch(error => {
                    this.msgError = error.response.data.error;
-                   console.log(this.msgError);
                 })
             }
         }
@@ -54,9 +53,18 @@
         a {
             color: black;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5em;
 
             @include mobile-tablet {
                 font-size: 13px;
+            }
+
+            img {
+                width: 2.5em;
+                border-radius: 50%;
+                margin-right: 0.5em;
             }
         }
 

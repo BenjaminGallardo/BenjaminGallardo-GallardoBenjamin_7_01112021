@@ -13,6 +13,7 @@
                 <form id="form-publication">
                     <label for="input-comments"><i class="fas fa-user"></i> Benjamin Gallardo</label>
                     <textarea id="input-comments" cols="30" rows="10" placeholder="Créer le message de votre publication..." name="textField"></textarea>
+                    <input class="input-user" type="text" name="userId" :value="this.$store.state.userId">
                     
                     <label for="my-file" class="label-add-img" >Ajouter une image</label>
                     <input id="my-file" class="input-add-img" type="file" accept="image/png, image/jpeg" name="imageUrl">
@@ -41,9 +42,10 @@
         methods: {
             sendPublication(){
                 let sendFormPublication = new FormData(document.getElementById("form-publication"));
+                console.log(sendFormPublication);
 
                 axios
-                .post('http://localhost:3001/api/publication', sendFormPublication, this.$store.state.headers)
+                .post('http://localhost:3001/api/publication', sendFormPublication, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
                 .then(() => {
                     setTimeout(function(){ 
                     window.location.href="http://localhost:8080/home"
@@ -111,6 +113,10 @@
                     width: 100%;
                     background-color: rgb(223, 222, 222);
                     resize: none;
+                }
+
+                .input-user {
+                    display: none;
                 }
 
                 .label-add-img {

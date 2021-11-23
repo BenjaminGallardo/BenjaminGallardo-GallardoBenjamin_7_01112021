@@ -19,7 +19,7 @@ module.exports.createComment = (req, res) => {
 };
 
 module.exports.getAllComments = (req, res) => {
-    connectMysql.query('SELECT * FROM comments ORDER BY date DESC', (err, result) => {
+    connectMysql.query('SELECT * FROM comments WHERE publication_id=? ORDER BY date DESC', [req.body.publication_id],(err, result) => {
         if(err){
             console.log(err);
         } else {

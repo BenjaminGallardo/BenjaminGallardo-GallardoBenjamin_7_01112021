@@ -13,7 +13,7 @@
         <hr>
 
         <main>
-            <news></news>
+            <news :userInformations="userInformations"></news>
             <hr>
             <members class="listing-members"></members>
         </main>
@@ -48,17 +48,22 @@
             deconnexion(){
                this.$store.commit('deconnexion');
                this.$router.push('/connexion');
-           }
+           },
        },
        created(){
             axios
-            .post('http://localhost:3001/api/profile', {id:this.$store.state.userId}, this.$store.state.headers)
+            .post('http://localhost:3001/api/profile', {id:this.$store.state.user.userId}, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
             .then(response => {
                 this.userInformations = response.data;
             })
             .catch(error => {
                 console.log(error);
             })
+       },
+       mounted(){
+            if(this.$store.state.user.userId == -1){
+                this.$router.push('/connexion')
+            }
        }
     }
 </script>
@@ -108,6 +113,7 @@
                 
                 img {
                     width: 3em;
+                    border-radius: 50%;
                     margin: 0;
 
                     &:hover {

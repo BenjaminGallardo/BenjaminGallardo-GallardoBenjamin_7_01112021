@@ -27,7 +27,7 @@ module.exports.createPublication = (req, res) => {
     const options = { year: "numeric", month: "long", day: "2-digit"};
 
     const newPublication = {
-        userId: '55', //req.body.userId,
+        userId: req.body.userId,
         textField: req.body.textField,
         date: `${date.toLocaleDateString("fr-FR", options)} à ${('0'+date.getHours()).slice(-2)}:${('0'+date.getMinutes()).slice(-2)}`
     }

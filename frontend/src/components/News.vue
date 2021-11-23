@@ -28,7 +28,7 @@
                     <hr>
 
                     <div class="footer-news">
-                        <create-comment :publicationId="publication.id"></create-comment>
+                        <create-comment :publicationId="publication.id" :userInformations="userInformations"></create-comment>
                         <view-comments :publicationId="publication.id"></view-comments>
                     </div> 
                 </article>
@@ -67,9 +67,10 @@
             return {
                 reveleMenu: -1,
                 publications: [],
-                revelePopUp: false
+                revelePopUp: false,
             }
         },
+        props: ["userInformations"],
         methods: {
             toggleMenu: function(id){
                 if(id == this.reveleMenu){
@@ -87,7 +88,7 @@
                 axios
                 .delete('http://localhost:3001/api/publication', {
                     data : {id : this.reveleMenu}
-                }, this.$store.state.headers)
+                }, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
                 .then(response => {
                     console.log(response);
                     window.location.reload();
@@ -97,7 +98,7 @@
         },
         created(){
             axios
-            .get('http://localhost:3001/api/publication', this.$store.state.headers)
+            .get('http://localhost:3001/api/publication', {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
             .then(response => {
                 for(const publication of response.data){
                     this.publications.push(publication)

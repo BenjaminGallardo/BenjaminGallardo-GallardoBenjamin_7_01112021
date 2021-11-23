@@ -31,7 +31,7 @@
        },
        created(){
            axios
-            .post('http://localhost:3001/api/profile', {id:this.$store.state.userId}, this.$store.state.headers)
+            .post('http://localhost:3001/api/profile', {id:this.$store.state.user.userId}, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
             .then(response => {
                 this.userInformations = response.data;
             })
@@ -80,6 +80,7 @@
                 
                 img {
                     width: 2.5em;
+                    border-radius: 50%;
 
                     &:hover {
                         transform: scale(1.1);

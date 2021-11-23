@@ -47,7 +47,7 @@
                  let sendFormModificationPublication = new FormData(document.getElementById("form-publication"));
 
                  axios
-                 .put(`http://localhost:3001/api/publication/${this.id}`, sendFormModificationPublication ,this.$store.state.headers)
+                 .put(`http://localhost:3001/api/publication/${this.id}`, sendFormModificationPublication , {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
                  .then(() => {
                     setTimeout(function(){ 
                     window.location.href="http://localhost:8080/home"
@@ -59,10 +59,15 @@
         },
         created(){
             axios
-            .get(`http://localhost:3001/api/publication/${this.id}`, this.$store.state.headers)
+            .get(`http://localhost:3001/api/publication/${this.id}`, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
             .then(response => {
                 this.publicationContain = response.data[0];
             })
+        },
+        mounted(){
+            if(this.$store.state.user.userId == -1){
+                this.$router.push('/connexion')
+            }
         }
     }
 </script>

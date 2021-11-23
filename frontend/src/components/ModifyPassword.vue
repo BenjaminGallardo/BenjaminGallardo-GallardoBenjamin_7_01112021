@@ -116,14 +116,14 @@
             modifyPassword(){
                 axios
                 .put(`http://localhost:3001/api/profile/password`, {
-                    id: this.$store.state.userId,
+                    id: this.$store.state.user.userId,
                     oldPassword: {
                         password: `${this.oldPassword}`
                     },
                     newPassword: {
                         password: `${this.newPassword}`
                     }
-                }, this.$store.state.headers)
+                }, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
                 .then(response => {
                     this.modifiedPassword = response.data.message; 
                     setTimeout(function(){window.location.reload(); }, 1000);

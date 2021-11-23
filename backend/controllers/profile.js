@@ -69,6 +69,7 @@ module.exports.modifyPassword = (req, res) => {
 }
 
 module.exports.modifyBio = (req, res) => {
+    console.log(req.body);
     connectMysql.query('UPDATE user SET bio=? WHERE id=?', [req.body.bio, req.body.id], (err, result) => {
         if(err){
             res.status(500).json({error : "La bio n'a pas pu être modifiée"});
@@ -79,7 +80,25 @@ module.exports.modifyBio = (req, res) => {
 };
 
 module.exports.modifyProfileImage = (req, res) => {
-    const imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+   if(req.file == undefined){
+       connectMysql.query('UPDATE user SET imageUrl=? WHERE id=?', ['http://localhost:3001/images/user_profile.png1637518182523.png', req.body.id], (err, result) => {
+           if(err){
+               console.log(err);
+           } else {
+            res.status(200).json(result);
+           }
+       })
+   } else {
+    const imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    connectMysql.query('UPDATE user SET imageUrl=? WHERE id=?', [imageUrl, req.body.id], (err, result) => {
+        if(err){
+            console.log(error);
+        } else {
+            res.status(200).json(result);
+        }
+    })
+
+   }
 };
 
 module.exports.deleteAccount = (req, res) => {

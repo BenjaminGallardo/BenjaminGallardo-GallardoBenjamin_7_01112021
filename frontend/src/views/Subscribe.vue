@@ -9,7 +9,7 @@
         <main>
             <section>
                 <form id="form-inscription">
-                    <p class="msg-error" v-if="status == 'error-created'">{{ errorMsg }}</p>
+                    <p class="msg-error" v-if="errorMsg == ''">{{ errorMsg }}</p>
                     <div class="form-container">
                         <label for="username">Nom d'utilisateur :</label>
                         <input type="text" id="username" v-model="user.username" @input="verifyUsername" placeholder="Prénom Nom">
@@ -42,10 +42,7 @@
                         <span v-if="checkFour == false">Les deux mots de passe sont différents</span>
                     </div>
 
-                    <button @click.prevent="subscribe">
-                        <span v-if="status == 'loading'">Inscription en cours...</span>
-                        <span v-else>Inscription</span>
-                    </button>
+                    <button @click.prevent="subscribe">Inscription</button>
                 
                     <div :class="{'button--disabled' : !formVerify()}"></div>                    
                 </form>
@@ -57,8 +54,6 @@
 </template>
 
 <script>
-    import { mapState } from 'vuex'
-
     export default {
         name: 'Subscribe',
         
@@ -77,10 +72,6 @@
                 errorMsg: ""
             }
         },
-
-        computed: {
-            ...mapState(['status'])
-        }, 
 
         methods: {
             verifyUsername : function(event){
@@ -174,26 +165,35 @@
                 }
             },
             
-            subscribe: function(){
-                this.$store.dispatch('subscribe', {
-                    username: `${this.user.username}`,
-                    email :`${this.user.email}`,
-                    password: `${this.user.password}`,
-                })
-                .then(() => {
-                    this.$store.dispatch('connexion', {
-                        email: this.user.email,
+            subscribe(){
+                    this.$store.dispatch('subscribe', {
+                        username: this.user.username,
+                        email : this.user.email,
                         password: this.user.password
                     })
+                    .then((response) => {
+                        console.log(response);
+                        this.$store.dispatch('connexion', {
+                            email: this.user.email,
+                            password: this.user.password
+                        })
                         .then(() => {
-                            this.$router.push('/home')
+                            this.$router.push('/home');
                         })
                         .catch(error => {
-                            console.log(error);
+                            console.log(error.response.data.error);
+                            this.errorMsg = error.response.data.error;
                         })
-                    }, error => {
+                    })
+                    .catch(error => {
+                        console.log(error);
                         this.errorMsg = error.response.data.error;
                     })
+                }
+            },
+            mounted(){
+                if(this.$store.state.user.userId != -1){
+                    this.$router.push('/home')
                 }
             }
         }

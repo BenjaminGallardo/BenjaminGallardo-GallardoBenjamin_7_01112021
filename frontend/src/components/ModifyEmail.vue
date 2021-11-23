@@ -49,9 +49,9 @@
            modifyEmail(){
                axios
                .put(`http://localhost:3001/api/profile/email`, {
-                   id: this.$store.state.userId,
+                   id: this.$store.state.user.userId,
                    email : this.inputModifyEmail
-               }, this.$store.state.headers)
+               }, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
                .then(response => {
                    console.log(response);
 

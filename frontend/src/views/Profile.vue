@@ -9,20 +9,28 @@
                 
                 <div class="modify-img-profile">
                     <div class="container-profile-img">
-                        <img class="img-profile" :src="userInformations.imageUrl" alt="Image de profil">
+                        <img v-if="url == null" class="img-profile" :src="userInformations.imageUrl" alt="Image de profil">
+                        <img v-if="url" class="preview-img" :src="url" alt="">
                     </div>
 
-                    <form action="">
+                    <form id="form-modify-img-profile">
                         <label for="input-modify-image-profile" class="label-modify-image-profile">Modifier</label>
-                        <input type="file" id="input-modify-image-profile">
+                        <input type="file" id="input-modify-image-profile" accept="image/png, image/jpeg" name="imageUrl" @change="onFileChange">
+                        <input class="input-user" type="text" name="id" :value="this.$store.state.userId">
+                        
+                        <div class="yes-no" v-if="url != null">
+                            <button type="submit" form="form-modify-img-profile" class="btn-check" @click.prevent="sendImage"><i class="fas fa-check"></i></button>
+                            <button class="btn-error"><i class="fas fa-times"></i></button>
+                        </div>
                     </form>
                 </div>
 
                 <p>{{ userInformations.username }}</p>
 
-                <form id="bio">
-                    <textarea name="text-bio" id="text-bio" cols="40" rows="5" :value="userInformations.bio"></textarea>
-                    <button>Modifier</button>
+                <form id="form-bio">
+                    <textarea name="bio" id="text-bio" cols="40" rows="5" :value="userInformations.bio"></textarea>
+                    <input class="input-user" type="text" name="id" :value="this.$store.state.userId">
+                    <button type='submit' form="bio" @click.prevent="sendBio">Modifier</button>
                 </form>
 
                 <button class="delete" @click="toggleModale">Supprimer le compte</button>
@@ -62,7 +70,8 @@
         data(){
             return {
                 revelePopUp: false,
-                userInformations: ''
+                userInformations: '',
+                url: null
             }
         },
 
@@ -82,6 +91,36 @@
                 this.$router.push('/account-delete');
             },
 
+            onFileChange(e){
+                const file = e.target.files[0];
+                this.url = URL.createObjectURL(file);
+            },
+
+            sendImage(){
+                let sendFormModificationImage = new FormData(document.getElementById("form-modify-img-profile"));
+
+                axios
+                .put('http://localhost:3001/api/profile/profile-image', sendFormModificationImage, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
+                .then(() => {
+                    setTimeout(function(){ 
+                    window.location.href="http://localhost:8080/profile"
+                    }, 1000)
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+            },
+
+            sendBio(){
+                let sendFormModificationBio = new FormData(document.getElementById("form-bio"));
+
+                axios
+                .put('http://localhost:3001/api/profile/bio', sendFormModificationBio, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
+                .then(response => {
+                    console.log(response);
+                })
+            },
+
             deleteAccount(){
                 axios
                 .delete('http://localhost:3001/api/profile', {
@@ -93,14 +132,21 @@
             }
         },
         mounted(){
+            if(this.$store.state.user.userId == -1){
+                this.$router.push('/connexion')
+            }
             axios
-            .post('http://localhost:3001/api/profile', {id:this.$store.state.userId}, this.$store.state.headers)
+            .post('http://localhost:3001/api/profile', {id:this.$store.state.user.userId}, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
             .then(response => {
                 this.userInformations = response.data;
             })
             .catch(error => {
                 console.log(error);
-            })
+            });
+
+            if(this.$store.state.user.userId == -1){
+                this.$router.push('/connexion')
+            }
         }
     }
 </script>
@@ -131,15 +177,7 @@
             position: relative;
 
             .container-profile-img {
-                height: 14em;
-                width: 14em;
-                border-radius: 50%;
                 overflow: hidden;
-
-                @include laptopL {
-                    height: 20em;
-                    width: 20em;
-                }
 
                 @include mobile-tablet {
                     margin-top: 1em;
@@ -147,6 +185,21 @@
 
                 .img-profile {
                     width: 15em;
+                    height: 15em;
+                    object-fit: cover;
+                    border-radius: 50%;
+
+                    @include laptopL {
+                        height: 20em;
+                        width: 20em;
+                    }
+                }
+
+                .preview-img {
+                    width: 15em;
+                    height: 15em;
+                    object-fit: cover;
+                    border-radius: 50%;
 
                     @include laptopL {
                         height: 20em;
@@ -164,10 +217,60 @@
                 @include laptopL {
                     right: 2em;
                 }
+
+                @include mobile-tablet {
+                    top: 2em;
+                }
             }
 
             #input-modify-image-profile {
                 display: none;
+            }
+
+            .input-user {
+                display: none;
+            }
+
+            .yes-no {
+                position: absolute;
+                bottom: 2em;
+                right: 3.7em;
+
+                @include laptopL {
+                    bottom: 3em;
+                    right: 6.3em;
+                }
+
+                .btn-check {
+                    margin-right: 1em;
+                    padding: 0.5em 1em;
+                    border: none;
+                    border-radius: 0.3em;
+                    background-color: #05d157;
+                    color: white;
+                    cursor: pointer;
+
+                    &:hover {
+                        transform: scale(1.1);
+                        transition: 0.5s;
+                    }
+                }
+
+                .btn-error {
+                    margin-right: 1em;
+                    padding: 0.5em 1em;
+                    border: none;
+                    border-radius: 0.3em;
+                    color: white;
+                    background-color: red;
+                    cursor: pointer;
+
+                    &:hover {
+                        transform: scale(1.1);
+                        transition: 0.5s;
+                    }
+                }
+
             }
         }
 
@@ -180,7 +283,7 @@
             }
         }
 
-        #bio {
+        #form-bio {
             position: relative;
 
                 textarea {
@@ -199,6 +302,10 @@
                 right: 0.5em;
                 bottom: 1em;
                 @include btn-modify;
+            }
+
+            .input-user {
+                display: none;
             }
         }
 

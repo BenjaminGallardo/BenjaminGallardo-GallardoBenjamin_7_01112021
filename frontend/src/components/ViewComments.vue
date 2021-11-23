@@ -8,9 +8,9 @@
 
         <ul v-if="reveleComments == true">
             <li :key="index" v-for="(comment, index) in allComments">
-                <article class="comment" v-if="comment.publication_id === publicationId">
+                 <article class="comment"> <!--v-if="comment.publication_id === publicationId" -->
                     <div class="name-date">
-                        <p><i class="fas fa-user"></i>Gallardo Benjamin</p>
+                        <p><i class="fas fa-user"></i>Gallardo Benjamin {{ comment.userId }}</p>
                         <p>{{ comment.date }}</p>
                     </div>
                     <p class="contain-comment">{{ comment.commentText }}</p>
@@ -38,8 +38,9 @@
                 this.reveleComments = !this.reveleComments;
 
                 if(this.reveleComments == true && this.allComments == ''){
+                    
                     axios
-                    .get('http://localhost:3001/api/comment', this.$store.state.headers)
+                    .post('http://localhost:3001/api/comment/one-publication', {publication_id: this.publicationId}, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
                     .then(response => {
                         for(const comment of response.data){
                          this.allComments.push(comment);
@@ -49,7 +50,7 @@
             },
             deleteComment(commentId){
                 axios
-                .delete(`http://localhost:3001/api/comment`, {data: {id: commentId}}, this.$store.state.headers)
+                .delete(`http://localhost:3001/api/comment`, {data: {id: commentId}}, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
                 .then(response => {
                     console.log(response);
                 })

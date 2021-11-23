@@ -31,8 +31,6 @@
 </template>
 
 <script>
-    import axios from 'axios'
-
     export default {
         name: 'Connexion',
         data(){
@@ -46,21 +44,25 @@
         },
 
         methods: {
-            connexion: function(){
-                axios
-                .post('http://localhost:3001/api/auth/connexion', {
+            connexion(){
+                this.$store.dispatch('connexion', {
                     email: this.user.email,
                     password: this.user.password
                 })
-                .then(response => {
-                    localStorage.setItem('user', JSON.stringify(response.data));
-                    this.$router.push('/home');
+                .then(() => {
+                    this.$router.push('/profile');
                 })
                 .catch(error => {
-                    this.errorMsg = error.response.data.error
+                    console.log(error.response.data.error);
+                    this.errorMsg = error.response.data.error;
                 })
             }
         },
+        mounted(){
+            if(this.$store.state.user.userId != -1){
+                this.$router.push('/home')
+            }
+        }
     }
 </script>
 

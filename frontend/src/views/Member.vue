@@ -28,10 +28,14 @@
         },
         mounted(){
             axios
-            .get(`http://localhost:3001/api/member/${this.id}`, this.$store.state.headers)
+            .get(`http://localhost:3001/api/member/${this.id}`, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
             .then(response => {
                 this.member = response.data[0];
-            })
+            });
+
+            if(this.$store.state.user.userId == -1){
+                this.$router.push('/connexion')
+            }
         }
     }
 </script>
@@ -48,6 +52,7 @@
 
         img {
             width: 12em;
+            border-radius: 50%;
         }
 
         .bio {
