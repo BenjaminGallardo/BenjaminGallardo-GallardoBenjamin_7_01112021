@@ -12,8 +12,9 @@
 
             <article class="form-container">
                 <form id="form-publication">
-                    <label for="input-comments"><i class="fas fa-user"></i> Benjamin Gallardo</label>
-                    <textarea id="input-comments" cols="30" rows="10" name="textField" :value="publicationContain.textField" ></textarea>
+                    <label class="label-modify-publication" for="input-modify-publication"><img class="img-user" :src="userInfos.imageUrl"> {{ userInfos.username }}</label>
+                    <textarea id="input-modify-publication" cols="30" rows="10" name="textField" :value="publicationContain.textField" ></textarea>
+                    <input class="input-user" type="text" name="userId" :value="this.$store.state.user.userId">
                             
                     <img v-if="publicationContain.imageUrl != undefined" class="old-image" :src="publicationContain.imageUrl" alt="">
 
@@ -39,7 +40,8 @@
             return {
                 id: this.$route.params.id,
                 publicationContain: [],
-                imageUrl: []
+                imageUrl: [],
+                userInfos: ''
             }
         },
         methods: {
@@ -49,6 +51,7 @@
                  axios
                  .put(`http://localhost:3001/api/publication/${this.id}`, sendFormModificationPublication , {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
                  .then(() => {
+                    this.$forceUpdate();
                     setTimeout(function(){ 
                     window.location.href="http://localhost:8080/home"
                     }, 1000)
@@ -68,6 +71,12 @@
             if(this.$store.state.user.userId == -1){
                 this.$router.push('/connexion')
             }
+
+            axios
+            .post('http://localhost:3001/api/profile', {id:this.$store.state.user.userId}, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
+            .then(response => {
+                this.userInfos = response.data;
+            })
         }
     }
 </script>
@@ -139,6 +148,20 @@
                     }
                 }
 
+                .label-modify-publication {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 0.5em;
+
+                    .img-user {
+                        width: 2.5em;
+                        height: 2.5em;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        margin-right: 0.5em;
+                    }
+                }
+
                 textarea {
                     width: 100%;
                     background-color: rgb(223, 222, 222);
@@ -147,6 +170,10 @@
                     @include mobile-tablet {
                         height: 100px;
                     }
+                }
+
+                .input-user {
+                    display: none;
                 }
 
                 .old-image {

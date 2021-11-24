@@ -8,13 +8,13 @@
 
         <ul v-if="reveleComments == true">
             <li :key="index" v-for="(comment, index) in allComments">
-                 <article class="comment"> <!--v-if="comment.publication_id === publicationId" -->
+                 <article class="comment">
                     <div class="name-date">
-                        <p><i class="fas fa-user"></i>Gallardo Benjamin {{ comment.userId }}</p>
+                        <p><img class="user-img" :src="comment.imageUrl"> {{ comment.username }}</p>
                         <p>{{ comment.date }}</p>
                     </div>
                     <p class="contain-comment">{{ comment.commentText }}</p>
-                    <button class="delete-comment" @click="deleteComment(comment.id)"><i class="fas fa-trash-alt"></i></button>
+                    <button class="delete-comment" @click="deleteComment(comment.id)" v-if="comment.userId == this.$store.state.user.userId"><i class="fas fa-trash-alt"></i></button>
                 </article>
             </li>
         </ul>
@@ -42,6 +42,7 @@
                     axios
                     .post('http://localhost:3001/api/comment/one-publication', {publication_id: this.publicationId}, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
                     .then(response => {
+                        console.log(response);
                         for(const comment of response.data){
                          this.allComments.push(comment);
                         }
@@ -50,15 +51,24 @@
             },
             deleteComment(commentId){
                 axios
-                .delete(`http://localhost:3001/api/comment`, {data: {id: commentId}}, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
+                .delete('http://localhost:3001/api/comment', { 
+                    headers: {
+                        'Authorization' : `Bearer ${this.$store.state.user.token}`
+                    },
+                    data: {
+                        id: commentId,
+                        userId: this.$store.state.user.userId
+                    }
+                })
                 .then(response => {
                     console.log(response);
+                    window.location.reload();
                 })
                 .catch(error => {
                     console.log(error);
                 });
             }
-        },
+        }
     }
 </script>
 
@@ -103,13 +113,19 @@
                 p {
                     font-size: 14px;
                     margin: 0 0 0.3em 0;
+                    display: flex;
+                    align-items: center;
 
                     @include mobile-tablet {
                         font-size: 13px;
                     }
 
-                i {
-                    margin-right: 0.3em;
+                    .user-img {
+                        width: 2.5em;
+                        height: 2.5em;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        margin-right: 0.5em;
                     }
                 }
 

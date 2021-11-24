@@ -4,11 +4,11 @@
             <li :key="index" v-for="(publication, index) in publications">
                 <article class="news">
                     <div class="header-news">                      
-                        <router-link :to='`/member/${publication.userId}`'><i class="fas fa-user"></i> Gallardo Benjamin</router-link>
+                        <router-link :to='`/member/${publication.userId}`'><img class="user-img" :src="publication.imageUrl" alt="Image de profil vignette"> {{ publication.username }}</router-link>
                         
                         <div class="date">
                             <p>{{ publication.date }}</p>
-                            <i class="fas fa-ellipsis-h fa-2x" @click="toggleMenu(publication.id)"></i>
+                            <i class="fas fa-ellipsis-h fa-2x" @click="toggleMenu(publication.id)" v-if="publication.userId == this.$store.state.user.userId"></i>
                         </div>
 
                         <div class="btn-action" v-if="reveleMenu == publication.id">
@@ -22,7 +22,7 @@
 
                     <div class='body-news'>
                         <p>{{ publication.textField }}</p>
-                        <img v-if="publication.imageUrl != undefined" :src="publication.imageUrl" alt="Images de la publication">
+                        <img v-if="publication.imageUrl != undefined" :src="publication.imageUrlPublication" alt="Images de la publication">
                     </div>  
 
                     <hr>
@@ -87,10 +87,17 @@
             deletePublication(){
                 axios
                 .delete('http://localhost:3001/api/publication', {
-                    data : {id : this.reveleMenu}
-                }, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
+                    headers: {
+                        'Authorization' : `Bearer ${this.$store.state.user.token}`
+                    },
+                    data: {
+                        id : this.reveleMenu,
+                        userId: this.$store.state.user.userId
+                    }
+                })
                 .then(response => {
                     console.log(response);
+                    this.$forceUpdate();
                     window.location.reload();
                 })
                 .catch()
@@ -102,6 +109,7 @@
             .then(response => {
                 for(const publication of response.data){
                     this.publications.push(publication)
+                    console.log(this.publications);
                 }
             })
             .catch(error => {
@@ -133,6 +141,16 @@
                 a {
                     color: black;
                     text-decoration: none;
+                    display: flex;
+                    align-items: center;
+
+                    .user-img {
+                        width: 2.5em;
+                        height: 2.5em;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        margin-right: 0.5em;
+                    }
 
                 @include mobile-tablet {
                         font-size: 14px;
@@ -141,6 +159,7 @@
 
                 i {
                     cursor: pointer;
+                    margin: 0 0 0 1em;
                 }
 
                 .date {
@@ -148,15 +167,14 @@
                     align-items: center;
 
                     p {
-                        margin: 0 1em;
                         font-size: 12px;
 
                         @include mobile-tablet {
                             font-size: 10px;
                             position: absolute;
                             width: 150px;
-                            left: -1em;
-                            bottom: -0.8em;
+                            left: 4em;
+                            bottom: -1.8em;
                         }
                     }
                 }

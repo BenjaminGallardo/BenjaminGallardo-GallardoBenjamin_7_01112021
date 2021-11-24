@@ -52,7 +52,9 @@
 
         img {
             width: 12em;
+            height: 12em;
             border-radius: 50%;
+            object-fit: cover;
         }
 
         .bio {

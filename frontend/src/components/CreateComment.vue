@@ -3,9 +3,9 @@
         <router-link to='/profile'><img :src="userInformations.imageUrl" alt=""> {{ userInformations.username }}</router-link>
         <form> 
             <p class="msg-error" v-if="msgError != ''">{{ msgError }}</p>
-            <label for="comment-text"></label>
+            <label class="label-comment" for="comment-text">Créer votre commentaire</label>
             <textarea name="commentText" id="comment-text" cols="30" rows="3" placeholder="Commenter cette publication..." v-model="commentText"></textarea>
-            <button type="submit" @click.prevent="sendComment"><i class="fas fa-paper-plane"></i></button>
+            <button type="submit" @click.prevent="sendComment" aria-label="Boutton d'envoi de commentaire"><i class="fas fa-paper-plane"></i></button>
         </form>
     </article>
 </template>
@@ -72,6 +72,10 @@
 
         form {
             position: relative;
+
+            .label-comment {
+                display: none;
+            }
 
             .msg-error {
                 font-size: 12px;

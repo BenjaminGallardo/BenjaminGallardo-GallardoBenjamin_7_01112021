@@ -19,7 +19,7 @@ module.exports.createComment = (req, res) => {
 };
 
 module.exports.getAllComments = (req, res) => {
-    connectMysql.query('SELECT * FROM comments WHERE publication_id=? ORDER BY date DESC', [req.body.publication_id],(err, result) => {
+    connectMysql.query('SELECT *, comments.id FROM comments JOIN user ON comments.userId=user.id WHERE publication_id=? ORDER BY date DESC', [req.body.publication_id],(err, result) => {
         if(err){
             console.log(err);
         } else {
@@ -29,12 +29,11 @@ module.exports.getAllComments = (req, res) => {
 };
 
 module.exports.deleteComment = (req, res) => {
-    console.log(req.body);
     connectMysql.query('DELETE FROM comments WHERE id=?', [req.body.id], (err, result) => {
         if(err) {
             console.log(err);
         } else {
-            console.log(result);
+            res.status(200).json({message: 'Commentaire supprimé'});
         }
     })
 };

@@ -11,9 +11,9 @@
 
             <article class="form-container">
                 <form id="form-publication">
-                    <label for="input-comments"><i class="fas fa-user"></i> Benjamin Gallardo</label>
+                    <label for="input-comments" id="label-comments"><img :src="userInfos.imageUrl" alt=""> {{ userInfos.username }}</label>
                     <textarea id="input-comments" cols="30" rows="10" placeholder="Créer le message de votre publication..." name="textField"></textarea>
-                    <input class="input-user" type="text" name="userId" :value="this.$store.state.userId">
+                    <input class="input-user" type="text" name="userId" :value="this.$store.state.user.userId">
                     
                     <label for="my-file" class="label-add-img" >Ajouter une image</label>
                     <input id="my-file" class="input-add-img" type="file" accept="image/png, image/jpeg" name="imageUrl">
@@ -36,6 +36,7 @@
         name: "Publication",
         data(){
             return {
+                userInfos: ''
             }
         },
         props: ['revele', 'toggleModale'],
@@ -47,11 +48,19 @@
                 axios
                 .post('http://localhost:3001/api/publication', sendFormPublication, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
                 .then(() => {
+                    this.$forceUpdate();
                     setTimeout(function(){ 
                     window.location.href="http://localhost:8080/home"
                     }, 1000)
                 })
             }
+        },
+        mounted(){
+            axios
+            .post('http://localhost:3001/api/profile', {id:this.$store.state.user.userId}, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
+            .then(response => {
+                this.userInfos = response.data;
+            })
         }
     }
 </script>
@@ -108,6 +117,20 @@
                 flex-direction: column;
                 align-items: flex-start;
                 position: relative;
+
+                #label-comments {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 0.5em;
+
+                    img {
+                        width: 2.5em;
+                        height: 2.5em;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        margin-right: 0.5em;
+                    }
+                }
 
                 textarea {
                     width: 100%;

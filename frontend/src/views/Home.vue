@@ -2,11 +2,11 @@
     <div class="home">
         <nav>
             <img src="../assets/icon-left-font-monochrome-white.png" alt="">
-            <ul>
+            <ul aria-hidden="false">
                 <li class="home-list"><router-link to="/home" title="Accueil"><i class="fas fa-home fa-2x"></i></router-link></li>
                 <li><a @click="toggleModale" title="Créer une publication"><i class="fas fa-plus fa-2x"></i></a></li>
-                <li><router-link to="/profile" title="Profil"><img :src="userInformations.imageUrl" alt=""></router-link></li>
-                <li><a @click="deconnexion" title="Déconnexion"> <i class="fas fa-sign-out-alt fa-2x"></i></a></li>
+                <li><router-link to="/profile" title="Profil"><img :src="userInformations.imageUrl" alt="Image de profil"></router-link></li>
+                <li><a @click="deconnexion" title="Déconnexion"><i class="fas fa-sign-out-alt fa-2x"></i></a></li>
             </ul>
         </nav>
 

@@ -21,6 +21,11 @@ if(!user){
 export default createStore({
   state: {
     user: user, // C'est le user qui est chargé depuis le localstorage
+    userInfos: {
+      username : '',
+      imageUrl : '',
+      bio: '',
+    }
   },
 
   mutations: {

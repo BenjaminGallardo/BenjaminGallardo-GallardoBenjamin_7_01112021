@@ -50,7 +50,7 @@
                     password: this.user.password
                 })
                 .then(() => {
-                    this.$router.push('/profile');
+                    this.$router.push('/home');
                 })
                 .catch(error => {
                     console.log(error.response.data.error);

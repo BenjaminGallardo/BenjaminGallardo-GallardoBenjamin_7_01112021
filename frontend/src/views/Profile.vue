@@ -124,7 +124,12 @@
             deleteAccount(){
                 axios
                 .delete('http://localhost:3001/api/profile', {
-                    data: {id:70}
+                    headers: {
+                        'Authorization' : `Bearer ${this.$store.state.user.token}`
+                    },
+                    data: {
+                        id:this.$store.state.user.userId
+                    }
                 })
                 .then(() => {
                     this.deconnexion();
