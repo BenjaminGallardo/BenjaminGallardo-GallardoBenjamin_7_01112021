@@ -22,7 +22,7 @@
 
                     <div class='body-news'>
                         <p>{{ publication.textField }}</p>
-                        <img v-if="publication.imageUrl != undefined" :src="publication.imageUrlPublication" alt="Images de la publication">
+                        <img v-if="publication.imageUrlPublication != undefined" :src="publication.imageUrlPublication" alt="Images de la publication">
                     </div>  
 
                     <hr>

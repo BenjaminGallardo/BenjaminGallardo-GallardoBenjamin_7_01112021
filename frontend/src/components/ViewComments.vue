@@ -10,11 +10,11 @@
             <li :key="index" v-for="(comment, index) in allComments">
                  <article class="comment">
                     <div class="name-date">
-                        <p><img class="user-img" :src="comment.imageUrl"> {{ comment.username }}</p>
+                        <p><img class="user-img" :src="comment.imageUrl" alt="Vignette d'image utilisateur"> {{ comment.username }}</p>
                         <p>{{ comment.date }}</p>
                     </div>
                     <p class="contain-comment">{{ comment.commentText }}</p>
-                    <button class="delete-comment" @click="deleteComment(comment.id)" v-if="comment.userId == this.$store.state.user.userId"><i class="fas fa-trash-alt"></i></button>
+                    <button class="delete-comment" @click="deleteComment(comment.id)" v-if="comment.userId == this.$store.state.user.userId" aria-label="Boutton de suppresion du commentaire"><i class="fas fa-trash-alt"></i></button>
                 </article>
             </li>
         </ul>

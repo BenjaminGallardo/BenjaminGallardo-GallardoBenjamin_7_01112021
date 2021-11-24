@@ -16,7 +16,7 @@
                     <form id="form-modify-img-profile">
                         <label for="input-modify-image-profile" class="label-modify-image-profile">Modifier</label>
                         <input type="file" id="input-modify-image-profile" accept="image/png, image/jpeg" name="imageUrl" @change="onFileChange">
-                        <input class="input-user" type="text" name="id" :value="this.$store.state.user.userId">
+                        <input class="input-user" type="text" name="id" :value="this.$store.state.user.userId" aria-label="Id user">
                         
                         <div class="yes-no" v-if="url != null">
                             <button type="submit" form="form-modify-img-profile" class="btn-check" @click.prevent="sendImage"><i class="fas fa-check"></i></button>
@@ -28,9 +28,9 @@
                 <p>{{ userInformations.username }}</p>
 
                 <form id="form-bio">
-                    <textarea name="bio" id="text-bio" cols="40" rows="5" :value="userInformations.bio"></textarea>
-                    <input class="input-user" type="text" name="id" :value="this.$store.state.user.userId">
-                    <button type='submit' form="bio" @click.prevent="sendBio">Modifier</button>
+                    <textarea name="bio" id="text-bio" cols="40" rows="5" :value="userInformations.bio" aria-label="Texte de la bio"></textarea>
+                    <input class="input-user" type="text" name="id" :value="this.$store.state.user.userId" aria-label="Utilisateur nombre">
+                    <button type='submit' form="bio" @click.prevent="sendBio" aria-label="Bouton de modification de la bio">Modifier</button>
                 </form>
 
                 <button class="delete" @click="toggleModale">Supprimer le compte</button>
@@ -43,8 +43,8 @@
 
                         <p>Voulez-vous vraiment supprimer votre compte ?</p>
                         <div>                
-                            <button class="btn-yes" @click="deleteAccount">Oui</button> 
-                            <button class="btn-no" @click="toggleModale">Non</button>
+                            <button class="btn-yes" @click="deleteAccount" aria-label="Modifier la photo">Oui</button> 
+                            <button class="btn-no" @click="toggleModale" aria-label="Ne pas modifier la photo">Non</button>
                         </div>
                     </aside>
                 </div>

@@ -11,8 +11,8 @@
                 <form>
                     <p class="msg-error" v-if="errorMsg != ''">{{ errorMsg }}</p>
                     <div class="form-container">
-                        <label for="username">Adresse Email :</label>
-                        <input type="text" name="username" id="username" v-model="user.email">
+                        <label for="email">Adresse Email :</label>
+                        <input type="email" name="email" id="email" v-model="user.email">
                     </div>
 
                     <div class="form-container">

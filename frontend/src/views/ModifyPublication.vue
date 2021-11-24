@@ -12,11 +12,11 @@
 
             <article class="form-container">
                 <form id="form-publication">
-                    <label class="label-modify-publication" for="input-modify-publication"><img class="img-user" :src="userInfos.imageUrl"> {{ userInfos.username }}</label>
+                    <label class="label-modify-publication" for="input-modify-publication"><img class="img-user" :src="userInfos.imageUrl" alt="Image de profil vignette"> {{ userInfos.username }}</label>
                     <textarea id="input-modify-publication" cols="30" rows="10" name="textField" :value="publicationContain.textField" ></textarea>
-                    <input class="input-user" type="text" name="userId" :value="this.$store.state.user.userId">
+                    <input class="input-user" type="text" name="userId" :value="this.$store.state.user.userId" aria-label="Numero utilisateur">
                             
-                    <img v-if="publicationContain.imageUrl != undefined" class="old-image" :src="publicationContain.imageUrl" alt="">
+                    <img v-if="publicationContain.imageUrlPublication != undefined" class="old-image" :src="publicationContain.imageUrlPublication" alt="">
 
                     <label for="my-file" class="label-add-img" >Modifier l'image</label>
                     <input id="my-file" class="input-add-img" type="file" accept="image/png, image/jpeg" name="imageUrl">

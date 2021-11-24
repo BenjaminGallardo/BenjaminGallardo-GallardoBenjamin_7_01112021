@@ -108,7 +108,7 @@
                 i:hover {
                     transform: scale(1.1);
                     transition: 0.5s;
-                    color: $color-anchor-hover;
+                    color: $color-anchor-hover; 
                 } 
                 
                 img {

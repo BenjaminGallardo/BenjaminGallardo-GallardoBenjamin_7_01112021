@@ -5,7 +5,7 @@
             <ul>
                 <li><router-link to="/home" title="Accueil"><i class="fas fa-home fa-2x"></i></router-link></li>
                 <li><router-link to="/profile" title="Profil"><img :src="userInformations.imageUrl" alt="Image de profil"></router-link></li>
-                <li><a href="" @click="deconnexion"><i class="fas fa-sign-out-alt fa-2x"></i></a></li>
+                <li><a href="" @click="deconnexion" aria-label="Déconnexion"><i class="fas fa-sign-out-alt fa-2x"></i></a></li>
             </ul>
         </nav>
 
