@@ -96,7 +96,7 @@ module.exports.modifyPublication = (req, res) => {
 };
 
 module.exports.deletePublication = (req, res) => {
-    connectMysql.query('SELECT publication.id, publication.userId FROM publication WHERE id=?', [req.body.id], (err, result) => {
+    connectMysql.query('SELECT publication.id, publication.userId, publication.imageUrlPublication FROM publication WHERE id=?', [req.body.id], (err, result) => {
         if(err){
             res.status(400).json({error : "La publication n'existe pas"})
         } else {
@@ -105,7 +105,7 @@ module.exports.deletePublication = (req, res) => {
                 if(err){
                     console.log(err);
                 } else {
-                    if(publication.imageUrl == undefined){
+                    if(publication.imageUrlPublication == undefined){
                         connectMysql.query('DELETE FROM publication WHERE id=?', publication.id, (err, result) => {
                             if(err){
                                 console.log(err);
@@ -114,8 +114,8 @@ module.exports.deletePublication = (req, res) => {
                             }
                         })
                     } else {
-                        const filename = publication.imageUrl.split('/images/')[1]
-                        fs.unlink(`images/${filename}`, () => {
+                        const oldFilename = publication.imageUrlPublication.split('/images/')[1]
+                        fs.unlink(`images/${oldFilename}`, () => {
                             connectMysql.query('DELETE FROM publication WHERE id=?', publication.id, (err, result) => {
                                 if(err) {
                                     res.status(400).json({error : "La publication n'existe pas"})

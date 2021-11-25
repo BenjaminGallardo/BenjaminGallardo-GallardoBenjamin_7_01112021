@@ -124,15 +124,29 @@ module.exports.deleteAccount = (req, res) => {
     connectMysql.query('SELECT * FROM user WHERE id=?', [req.body.id], (err, result) => {
         if(err){
             res.status(400).json({error : "La publication n'existe pas"})
-        } else {       
-        const user = result[0];
-            connectMysql.query('DELETE FROM user WHERE id=?', user.id, (err, result) => {
-                if(err) {
-                    res.status(400).json({error : "L'utilisateur n'existe pas"})
-                } else {
-                    res.status(200).json({message: 'Utilisateur supprimé'});
-                }
-            })
+        } else {    
+            const user = result[0];
+
+            if(user.imageUrl === 'http://localhost:3001/images/Image_profile-default.png1637830252800.png'){
+                connectMysql.query('DELETE FROM user WHERE id=?', user.id, (err, result) => {
+                    if(err) {
+                        res.status(400).json({error : "L'utilisateur n'existe pas"})
+                    } else {
+                        res.status(200).json({message: 'Utilisateur supprimé'});
+                    }
+                })
+            } else {
+                const oldFilename = user.imageUrl.split('/images/')[1]
+                fs.unlink(`images/${oldFilename}`, () => {
+                    connectMysql.query('DELETE FROM user WHERE id=?', user.id, (err, result) => {
+                        if(err) {
+                            res.status(400).json({error : "L'utilisateur n'existe pas"})
+                        } else {
+                            res.status(200).json({message: 'Utilisateur supprimé'});
+                        }
+                    })
+                })
+            }
         }
     })
 };
