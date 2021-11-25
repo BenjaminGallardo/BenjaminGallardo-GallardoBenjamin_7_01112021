@@ -14,7 +14,7 @@
                         <p>{{ comment.date }}</p>
                     </div>
                     <p class="contain-comment">{{ comment.commentText }}</p>
-                    <button class="delete-comment" @click="deleteComment(comment.id)" v-if="comment.userId == this.$store.state.user.userId" aria-label="Boutton de suppresion du commentaire"><i class="fas fa-trash-alt"></i></button>
+                    <button class="delete-comment" @click="deleteComment(comment.id)" v-if="comment.userId == this.$store.state.user.userId || this.$store.state.user.admin === 'true'" aria-label="Boutton de suppresion du commentaire"><i class="fas fa-trash-alt"></i></button>
                 </article>
             </li>
         </ul>
@@ -57,7 +57,7 @@
                     },
                     data: {
                         id: commentId,
-                        userId: this.$store.state.user.userId
+                        userId: this.$store.state.user.userId,
                     }
                 })
                 .then(response => {

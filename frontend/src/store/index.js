@@ -5,6 +5,7 @@ let user = localStorage.getItem('user');
 if(!user){
   user= {
     userId: -1,
+    admin: '',
     token: ''
   };
 } else {
@@ -13,6 +14,7 @@ if(!user){
   } catch {
     user= {
       userId: -1,
+      admin: '',
       token: ''
     };
   }
@@ -21,11 +23,6 @@ if(!user){
 export default createStore({
   state: {
     user: user, // C'est le user qui est chargé depuis le localstorage
-    userInfos: {
-      username : '',
-      imageUrl : '',
-      bio: '',
-    }
   },
 
   mutations: {
@@ -36,6 +33,7 @@ export default createStore({
     deconnexion: function(state){
       state.user = {
         userId: -1,
+        admin: '',
         token: ''
       }
       localStorage.removeItem('user');

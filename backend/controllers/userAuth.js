@@ -6,7 +6,7 @@ require('dotenv').config();
 // Inscription de l'utilisateur 
 
 module.exports.subscribe = (req, res) => {
-    let usernameSyntax = /^[a-z A-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ0-9-]{2,}$/;
+    let usernameSyntax = /^[a-z A-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ0-9-\(\)]{2,}$/;
     let emailSyntax = /\S+@\S+\.\S+/;
     
     let verificationSyntaxForm = [
@@ -43,7 +43,7 @@ module.exports.connexion = (req, res) => {
     ];
 
     if(verificationSyntaxForm[0] == true && verificationSyntaxForm[1] == true) {
-        connectMysql.query("SELECT id, username, email, password FROM user WHERE email=?", [req.body.email], (err, result) => {
+        connectMysql.query("SELECT id, username, email, password, admin FROM user WHERE email=?", [req.body.email], (err, result) => {
             if(result[0] == undefined){
                 return res.status(401).json({error: 'Utilisateur introuvable'})
             } else {
@@ -54,6 +54,7 @@ module.exports.connexion = (req, res) => {
                     } else {
                         res.status(200).json({
                             userId: result[0].id,
+                            admin: result[0].admin,
                             token: jwt.sign(
                                 { userId: result[0].id },
                                 process.env.TOKEN,

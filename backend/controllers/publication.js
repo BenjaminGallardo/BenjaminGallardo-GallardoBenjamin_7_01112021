@@ -101,44 +101,39 @@ module.exports.deletePublication = (req, res) => {
             res.status(400).json({error : "La publication n'existe pas"})
         } else {
             const publication = result[0];
-
-            if(publication.userId != req.body.userId){
-                console.log("Vous n'êtes pas autoriser à supprimer cette publication");
-            } else { 
-                connectMysql.query('DELETE FROM comments WHERE publication_id=?', [req.body.id], (err, result) => {
-                    if(err){
-                        console.log(err);
+            connectMysql.query('DELETE FROM comments WHERE publication_id=?', [req.body.id], (err, result) => {
+                if(err){
+                    console.log(err);
+                } else {
+                    if(publication.imageUrl == undefined){
+                        connectMysql.query('DELETE FROM publication WHERE id=?', publication.id, (err, result) => {
+                            if(err){
+                                console.log(err);
+                            } else {
+                                res.status(200).json({message: 'Publication Supprimée'});
+                            }
+                        })
                     } else {
-                        if(publication.imageUrl == undefined){
+                        const filename = publication.imageUrl.split('/images/')[1]
+                        fs.unlink(`images/${filename}`, () => {
                             connectMysql.query('DELETE FROM publication WHERE id=?', publication.id, (err, result) => {
-                                if(err){
-                                    console.log(err);
+                                if(err) {
+                                    res.status(400).json({error : "La publication n'existe pas"})
                                 } else {
-                                    res.status(200).json({message: 'Publication Supprimée'});
+                                    connectMysql.query('DELETE FROM comments WHERE publication_id=?', publication.id, (err, result) => {
+                                        if(err){
+                                            console.log(err);
+                                        } else {
+                                            console.log(result);
+                                        }
+                                        res.status(200).json({message: 'Publication Supprimée'});
+                                    })
                                 }
                             })
-                        } else {
-                            const filename = publication.imageUrl.split('/images/')[1]
-                            fs.unlink(`images/${filename}`, () => {
-                                connectMysql.query('DELETE FROM publication WHERE id=?', publication.id, (err, result) => {
-                                    if(err) {
-                                        res.status(400).json({error : "La publication n'existe pas"})
-                                    } else {
-                                        connectMysql.query('DELETE FROM comments WHERE publication_id=?', publication.id, (err, result) => {
-                                            if(err){
-                                                console.log(err);
-                                            } else {
-                                                console.log(result);
-                                            }
-                                            res.status(200).json({message: 'Publication Supprimée'});
-                                        })
-                                    }
-                                })
-                            })
-                        }  
-                    }
-                })
-            }
+                        })
+                    }  
+                }
+            })
         }
     })
 };

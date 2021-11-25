@@ -8,7 +8,7 @@
                         
                         <div class="date">
                             <p>{{ publication.date }}</p>
-                            <i class="fas fa-ellipsis-h fa-2x" @click="toggleMenu(publication.id)" v-if="publication.userId == this.$store.state.user.userId"></i>
+                            <i class="fas fa-ellipsis-h fa-2x" @click="toggleMenu(publication.id)" v-if="publication.userId == this.$store.state.user.userId || this.$store.state.user.admin === 'true'"></i>
                         </div>
 
                         <div class="btn-action" v-if="reveleMenu == publication.id">
@@ -92,7 +92,7 @@
                     },
                     data: {
                         id : this.reveleMenu,
-                        userId: this.$store.state.user.userId
+                        userId: this.$store.state.user.userId,
                     }
                 })
                 .then(response => {
@@ -120,7 +120,6 @@
 </script>
 
 <style lang='scss' scoped>
-
     ul {
         list-style-type: none;
         padding-inline-start: 0px;
