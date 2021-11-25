@@ -81,7 +81,7 @@ module.exports.modifyBio = (req, res) => {
 
 module.exports.modifyProfileImage = (req, res) => {
    if(req.file == undefined){
-       connectMysql.query('UPDATE user SET imageUrl=? WHERE id=?', ['http://localhost:3001/images/user_profile.png1637518182523.png', req.body.id], (err, result) => {
+       connectMysql.query('UPDATE user SET imageUrl=? WHERE id=?', ['http://localhost:3001/images/Image_profile-default.png1637830252800.png', req.body.id], (err, result) => {
            if(err){
                console.log(err);
            } else {
@@ -89,15 +89,34 @@ module.exports.modifyProfileImage = (req, res) => {
            }
        })
    } else {
-    const imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    connectMysql.query('UPDATE user SET imageUrl=? WHERE id=?', [imageUrl, req.body.id], (err, result) => {
-        if(err){
-            console.log(error);
-        } else {
-            res.status(200).json(result);
-        }
-    })
+        connectMysql.query('SELECT * FROM user WHERE id=?', [req.body.id], (err, result) => {
+            if(err){
+                console.log(err);
+            } else {
+                const imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
 
+                if(result[0].imageUrl === 'http://localhost:3001/images/Image_profile-default.png1637830252800.png'){
+                    connectMysql.query('UPDATE user SET imageUrl=? WHERE id=?', [imageUrl, req.body.id], (err, result) => {
+                        if(err){
+                            console.log(error);
+                        } else {
+                            res.status(200).json(result);
+                        }
+                    })
+                } else {
+                    const oldFilename = result[0].imageUrl.split('/images/')[1]
+                    fs.unlink(`images/${oldFilename}`, () => {
+                        connectMysql.query('UPDATE user SET imageUrl=? WHERE id=?', [imageUrl, req.body.id], (err, result) => {
+                            if(err){
+                                console.log(error);
+                            } else {
+                                res.status(200).json(result);
+                            }
+                        })
+                    })
+                }
+            }
+        })
    }
 };
 

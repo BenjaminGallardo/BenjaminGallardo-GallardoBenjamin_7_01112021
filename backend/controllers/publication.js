@@ -74,17 +74,20 @@ module.exports.modifyPublication = (req, res) => {
                         }
                     })
                 } else {
-                    const publication = {
-                        textField : req.body.textField,
-                        imageUrlPublication: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-                    }
-
-                    connectMysql.query('UPDATE publication SET textField=?, imageUrlPublication=?, date=? WHERE id=?', [publication.textField, publication.imageUrlPublication, datePublication, req.params.id], (err, result) => {
-                        if(err){
-                            console.log(err);
-                        } else {
-                            res.status(200).json(result);
+                    const filename = result[0].imageUrlPublication.split('/images/')[1]
+                    fs.unlink(`images/${filename}`, () => {
+                        const publication = {
+                            textField : req.body.textField,
+                            imageUrlPublication: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
                         }
+    
+                        connectMysql.query('UPDATE publication SET textField=?, imageUrlPublication=?, date=? WHERE id=?', [publication.textField, publication.imageUrlPublication, datePublication, req.params.id], (err, result) => {
+                            if(err){
+                                console.log(err);
+                            } else {
+                                res.status(200).json(result);
+                            }
+                        })
                     })
                 }
             }
