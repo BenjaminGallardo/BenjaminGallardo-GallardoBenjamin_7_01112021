@@ -19,7 +19,7 @@ module.exports.subscribe = (req, res) => {
         .then(hash => {
             connectMysql.query("INSERT INTO user SET username=?, email=?, password=?", [req.body.username, req.body.email, hash],(err, result) => {
                 if(!err){
-                    res.status(200).json({message : 'Utilisateur créé'})
+                    res.status(200).json({message : 'Utilisateur créé'});
                 } else {
                    res.status(500).json({error: "L'utilisateur existe déjà"});
                 }
@@ -45,7 +45,7 @@ module.exports.connexion = (req, res) => {
     if(verificationSyntaxForm[0] == true && verificationSyntaxForm[1] == true) {
         connectMysql.query("SELECT id, username, email, password, admin FROM user WHERE email=?", [req.body.email], (err, result) => {
             if(result[0] == undefined){
-                return res.status(401).json({error: 'Utilisateur introuvable'})
+                return res.status(401).json({error: 'Utilisateur introuvable'});
             } else {
                 bcrypt.compare(req.body.password, result[0].password)
                 .then(validation => {

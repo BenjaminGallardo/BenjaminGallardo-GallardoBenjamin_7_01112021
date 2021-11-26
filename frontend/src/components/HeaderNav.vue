@@ -18,17 +18,20 @@
 
     export default {
        name: 'HeaderNav',
+
        data() {
            return {
                userInformations: ''
            }
        },
+
        methods: {
            deconnexion(){
                this.$store.commit('deconnexion');
                this.$router.push('/connexion');
-           },
+           }
        },
+       
        created(){
            axios
             .post('http://localhost:3001/api/profile', {id:this.$store.state.user.userId}, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})

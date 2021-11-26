@@ -26,6 +26,7 @@
 
     export default {
        name: 'ModifyEmail',
+
        data(){
            return {
                inputModifyEmail: '',
@@ -33,9 +34,11 @@
                errorMsg: ''
            }
        },
+
        props:['userInformations'],
+
        methods:{
-            verifyEmail: function(event){
+            verifyEmail(event){
                 const regexEmail = /\S+@\S+\.\S+/;
 
                 if(event.target.value.search(regexEmail) === 0){
@@ -53,7 +56,7 @@
                    email : this.inputModifyEmail
                }, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
                .then(response => {
-                   console.log(response);
+                   console.log(response.data.message);
 
                     setTimeout(function(){ 
                     window.location.href="http://localhost:8080/profile"
@@ -62,7 +65,7 @@
                })
                .catch(error => {
                    this.errorMsg = error.response.data.error;
-               })   
+               });   
            }
        }
     }

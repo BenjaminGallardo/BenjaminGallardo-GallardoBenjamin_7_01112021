@@ -17,20 +17,26 @@
 
     export default {
         name: "Member",
+
         components: {
             HeaderNav
         },
+
         data(){
             return {
                 id: this.$route.params.id,
                 member : []
             }
         },
+
         mounted(){
             axios
             .get(`http://localhost:3001/api/member/${this.id}`, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
             .then(response => {
                 this.member = response.data[0];
+            })
+            .catch(error => {
+                console.log(error)
             });
 
             if(this.$store.state.user.userId == -1){

@@ -1,5 +1,4 @@
 const express = require('express');
-const mysql = require('mysql');
 const connectMysql = require('./mysql-config');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
@@ -16,7 +15,6 @@ connectMysql.connect(function(err){
     console.log('Connected');
     connectMysql.query('SELECT * FROM user'), function (err, result){
         if(err) throw err;
-        console.log(result);
     }
 });
 

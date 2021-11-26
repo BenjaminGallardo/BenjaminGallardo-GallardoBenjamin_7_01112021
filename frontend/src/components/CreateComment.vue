@@ -1,6 +1,7 @@
 <template>
     <article>
         <router-link to='/profile'><img :src="userInformations.imageUrl" alt=""> {{ userInformations.username }}</router-link>
+
         <form> 
             <p class="msg-error" v-if="msgError != ''">{{ msgError }}</p>
             <textarea name="commentText" id="textarea-comment-text" cols="30" rows="3" placeholder="Commenter cette publication..." v-model="commentText" aria-label="Crééer un commentaire"></textarea>
@@ -14,6 +15,7 @@
 
     export default {
         name: 'CreateComment',
+
         data(){
             return {
                 commentText: '',
@@ -21,7 +23,9 @@
                 msgError: '',
             }
         },
+
         props:['publicationId', 'userInformations'],
+
         methods:{
             sendComment(){
                 axios
@@ -34,11 +38,10 @@
                     setTimeout(function(){ 
                     window.location.href="http://localhost:8080/home"
                     }, 1000)
-                    return;
                 })
                 .catch(error => {
                    this.msgError = error.response.data.error;
-                })
+                });
             }
         }
     }

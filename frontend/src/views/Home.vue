@@ -30,26 +30,31 @@
 
     export default {
         name: 'Home',
+
         components: {
             News,
             Members,
             Publication,
         },
+
         data(){
             return {
                 revele: false,
                 userInformations: ''
             }
         },
+
         methods: {
-           toggleModale: function(){
+           toggleModale(){
                this.revele = !this.revele
            },
+
             deconnexion(){
                this.$store.commit('deconnexion');
                this.$router.push('/connexion');
            },
        },
+
        created(){
             axios
             .post('http://localhost:3001/api/profile', {id:this.$store.state.user.userId}, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
@@ -58,8 +63,9 @@
             })
             .catch(error => {
                 console.log(error);
-            })
+            });
        },
+       
        mounted(){
             if(this.$store.state.user.userId == -1){
                 this.$router.push('/connexion')

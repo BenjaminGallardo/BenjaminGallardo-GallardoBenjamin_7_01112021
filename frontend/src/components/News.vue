@@ -59,10 +59,12 @@
 
     export default {
         name: 'Publication',
+
         components: {
             CreateComment,
             ViewComments
         },
+
         data(){
             return {
                 reveleMenu: -1,
@@ -70,9 +72,11 @@
                 revelePopUp: false,
             }
         },
+
         props: ["userInformations"],
+
         methods: {
-            toggleMenu: function(id){
+            toggleMenu(id){
                 if(id == this.reveleMenu){
                    this.reveleMenu = -1; 
                 } else {
@@ -95,26 +99,27 @@
                         userId: this.$store.state.user.userId,
                     }
                 })
-                .then(response => {
-                    console.log(response);
+                .then(() => {
                     this.$forceUpdate();
                     window.location.reload();
                 })
-                .catch()
-            },
+                .catch(error => {
+                    console.log(error);
+                });
+            }
         },
+
         created(){
             axios
             .get('http://localhost:3001/api/publication', {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
             .then(response => {
                 for(const publication of response.data){
                     this.publications.push(publication)
-                    console.log(this.publications);
                 }
             })
             .catch(error => {
                 console.log(error);
-            })
+            });
         }
     }
 </script>

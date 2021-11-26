@@ -3,6 +3,7 @@
         <header>
             <header-nav></header-nav>
         </header>
+
         <main>
             <section class="general-profile">
                 <h1>Votre profil</h1>
@@ -67,6 +68,7 @@
 
     export default {
         name: 'Profile',
+        
         data(){
             return {
                 revelePopUp: false,
@@ -84,11 +86,6 @@
         methods: {
             toggleModale(){
                 this.revelePopUp = !this.revelePopUp;
-            },
-
-            deconnexion(){
-                this.$store.commit('deconnexion');
-                this.$router.push('/account-delete');
             },
 
             onFileChange(e){
@@ -117,8 +114,16 @@
                 axios
                 .put('http://localhost:3001/api/profile/bio', sendFormModificationBio, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
                 .then(response => {
-                    console.log(response);
+                    console.log(response.data.message);
                 })
+                .catch(error => {
+                    console.log(error);
+                });
+            },
+
+            deconnexion(){
+                this.$store.commit('deconnexion');
+                this.$router.push('/account-delete');
             },
 
             deleteAccount(){
@@ -134,12 +139,17 @@
                 .then(() => {
                     this.deconnexion();
                 })
+                .catch(error => {
+                    console.log(error);
+                });
             }
         },
+        
         mounted(){
             if(this.$store.state.user.userId == -1){
                 this.$router.push('/connexion')
             }
+
             axios
             .post('http://localhost:3001/api/profile', {id:this.$store.state.user.userId}, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
             .then(response => {
@@ -148,10 +158,6 @@
             .catch(error => {
                 console.log(error);
             });
-
-            if(this.$store.state.user.userId == -1){
-                this.$router.push('/connexion')
-            }
         }
     }
 </script>

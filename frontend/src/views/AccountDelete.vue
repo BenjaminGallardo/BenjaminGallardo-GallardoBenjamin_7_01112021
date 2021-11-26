@@ -10,6 +10,7 @@
 <script>
 export default {
     name: 'AccountDelete',
+    
     methods: {
         redirection(){
             this.$router.push("/subscribe");

@@ -30,6 +30,7 @@ export default createStore({
       localStorage.setItem('user', JSON.stringify(user))
       state.user = user;
     },
+
     deconnexion: function(state){
       state.user = {
         userId: -1,
@@ -53,6 +54,7 @@ export default createStore({
         });
       });
     },
+    
     subscribe: ({commit}, userInfos) => {
       return new Promise ((resolve, reject) => {
         commit;

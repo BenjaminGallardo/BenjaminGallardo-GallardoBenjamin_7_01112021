@@ -13,14 +13,14 @@
 
                 <i class="fas fa-check check" v-if="checkOne == true"></i>
                 <i class="fas fa-times error" v-if="checkOne == false"></i>
-                <span v-if="checkOne == false">Le mot de passe doit contenir une majuscule, un chiffre et un caractère spécial</span>
+                <span v-if="checkOne == false">Le mot de passe doit contenir une majuscule, <br> un chiffre et un caractère spécial ( * . $ ? ! ^ % )</span>
             </div>
 
             <div class="form-style">
                 <label for="confirm-new-password">Confirmer nouveau mot de passe :</label> <br>
                 <input type="password" id="confirm-new-password" v-model="confirmNewPassword" @input="verifyConfirmPassword">
                 
-                <button type="submit" @click.prevent="modifyPassword" v-if="checkOne == null || checkOne == true && checkTwo == null || checkTwo == true">Modifier</button> <br>
+                <button type="submit" @click.prevent="sendModifyPassword" v-if="checkOne == null || checkOne == true && checkTwo == null || checkTwo == true">Modifier</button> <br>
 
                 <i class="fas fa-check check" v-if="checkTwo == true"></i>
                 <i class="fas fa-times error" v-if="checkTwo == false"></i>
@@ -38,6 +38,7 @@
 
     export default {
         name: 'ModifyPassword',
+
         data(){
             return {
                 newPassword: "",
@@ -49,8 +50,9 @@
                 msgError: ''
             }
         },
+
         methods :{
-            verifyPassword: function(event){        
+            verifyPassword(event){        
                 const specialCaracter = /[^a-zA-Z0-9]/;
                 const alphabet = /[a-z]/i;
                 const numbers = /[0-9]/;
@@ -101,7 +103,7 @@
                 }
             },
 
-            verifyConfirmPassword: function(event){
+            verifyConfirmPassword(event){
                 if(event.target.value.length === 0){
                     this.checkTwo = false;
                 
@@ -113,7 +115,7 @@
                 }
             },
 
-            modifyPassword(){
+            sendModifyPassword(){
                 axios
                 .put(`http://localhost:3001/api/profile/password`, {
                     id: this.$store.state.user.userId,
@@ -127,11 +129,10 @@
                 .then(response => {
                     this.modifiedPassword = response.data.message; 
                     setTimeout(function(){window.location.reload(); }, 1000);
-                   
                 })
                 .catch(error => {
                     this.msgError = error.response.data.error;
-                })
+                });
             }
         }
     }

@@ -32,18 +32,19 @@
     import axios from 'axios'
 
     export default {
-
         name: "Publication",
+
         data(){
             return {
                 userInfos: ''
             }
         },
+
         props: ['revele', 'toggleModale'],
+
         methods: {
             sendPublication(){
                 let sendFormPublication = new FormData(document.getElementById("form-publication"));
-                console.log(sendFormPublication);
 
                 axios
                 .post('http://localhost:3001/api/publication', sendFormPublication, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
@@ -53,13 +54,20 @@
                     window.location.href="http://localhost:8080/home"
                     }, 1000)
                 })
+                .catch(error => {
+                    console.log(error);
+                })
             }
         },
+
         mounted(){
             axios
             .post('http://localhost:3001/api/profile', {id:this.$store.state.user.userId}, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
             .then(response => {
                 this.userInfos = response.data;
+            })
+            .catch(error => {
+                console.log(error);
             })
         }
     }

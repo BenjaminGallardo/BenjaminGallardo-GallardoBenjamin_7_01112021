@@ -26,13 +26,16 @@
 
     export default {
         name: 'ViewComments',
+
         data(){
             return {
                 reveleComments: false,
                 allComments: [],
             }
         },
+
         props:['publicationId'],
+
         methods:{
             toggleViewComments(){
                 this.reveleComments = !this.reveleComments;
@@ -42,13 +45,16 @@
                     axios
                     .post('http://localhost:3001/api/comment/one-publication', {publication_id: this.publicationId}, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
                     .then(response => {
-                        console.log(response);
                         for(const comment of response.data){
                          this.allComments.push(comment);
                         }
                     })
+                    .catch(error => {
+                        console.log(error);
+                    });
                 }
             },
+
             deleteComment(commentId){
                 axios
                 .delete('http://localhost:3001/api/comment', { 
@@ -60,8 +66,7 @@
                         userId: this.$store.state.user.userId,
                     }
                 })
-                .then(response => {
-                    console.log(response);
+                .then(() => {
                     window.location.reload();
                 })
                 .catch(error => {

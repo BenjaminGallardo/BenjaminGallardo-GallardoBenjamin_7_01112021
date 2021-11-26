@@ -6,6 +6,7 @@
                 <router-link to="Subscribe"><h1>Inscription</h1></router-link>
             </nav>
         </header>
+
         <main>
             <section>
                 <form>
@@ -33,6 +34,7 @@
 <script>
     export default {
         name: 'Connexion',
+
         data(){
             return {
                 user: {
@@ -53,11 +55,11 @@
                     this.$router.push('/home');
                 })
                 .catch(error => {
-                    console.log(error.response.data.error);
                     this.errorMsg = error.response.data.error;
-                })
+                });
             }
         },
+        
         mounted(){
             if(this.$store.state.user.userId != -1){
                 this.$router.push('/home')

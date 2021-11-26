@@ -36,6 +36,7 @@
 
     export default {
         name: 'ModificationPublication',
+
         data(){
             return {
                 id: this.$route.params.id,
@@ -44,6 +45,7 @@
                 userInfos: ''
             }
         },
+
         methods: {
             sendModificationPublication(){
                  let sendFormModificationPublication = new FormData(document.getElementById("form-publication"));
@@ -55,18 +57,24 @@
                     setTimeout(function(){ 
                     window.location.href="http://localhost:8080/home"
                     }, 1000)
-                    return;
                  })
-
+                 .catch(error => {
+                     console.log(error);
+                 });
             }
         },
+
         created(){
             axios
             .get(`http://localhost:3001/api/publication/${this.id}`, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
             .then(response => {
                 this.publicationContain = response.data[0];
             })
+            .catch(error => {
+                console.log(error);
+            });
         },
+
         mounted(){
             if(this.$store.state.user.userId == -1){
                 this.$router.push('/connexion')
@@ -77,6 +85,9 @@
             .then(response => {
                 this.userInfos = response.data;
             })
+            .catch(error => {
+                console.log(error);
+            });
         }
     }
 </script>

@@ -6,6 +6,7 @@
                 <router-link to="connexion"><h1>Connexion</h1></router-link>
             </nav>
         </header>
+
         <main>
             <section>
                 <form id="form-inscription">
@@ -65,6 +66,7 @@
                     password: '',
                     confirmPassword: ''
                 },
+                
                 checkOne: null,
                 checkTwo: null,
                 checkThree: null,
@@ -74,7 +76,7 @@
         },
 
         methods: {
-            verifyUsername : function(event){
+            verifyUsername(event){
                 if(event.target.value.length >= 3 && event.target.value.length <= 50){
                     this.checkOne = true;  
                 }         
@@ -83,7 +85,7 @@
                 } 
             },
 
-            verifyEmail: function(event){
+            verifyEmail(event){
                 const regexEmail = /\S+@\S+\.\S+/;
 
                 if(event.target.value.search(regexEmail) === 0){
@@ -94,7 +96,7 @@
                 }
             },
 
-            verifyPassword: function(event){   
+            verifyPassword(event){   
                 const specialCaracter = /[^a-zA-Z0-9]/;
                 const alphabet = /[a-z]/i;
                 const numbers = /[0-9]/;
@@ -145,7 +147,7 @@
                 }
             },
 
-            verifyConfirmPassword: function(event){
+            verifyConfirmPassword(event){
                 if(event.target.value.length === 0){
                     this.checkFour = false;
                 
@@ -157,7 +159,7 @@
                 }
             },
 
-            formVerify: function(){
+            formVerify(){
                 if(this.checkOne == true && this.checkTwo == true && this.checkThree == true && this.checkFour == true ){
                     return true;
                 } else {
@@ -171,8 +173,7 @@
                         email : this.user.email,
                         password: this.user.password
                     })
-                    .then((response) => {
-                        console.log(response);
+                    .then(() => {
                         this.$store.dispatch('connexion', {
                             email: this.user.email,
                             password: this.user.password
@@ -181,16 +182,15 @@
                             this.$router.push('/home');
                         })
                         .catch(error => {
-                            console.log(error.response.data.error);
                             this.errorMsg = error.response.data.error;
-                        })
+                        });
                     })
                     .catch(error => {
-                        console.log(error);
                         this.errorMsg = error.response.data.error;
-                    })
+                    });
                 }
             },
+            
             mounted(){
                 if(this.$store.state.user.userId != -1){
                     this.$router.push('/home')

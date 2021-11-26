@@ -12,11 +12,13 @@
 
     export default {
         name: 'Members',
+
         data(){
             return {
                 members: [],
             }
         },
+
         created(){
             axios
             .get('http://localhost:3001/api/member', {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
@@ -25,6 +27,9 @@
                     this.members.push(user)
                 }
             })
+            .catch(error => {
+                console.log(error);
+            });
         }
     }
 </script>
