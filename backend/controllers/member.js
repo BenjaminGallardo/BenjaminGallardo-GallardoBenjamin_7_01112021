@@ -3,7 +3,7 @@ const connectMysql = require('../mysql-config');
 // Récupération de tout les membres
 
 module.exports.getAllMembers = (req, res) => {
-    connectMysql.query('SELECT * FROM user', (err, result) => {
+    connectMysql.query('SELECT * FROM user ORDER BY username', (err, result) => {
         if(!err){
             res.status(200).json(result);
         } else {
