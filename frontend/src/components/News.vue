@@ -191,7 +191,7 @@
                 .btn-action {
                     position: absolute;
                     right: 0;
-                    top: 2em;
+                    top: 2.3em;
                     display: flex;
                     flex-direction: column;
                     align-items: flex-end;
@@ -230,7 +230,7 @@
                         font-size: 12px;
                         color: white;
                         padding: 0.5em;
-                        width: 83.5%;
+                        width: 83.7%;
 
                         &:hover {
                             text-decoration: underline;

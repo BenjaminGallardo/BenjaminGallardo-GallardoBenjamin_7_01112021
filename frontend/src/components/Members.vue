@@ -19,7 +19,7 @@
             }
         },
 
-        created(){
+        mounted(){
             axios
             .get('http://localhost:3001/api/member', {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
             .then(response => {
