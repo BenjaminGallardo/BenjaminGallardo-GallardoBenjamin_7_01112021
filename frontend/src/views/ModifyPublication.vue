@@ -14,7 +14,7 @@
                 <form id="form-publication">
                     <label class="label-modify-publication" for="input-modify-publication"><img class="img-user" :src="userInfos.imageUrl" alt="Image de profil vignette"> {{ userInfos.username }}</label>
                     <textarea id="input-modify-publication" cols="30" rows="10" name="textField" :value="publicationContain.textField" ></textarea>
-                    <input class="input-user" type="text" name="userId" :value="this.$store.state.user.userId" aria-label="Numero utilisateur">
+                    <input class="input-user" type="text" name="userId" :value="this.$store.state.user.userId" aria-label="Numero utilisateur" aria-hidden="true">
                             
                     <img v-if="publicationContain.imageUrlPublication != undefined" class="old-image" :src="publicationContain.imageUrlPublication" alt="">
 

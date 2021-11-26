@@ -17,7 +17,7 @@
                     <form id="form-modify-img-profile">
                         <label for="input-modify-image-profile" class="label-modify-image-profile">Modifier</label>
                         <input type="file" id="input-modify-image-profile" accept="image/png, image/jpeg" name="imageUrl" @change="onFileChange">
-                        <input class="input-user" type="text" name="id" :value="this.$store.state.user.userId" aria-label="Id user">
+                        <input class="input-user" type="text" name="id" :value="this.$store.state.user.userId" aria-label="Id user" aria-hidden="true">
                         
                         <div class="yes-no" v-if="url != null">
                             <button type="submit" form="form-modify-img-profile" class="btn-check" @click.prevent="sendImage"><i class="fas fa-check"></i></button>

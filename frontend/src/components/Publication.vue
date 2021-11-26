@@ -13,7 +13,7 @@
                 <form id="form-publication">
                     <label for="input-comments" id="label-comments"><img :src="userInfos.imageUrl" alt=""> {{ userInfos.username }}</label>
                     <textarea id="input-comments" cols="30" rows="10" placeholder="Créer le message de votre publication..." name="textField"></textarea>
-                    <input class="input-user" type="text" name="userId" :value="this.$store.state.user.userId">
+                    <input class="input-user" type="text" name="userId" :value="this.$store.state.user.userId" aria-hidden="true">
                     
                     <label for="my-file" class="label-add-img" >Ajouter une image</label>
                     <input id="my-file" class="input-add-img" type="file" accept="image/png, image/jpeg" name="imageUrl">

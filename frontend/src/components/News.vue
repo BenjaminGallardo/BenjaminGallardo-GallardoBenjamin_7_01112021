@@ -8,7 +8,7 @@
                         
                         <div class="date">
                             <p>{{ publication.date }}</p>
-                            <i class="fas fa-ellipsis-h fa-2x" @click="toggleMenu(publication.id)" v-if="publication.userId == this.$store.state.user.userId || this.$store.state.user.admin === 'true'"></i>
+                            <button class="menu-publication" @click="toggleMenu(publication.id)" v-if="publication.userId == this.$store.state.user.userId || this.$store.state.user.admin === 'true'" aria-label="Boutton du menu de la publication"><i class="fas fa-ellipsis-h fa-2x"></i></button>
                         </div>
 
                         <div class="btn-action" v-if="reveleMenu == publication.id">
@@ -161,9 +161,15 @@
                     }
                 }
 
-                i {
-                    cursor: pointer;
-                    margin: 0 0 0 1em;
+
+                .menu-publication {
+                    border: none;
+                    background-color: transparent;
+
+                    i {
+                        cursor: pointer;
+                        margin: 0 0 0 1em;
+                    }
                 }
 
                 .date {
