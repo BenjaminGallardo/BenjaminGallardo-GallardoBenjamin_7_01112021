@@ -4,7 +4,7 @@ const fs = require('fs');
 // Récupération de toutes les publications
 
 module.exports.getAllPublication = (req, res) => {
-    connectMysql.query('SELECT *, publication.id FROM publication, user WHERE publication.userId = user.id ORDER by date DESC', (err, result) => {
+    connectMysql.query('SELECT *, publication.id FROM publication, user WHERE publication.userId = user.id ORDER by publication.id DESC', (err, result) => {
         if(err){
             res.status(500).json(err);
         } else {

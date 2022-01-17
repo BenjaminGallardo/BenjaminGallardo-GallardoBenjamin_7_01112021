@@ -59,12 +59,6 @@
                 });
             }
         },
-        
-        mounted(){
-            if(this.$store.state.user.userId != -1){
-                this.$router.push('/home')
-            }
-        }
     }
 </script>
 

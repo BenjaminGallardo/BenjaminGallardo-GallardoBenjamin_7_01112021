@@ -23,7 +23,7 @@ module.exports.createComment = (req, res) => {
 // Récupération des commentaires d'une publication
 
 module.exports.getAllComments = (req, res) => {
-    connectMysql.query('SELECT *, comments.id FROM comments JOIN user ON comments.userId=user.id WHERE publication_id=? ORDER BY date DESC', [req.body.publication_id],(err, result) => {
+    connectMysql.query('SELECT *, comments.id FROM comments JOIN user ON comments.userId=user.id WHERE publication_id=? ORDER BY comments.id DESC', [req.body.publication_id],(err, result) => {
         if(err){
             res.status(500).json(err);
         } else {

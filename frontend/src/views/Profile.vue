@@ -44,8 +44,8 @@
 
                         <p>Voulez-vous vraiment supprimer votre compte ?</p>
                         <div>                
-                            <button class="btn-yes" @click="deleteAccount" aria-label="Modifier la photo">Oui</button> 
-                            <button class="btn-no" @click="toggleModale" aria-label="Ne pas modifier la photo">Non</button>
+                            <button class="btn-yes" @click="deleteAccount" aria-label="Supprimer le compte">Oui</button> 
+                            <button class="btn-no" @click="toggleModale" aria-label="Ne pas supprimer le compte">Non</button>
                         </div>
                     </aside>
                 </div>
