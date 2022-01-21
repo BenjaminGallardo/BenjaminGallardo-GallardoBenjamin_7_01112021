@@ -10,7 +10,7 @@
         <main>
             <section>
                 <form id="form-inscription">
-                    <p class="msg-error" v-if="errorMsg == ''">{{ errorMsg }}</p>
+                    <p class="msg-error" v-if="errorMsg != ''">{{ errorMsg }}</p>
                     <div class="form-container">
                         <label for="username">Nom d'utilisateur :</label>
                         <input type="text" id="username" v-model="user.username" @input="verifyUsername" placeholder="Prénom Nom">
@@ -190,12 +190,6 @@
                     });
                 }
             },
-            
-            mounted(){
-                if(this.$store.state.user.userId != -1){
-                    this.$router.push('/home')
-                }
-            }
         }
 </script>
 

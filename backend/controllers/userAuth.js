@@ -6,7 +6,7 @@ require('dotenv').config();
 // Inscription de l'utilisateur 
 
 module.exports.subscribe = (req, res) => {
-    let usernameSyntax = /^[a-z A-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ0-9-\(\)]{2,}$/;
+    let usernameSyntax = /^[a-z A-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ0-9-\_\(\)]{2,}$/;
     let emailSyntax = /\S+@\S+\.\S+/;
     
     let verificationSyntaxForm = [
@@ -21,7 +21,7 @@ module.exports.subscribe = (req, res) => {
                 if(!err){
                     res.status(200).json({message : 'Utilisateur créé'});
                 } else {
-                   res.status(500).json({error: "L'utilisateur existe déjà"});
+                    res.status(500).json({error: "L'utilisateur existe déjà"});
                 }
             })
         })
