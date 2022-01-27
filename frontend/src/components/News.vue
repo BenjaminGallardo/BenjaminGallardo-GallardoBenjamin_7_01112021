@@ -29,7 +29,6 @@
 
                     <div class="footer-news">
                         <create-comment :publicationId="publication.id" :userInformations="userInformations"></create-comment>
-                        <view-comments :publicationId="publication.id"></view-comments>
                     </div> 
                 </article>
             </li>    
@@ -55,14 +54,12 @@
 <script>
     import axios from 'axios'
     import CreateComment from './CreateComment.vue'
-    import ViewComments from './ViewComments.vue'
 
     export default {
         name: 'Publication',
 
         components: {
             CreateComment,
-            ViewComments
         },
 
         data(){
@@ -100,8 +97,19 @@
                     }
                 })
                 .then(() => {
-                    this.$forceUpdate();
-                    window.location.reload();
+                    this.revelePopUp = false;
+                    this.publications = [];
+                    
+                    axios
+                    .get('http://localhost:3001/api/publication', {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
+                    .then(response => {
+                        for(const publication of response.data){
+                            this.publications.push(publication)
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
                 })
                 .catch(error => {
                     console.log(error);
