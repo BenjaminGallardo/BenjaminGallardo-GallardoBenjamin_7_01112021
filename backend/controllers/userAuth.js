@@ -21,7 +21,7 @@ module.exports.subscribe = (req, res) => {
                 if(!err){
                     res.status(200).json({message : 'Utilisateur créé'});
                 } else {
-                    res.status(500).json({error: "L'utilisateur existe déjà"});
+                    res.status(500).json({error: "Cette adresse email existe déjà"});
                 }
             })
         })
