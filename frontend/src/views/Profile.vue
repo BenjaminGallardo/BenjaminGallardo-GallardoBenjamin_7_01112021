@@ -99,9 +99,7 @@
                 axios
                 .put('http://localhost:3001/api/profile/profile-image', sendFormModificationImage, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
                 .then(() => {
-                    setTimeout(function(){ 
-                    window.location.href="http://localhost:8080/profile"
-                    }, 1000)
+                    window.location.href="http://localhost:8080/profile";
                 })
                 .catch(error => {
                     console.log(error);

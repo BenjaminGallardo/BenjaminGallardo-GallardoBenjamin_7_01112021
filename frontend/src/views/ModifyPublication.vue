@@ -53,10 +53,7 @@
                  axios
                  .put(`http://localhost:3001/api/publication/${this.id}`, sendFormModificationPublication , {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
                  .then(() => {
-                    this.$forceUpdate();
-                    setTimeout(function(){ 
-                    window.location.href="http://localhost:8080/home"
-                    }, 1000)
+                    window.location.href="http://localhost:8080/home";
                  })
                  .catch(error => {
                      console.log(error);

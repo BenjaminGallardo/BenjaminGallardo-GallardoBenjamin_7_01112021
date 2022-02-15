@@ -15,7 +15,7 @@
             <div class="verificationFormEmail">
                 <i class="fas fa-check check" v-if="check == true"></i> 
                 <i class="fas fa-times error" v-if="check == false"></i>
-                <span v-if="check == false || errorMsg != ''">L'adresse email n'a pas le bon format</span>
+                <span v-if="check == false || errorMsg != ''">{{ errorMsg }}</span>
             </div>
         </form>
     </article>
@@ -55,16 +55,12 @@
                    id: this.$store.state.user.userId,
                    email : this.inputModifyEmail
                }, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
-               .then(response => {
-                   console.log(response.data.message);
-
-                    setTimeout(function(){ 
-                    window.location.href="http://localhost:8080/profile"
-                    }, 1000)
-                    return;
+               .then(() => {
+                    window.location.href="http://localhost:8080/profile";
                })
                .catch(error => {
                    this.errorMsg = error.response.data.error;
+                   this.check = false;
                });   
            }
        }

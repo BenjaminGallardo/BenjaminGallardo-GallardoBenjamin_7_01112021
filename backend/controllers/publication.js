@@ -37,24 +37,28 @@ module.exports.createPublication = (req, res) => {
         date: `${date.toLocaleDateString("fr-FR", options)} à ${('0'+date.getHours()).slice(-2)}:${('0'+date.getMinutes()).slice(-2)}`
     }
 
-    if(req.file === undefined){
-        connectMysql.query('INSERT INTO publication SET userId=?, textField=?, date=?', [newPublication.userId, newPublication.textField, newPublication.date],(err, result) => {
-            if(err){
-                res.status(500).json(err);
-            } else {
-                res.status(200).json(result);
-            }
-        });
+    if(newPublication.textField != '' && req.file == undefined || req.file != undefined){
+        if(req.file === undefined){
+            connectMysql.query('INSERT INTO publication SET userId=?, textField=?, date=?', [newPublication.userId, newPublication.textField, newPublication.date],(err, result) => {
+                if(err){
+                    res.status(500).json(err);
+                } else {
+                    res.status(200).json(result);
+                }
+            });
+        } else {
+            const imageUrlPublication = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+    
+            connectMysql.query('INSERT INTO publication SET userId=?, textField=?, imageUrlPublication=?, date=?', [newPublication.userId, newPublication.textField, imageUrlPublication, newPublication.date],(err, result) => {
+                if(err){
+                    res.status(500).json(err);
+                } else {
+                    res.status(200).json(result);
+                }
+            });
+        }
     } else {
-        const imageUrlPublication = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
-
-        connectMysql.query('INSERT INTO publication SET userId=?, textField=?, imageUrlPublication=?, date=?', [newPublication.userId, newPublication.textField, imageUrlPublication, newPublication.date],(err, result) => {
-            if(err){
-                res.status(500).json(err);
-            } else {
-                res.status(200).json(result);
-            }
-        });
+        res.status(500).json({error:'La publication ne peut pas être vide'});
     }
 };
 

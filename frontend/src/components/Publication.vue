@@ -22,6 +22,8 @@
                 <div class="container-btn-publication">
                     <button form="form-publication" type="submit" class="btn-publication" @click.prevent="sendPublication">Publier</button>
                 </div>
+
+                <p class="msg-error" v-if='msgError != ""'>{{ msgError }}</p>
             </article>
             
         </section>
@@ -36,7 +38,8 @@
 
         data(){
             return {
-                userInfos: ''
+                userInfos: '',
+                msgError: ''
             }
         },
 
@@ -49,13 +52,10 @@
                 axios
                 .post('http://localhost:3001/api/publication', sendFormPublication, {headers:{ 'Authorization' : `Bearer ${this.$store.state.user.token}`}})
                 .then(() => {
-                    this.$forceUpdate();
-                    setTimeout(function(){ 
-                    window.location.href="http://localhost:8080/home"
-                    }, 1000)
+                    window.location.href="http://localhost:8080/home";
                 })
                 .catch(error => {
-                    console.log(error);
+                    this.msgError = error.response.data.error;
                 })
             }
         },
@@ -88,6 +88,7 @@
             border-radius: 0.5em;
             padding: 0em 1em;
             width: 600px;
+            text-align: center;
 
             @include mobile-tablet {
                 width: 80%;
@@ -180,6 +181,13 @@
                         bottom: 1.2em;
                     }
                 }
+            }
+
+            .msg-error {
+                margin: 0 0 1em 0;
+                font-size: 0.8em;
+                color: red;
+                font-weight: bold;
             }
 
             .container-btn-publication {

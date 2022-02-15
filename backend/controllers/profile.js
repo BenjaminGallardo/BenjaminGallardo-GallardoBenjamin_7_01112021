@@ -21,15 +21,21 @@ module.exports.modifyEmail = (req, res) => {
     let verificationSyntaxEmail = emailSyntax.test(req.body.email);
 
     if(verificationSyntaxEmail == true){
-        connectMysql.query(`UPDATE user SET email=? WHERE id=?`, [req.body.email, req.body.id], (err, result) => {
-            if(err){
-                res.status(500).json({error: "L'email n'a pas pu être modifié"});
+        connectMysql.query('SELECT email FROM user WHERE email=?', [req.body.email], (err, result) => {
+            if(result[0] == undefined){
+                connectMysql.query(`UPDATE user SET email=? WHERE id=?`, [req.body.email, req.body.id], (err, result) => {
+                    if(err){
+                        res.status(500).json({error: "L'email n'a pas pu être modifié"});
+                    } else {
+                        res.status(200).json({message: "Email Modifié"});
+                    }
+                });
             } else {
-                res.status(200).json({message: "Email Modifié"});
+                res.status(500).json({error: "L'adresse existe déjà"}); 
             }
         });
     } else {
-        res.status(500).json({error: "L'email n'a pas le bon format"})
+        res.status(500).json({error: "L'email n'a pas le bon format"});
     }
 
 };
