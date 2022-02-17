@@ -8,7 +8,7 @@ module.exports.createComment = (req, res) => {
     const dateComment = `${date.toLocaleDateString("fr-FR", options)} à ${('0'+date.getHours()).slice(-2)}:${('0'+date.getMinutes()).slice(-2)}`
 
     if(req.body.commentText == ''){
-        res.status(500).json({error : "La publication ne peut pas être vide"})
+        res.status(500).json({error : "Le commentaire ne peut pas être vide"})
     } else {
         connectMysql.query('INSERT INTO comments SET userId=?, commentText=?, publication_id=?, date=?', [req.body.userId, req.body.commentText, req.body.publication_id, dateComment], (err, result) => {
             if(err){
