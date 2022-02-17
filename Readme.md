@@ -1,5 +1,7 @@
 # Installer Groupomania sur votre ordinateur
 ***
+Vous devez déjà avoir installé sur votre machine, NodeJs et VueJs
+***
 1) Clôner l'application web directement avec votre éditeur de code ou télécharger le fichier ZIP.
 
 2) Importer dans votre base de données MYSQL le fichier groupomania.sql du dossier BDD (en utf8_general_ci).
